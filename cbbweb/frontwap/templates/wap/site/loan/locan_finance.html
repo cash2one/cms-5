@@ -1,0 +1,373 @@
+{% extends 'wap/base/base.html' %}
+{# 基础车系数据 #}
+{% set carSeries=run(API.FINANCE_CAR_SERIES_AND_CAR_TYPE,city_id=city.city_id,car_series_id=series_id) %}
+{# 基础车型数据 #}
+{% set type_dealer = run(API.FINANCE_CAR_SERIES_CAR_TYPE,city_id=city.city_id,car_series_id=series_id)%}
+{# 第一个车型ID #}
+{% set firstTypeId = model_id if model_id else type_dealer[0].id %}
+{# 获取经销商 #}
+{% set dealer=run(API.FINANCE_CAR_TYPE_DEALER,city_id=city.city_id,car_type_id=firstTypeId,per_page=50) %}
+{# 车系名 #}
+{% set seriesName = carSeries.series.name %}
+
+{% block title %}
+    【{{city.city_name}}分期贷款买车】{{seriesName}}车贷_{{seriesName}}零首付_分期贷款
+{% endblock %}
+ 
+{% block description%}
+  <meta name="Keywords" content="{{seriesName}}车贷,{{seriesName}}零首付, {{seriesName}}分期贷款">
+  <meta name="description" content="{{city.city_name}}贷款买车，{{seriesName}}汽车贷款，{{sign}}为您提供{{seriesName}}汽车贷款方案, {{seriesName}}车贷计算, {{seriesName}}首付比例,贷款期限和年利率查询服务, {{seriesName}}车贷免费在线申请, {{seriesName}}车贷问题答疑,查{{seriesName}}最新车贷方案,就上车巴巴">
+{% endblock %}
+
+{% block head %}
+  <div class="g-topNav">
+    <div class="m-topNav">
+      <div class="left"><i onclick="history.go(-1)" class="u-icon u-icon-left"></i></div>
+      {% block hd_title %}
+        <div class="title">任性贷</div>
+      {% endblock %}
+      <div class="right">
+        <ul class="u-menu f-fr f-cb">
+          <li><i class="u-icon u-icon-menu j-menu"></i></li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>  
+{% endblock%}
+{% block body %}
+	<div class="g-wrap finance-list-wrap">
+      <div class="m-loan-products f-pd-m">
+        {% set type_id = model_id %}
+        {# 地址有车型 #}
+        {% if type_dealer and  type_id %}
+          {% for item in type_dealer %}
+            {% if item and item.id|string == type_id|string  %}
+              {# <p>{{dumps_json(item, add_pre=true)}}</p>  #}
+              <div class="u-title">
+                <h3 id="text" class="text" data-id="{{item.id}}">{{item.name}}</h3>
+                <span class="more"><a class="j-changeCar" data-index='0' href="javascript:;">更换车型</a></span>
+              </div>
+              <div class="car">
+                <img src="{{ item.imgs[0].CDNPATH if item.imgs|length > 0 else ('images/lib/car1.jpg') }}" alt="">
+              </div>
+            {% endif %} 
+          {% endfor%}    
+          <ul class="m-info-list">
+            {% if dealer and dealer[0].dealer%}
+              <li class="first j-changeCar" data-index='1'>
+                <span class="j-deName">{{dealer[0].dealer.dlr_short_name}}</span>
+                <span data-price = "{{dealer[0].offer_price.price}}" class="j-price data s-color-secondary">{{ '%.2f'|format(dealer[0].offer_price.price/10000) or 0.00 }}万</span>
+                <i class="more u-icon u-icon-right"></i>
+              </li>
+            {% endif %}  
+        {% elif type_dealer %} {# 地址无车型 #}
+          {# {% if type_dealer %} #}
+            <div class="u-title">
+              <h3 id="text" class="text" data-id="{{type_dealer[0].id}}">{{type_dealer[0].name}}</h3>
+              <span class="more"><a class="j-changeCar" data-index='0' href="javascript:;">更换车型</a></span>
+            </div>
+            <div class="car">
+              <img src="{{type_dealer[0].imgs[0].CDNPATH if type_dealer[0].imgs|length > 0 else ('images/lib/car1.jpg')}}" alt="">
+            </div>
+            <ul class="m-info-list">
+              {% if dealer and dealer[0].dealer%}
+                <li id="dealer" class="first j-changeCar" data-index='1' data-id="{{dealer[0].dealer.id}}">
+                  <span class="j-deName">{{dealer[0].dealer.dlr_short_name}}</span>
+                  <span data-price = "{{dealer[0].offer_price.price}}" class="j-price data s-color-secondary">{{ '%.2f'|format(dealer[0].offer_price.price/10000) or 0.00 }}万</span>
+                  <i class="more u-icon u-icon-right"></i>
+                </li> 
+              {% endif %}   
+        {% else %}
+          <ul class="m-info-list">
+        {% endif %}
+      	
+          {# 首付 #}
+          {% set dowpay = run(API.DOWNPAYS,series_id=series_id)%}
+          {% if dowpay %}
+          <li class="j-changeCar" data-index='2'>
+            首付比例
+            <span  class="j-dowpay data">{{dowpay[0]}}%</span>
+            <i class="more u-icon u-icon-right"></i>
+          </li>
+          {% endif %}
+          {# 还款 #}
+          {% set periods = run(API.PERIODS, series_id = series_id)%}
+          {% if periods %}
+          <li class="j-changeCar" data-index='3'>
+            还款期限
+            <span class="j-date data">{{periods[0]}}期</span>
+            <i class="more u-icon u-icon-right"></i>
+          </li>
+          {% endif %}
+          <li>
+            首付金额
+            <span class="j-onepay data s-color-secondary">8.9万</span>
+          </li>
+          <li>
+            最低月供
+            <span class="j-month data s-color-secondary">2888元</span>
+          </li>
+        </ul>
+      </div>
+      <div class="m-loan-detail">
+        <div class="u-filter" style="overflow: hidden;">
+          <div data-type='-monthly_payment' class="item-half f-bt-red">按热门度排序</div>
+          <div data-type='monthly_payment' class="item-half">按月供金额排序</div>
+        </div>
+        <ul class="m-finance-list">
+        </ul>
+        <ul class="m-finance-list f-dn">
+        </ul>
+      </div>
+    </div>
+    {# 滑块 01#}
+    <div class="g-slider-fix">
+      <div class="m-changeCar">
+        <div class="u-title-ver title"><div class="tit">选择具体车型</div></div>
+        <ul class="cars j-cars">
+          {% if type_dealer %}
+          {% for item in type_dealer %}
+          <li data-id="{{item.id}}" data-img="{{ item.imgs[0].CDNPATH if item.imgs|length > 0 else ('images/lib/car1.jpg') }}" data-name="{{item.name}}">
+            <p class="c">{{item.name}}</p>
+            <div class="r">￥{{ '%.2f'|format(item.guide_price/10000) if item.guide_price  else 0.00}}万</div>
+          </li>
+          {% endfor%}
+          {% endif %}
+        </ul>
+        <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+      </div>
+    </div>
+    {# 滑块 02#}
+    <div class="g-slider-fix">
+      <div class="m-changeCar">
+        <div class="u-title-ver title"><div class="tit">选择该车型的经销商</div></div>
+        <ul class="cars j-dealer" >
+          {% if dealer %}
+          {% for item1 in dealer %}
+          <li data-id="{{item1.dealer.id}}">
+            <p class="" style="width:20%;float:left;">{{item1.dealer.county_name}}</p>
+            <p class="c" style="width:55%">{{item1.dealer.dlr_short_name}}</p>
+            <div data-price="{{item1.offer_price.price}}" class="r">￥{{ '%.2f'|format(item1.offer_price.price/10000) or 0.00 }}万</div>
+          </li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+        <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+      </div>
+    </div>
+    {# 滑块 03#}
+    <div class="g-slider-fix">
+      <div class="m-changeCar">
+        <div class="u-title-ver title"><div class="tit">选择首付比例</div></div>
+        <ul class="cars j-selPay">
+          {% if dowpay %}
+          {% for item2 in dowpay %}
+          <li>
+            <p class="c">{{item2}}%</p>
+          </li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+        <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+      </div>
+    </div>
+    {# 滑块 04#}
+    <div class="g-slider-fix">
+      <div class="m-changeCar">
+        <div class="u-title-ver title"><div class="tit">选择还款期限</div></div>
+        <ul class="cars j-selDate">
+          {% if periods %}
+          {% for item3 in periods %}
+          <li>
+            <p class="c">{{item3}}</p>
+          </li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+        <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+      </div>
+    </div>
+    
+    <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+    function hideSlide(el){
+      $('html').removeClass('f-lock');
+      el.closest('.g-slider-fix').removeClass('g-slider-fix-active');
+    }
+    $(function(){
+      
+      /*滑块*/
+      $('.j-changeCar').click(function(){
+        $('html').addClass('f-lock');
+        var index = $(this).data('index');
+        $('.g-slider-fix').eq(index).addClass('g-slider-fix-active');
+      })
+      $('.j-back').click(function(){
+        hideSlide($(this))
+      })
+    })
+
+    //設置首付金額
+    function OnecePay(){
+      var price = $('.j-price').data('price');
+      var percent = $('.j-dowpay').text().substring(0,2);
+      var onepay = ((price*percent)/(100*10000)).toFixed(2);
+      if(isNaN(onepay)){
+        $('.j-onepay').text('暂无报价');
+      }else{
+        $('.j-onepay').text(onepay+'万');
+      }
+    }
+    OnecePay();
+
+    //选择经销商
+     $('body').on('click','.j-dealer li',function(){
+        var dealer = $(this).find('.c').text();
+        var price = $(this).find('.r').data('price');
+        $('.j-deName').text(dealer);
+        $('.j-price').text((price/10000).toFixed(2)+'万').data('price',price);
+        $('#dealer').data('id',$(this).data('id'));
+        hideSlide($(this));
+        OnecePay();
+        hotMonthSort($('.f-bt-red').data('type'),$('.item-half').index('.f-bt-red'));
+     });
+
+    //首付比例
+    $('body').on('click','.j-selPay li',function(){
+      var dowpay= $(this).find('.c').text();
+      $('.j-dowpay').text(dowpay);
+      hideSlide($(this));
+      OnecePay();
+      hotMonthSort($('.f-bt-red').data('type'),$('.item-half').index('.f-bt-red'));
+    });
+    //还款期数
+    $('body').on('click','.j-selDate li',function(){
+      var num= $(this).find('.c').text();
+      $('.j-date').text(num+'期');
+      hideSlide($(this));
+      hotMonthSort($('.f-bt-red').data('type'),$('.item-half').index('.f-bt-red'));
+    })
+    //车型切换
+    $('body').on('click','.j-cars li',function(){
+      var that = this
+      $('.u-title .text').text($(this).data('name'));
+      $('.u-title .text').data('id',$(this).data('id'));
+      $('.car img').attr('src', $(this).data('img'));
+      $('.u-filter .item-half').removeClass('f-bt-red').eq(0).addClass('f-bt-red');
+      $.ajax({
+        url: '{{rest(API.FINANCE_CAR_TYPE_DEALER )}}',
+        type: 'GET',
+        dataType: 'json',
+        data: {car_type_id:$(this).data('id'),city_id:{{city.city_id}},per_page:50,page:1,county_id:0},
+      })
+      .done(function(data) {
+        if(data.status == 'success' && data.result.length>0){
+          $('#text').attr('data-id',$(that).data('id'));
+          $('.j-deName').text(data.result[0].dealer.dlr_short_name);
+          $('.j-price').data('price',data.result[0].offer_price.price).text((data.result[0].offer_price.price/10000).toFixed(2)+'万');
+          OnecePay();
+
+          $('.j-dealer').html('');
+          var html = '';
+          $.each(data.result,function(index, el) {
+            html +='<li data-id="'+el.dealer.id+'">\
+                      <p class="" style="width:20%;float:left;">'+el.dealer.county_name+'</p>\
+                      <p class="c" style="width:55%">'+el.dealer.dlr_short_name+'</p>\
+                      <div data-price="'+el.offer_price.price+'" class="r">￥'+(el.offer_price.price/10000).toFixed(2)+'万</div>\
+                    </li>'
+          });
+          $('.j-dealer').html(html);
+          hotMonthSort(0,0);
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      hideSlide($(this));
+    });
+
+    //热门排序
+    function hotMonthSort(orderby,ind){
+      $.ajax({
+        url: '{{rest(API.LIST_FINANCIALS)|safe }}',
+        type: 'GET',
+        dataType: 'json',
+        data: {city_id:'{{city.city_id}}',car_series_id:'{{series_id}}',car_type_id:$('.u-title .text').data('id'),dealer_id:$('#dealer').data('id'),first_pay_percent:$('.j-dowpay').text().substring(0,2),sku_item:$('.j-date').text().substring(0,2),order_by:orderby},
+      })
+      .done(function(data) {
+//        console.log(data);
+        var html  = '';
+        var _monthPay;
+        var _repaymentType;
+        var _monthlyPrice;
+        var month =100000;
+        $('.m-finance-list').eq(ind).html('');
+        if(data.status == 'success' && data.result.length>0){
+          $.each(data.result,function(index, el) {
+            _repaymentType = el.repayment_type;
+
+            _monthlyPrice = el.monthly_pay_amount;
+
+            if(_monthlyPrice >= 10000){
+                _monthlyPrice = (_monthlyPrice/10000).toFixed(2)+'万';
+            }else{
+                _monthlyPrice = _monthlyPrice+'元'
+            }
+
+            if(_repaymentType == 'paymentMethod1860'){
+              _monthPay = '不含利息'
+            }else{
+              _monthPay = '含利息'
+            }
+            html +=  '<li>\
+                    <div class="u-title">\
+                      <h3 class="text"><img class="img" src="'+el.corp_logo+'">'+el.corp_name+'<small>'+el.financial_product_name+'</small></h3>\
+                      <span class="more"><span class="tongguolv">通过率'+el.pass_percent+'%</span></span>\
+                    </div>\
+                    <p class="p">\
+                      月供（'+_monthPay+'）：<span class="s-color-secondary mr">'+_monthlyPrice+'</span>\
+                      总利息：<span class="s-color-secondary">'+el.loan_cost+'元</span>\
+                    </p>\
+                    <p class="ls" style="display:none">\
+                      <span><i class="u-icon u-icon-loan"></i>在线贷</span>\
+                      <span><i class="u-icon u-icon-dan"></i>免担保</span>\
+                      <span><i class="u-icon u-icon-shenbi"></i>审批长</span>\
+                      <span><i class="u-icon u-icon-fire"></i>极速贷</span>\
+                      <span><i class="u-icon u-icon-rate"></i>低利率</span>\
+                      <span><i class="u-icon u-icon-material"></i>资料少</span>\
+                    </p>\
+                      <a data-id="'+el.product_id+'" href="javascript:;" class="j-href u-btn u-btn-default u-btn-block"" class="u-btn u-btn-default u-btn-block">立即申请</a>\
+                  </li>'
+                  if(el.monthly_pay_amount<month){
+                    month = el.monthly_pay_amount;
+                  }
+          });
+          $('.j-month').text(month+'元');
+          $('.m-finance-list').eq(ind).html(html);
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+    }
+    hotMonthSort('-monthly_payment',0);
+
+    //nav 点击事件
+    $('body').on('click','.u-filter .item-half',function(){
+      $('.u-filter .item-half').toggleClass('f-bt-red');
+      $('.m-finance-list').toggle(100);
+      var index = $(this).index();
+      var orderby = $(this).data('type');
+      hotMonthSort(orderby,index);
+    });
+    
+    //申请点击
+    $('body').on('click','.j-href',function(){
+      var type_id = $('#text').attr('data-id');
+      var finance_id = $(this).data('id');
+      window.location.href = "{{ city_url('site.finance_apply') }}?key=NV-Chebabanew-Wap-V3-Ch-Le-PoC-Msg8-05-0000&series_id={{series_id}}&type_id="+type_id+"&finance_id="+finance_id+"&city_id={{ city.city_id }}";
+    });  
+  </script>
+{% endblock %}

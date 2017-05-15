@@ -1,0 +1,39 @@
+{% macro sidebar_macro(head_type) -%}
+
+    {% if head_type %}
+        
+    {% else %}
+    
+        
+    {% endif %}
+
+
+
+<!-- 获取品牌 -->
+<div class="m-sidebar">
+    <dl>
+        <dt><a href="/html/site/about"><i></i>关于我们</a></dt>
+        <dd><a href="/html/site/about#area_intro">我叫车巴巴</a></dd>
+        <dd><a href="/html/site/about#area_culture">五大频道</a></dd>
+        <dd><a href="/html/site/about#area_duty">车巴巴愿景</a></dd>
+        <dd><a href="/html/site/about#service">服务条款</a></dd>
+        <dd><a href="/html/site/about#protect">隐私保护</a></dd>
+        <dd><a href="/html/site/about#law">法律声明</a></dd>
+    </dl>
+
+    <dl>
+        <dt><a href="/html/site/join"><i></i>招纳贤士</a></dt>
+        <dd><a href="/html/site/join#area_societyarea_society">社会招聘</a></dd>
+        <!-- <dd><a href="/html/site/join">校园招聘</a></dd> -->
+        <dd><a href="/html/site/join#area_help">应聘帮助</a></dd>
+    </dl>
+    <dl>
+        <dt><a href="/html/site/contract"><i></i>联系我们</a></dt>
+        <dd><a href="/html/site/contract">400-830-8899</a></dd>
+        <dd><a href="/html/site/contract">800-830-8899</a></dd>
+        <dd><a href="/html/site/contract">周一至周日 8:00-21:00</a></dd>
+        <dd><a href="/html/site/contract">邮箱:chebaba@dfl.com.cn</a></dd>
+    </dl>
+</div>
+{%- endmacro %}
+

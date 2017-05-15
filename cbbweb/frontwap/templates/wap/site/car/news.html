@@ -1,0 +1,95 @@
+{% extends 'wap/base/base.html'  %}
+
+{% set detail = run(API.ARTICLE_DETAIL_WITH_SERIES,article_id=article.id) %}
+
+{% block title %}
+    {{ detail.title }} – {{ detail.series[0].CAR_SERIES_CN }}评测_提车作业
+{% endblock %}
+{% block description%}
+  <meta name="Keywords" content="{{detail.keywords}}">
+  <meta name="description" content="{{detail.description}}">
+{% endblock %}
+
+{% block js %}
+<script>
+  $(function(){
+    if($(".m-news-wrap .content .p1").height()<300){
+      $(".m-news-wrap .more").hide();
+      $(".m-news-wrap .content").css("height","auto");
+    }else{
+      $(".m-news-wrap .more").click(function(){
+        $(this).hide();
+        $(".m-news-wrap .content").css("height","auto");
+      })
+    }
+  })
+</script>
+{% endblock %}
+{% block body %}
+
+<div class="g-wrap">
+{# <p>{{ dumps_json(detail, add_pre=True)|safe }}</p>  #}
+  <div class="m-news-wrap">
+    <h3 class="h3">{{ detail.title }}</h3>
+    <p class="small"><span class="time">{{detail.created_date.strftime('%Y{0}%m{1}%d{2}').format(*'年月日')}} </span>来源：<span class="src">{{ detail.source }}</span></p>
+
+    <div class="img">
+      <img src="{{ detail.front_img_path }}" alt=""/>
+    </div>
+    <div class="content">
+      <div class="p1">
+        {{ detail.content|safe }}
+      </div>
+    </div>
+    <a class="more">继续阅读</a>
+  </div>
+  {% set article_newest=run(API.ARTICLE_NEWEST_BY_CARSERIES, series_id=request.GET['series_id'],count=3) %}{# series_id=detail.series[0].object_id #}
+  {% if article_newest %}
+  <div class="m-pannel">
+    <div class="head">
+      <div class="tit">相关阅读</div>
+    </div>
+    <div class="body f-pb-l">
+      <ul class="m-news-list">
+        {% for relalist in article_newest %}
+        <li>
+          <a class="f-db f-cb" href="{{ city_url('cms.article',id=relalist.id) }}">
+            <div class="l">
+              <img src={{ relalist.front_img_path }} alt="">
+            </div>
+            <div class="r">
+              <div class="u-news">
+                <div class="text">{{ relalist.title }}
+                </div>
+                <div class="date">{{relalist.update_date.strftime('%Y/%m/%d')}}</div>
+              </div>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+  </div>
+  
+<div class="g-fixed-bottom">
+  <div class="m-bottom-suspend">
+     
+    <div class="fl">
+      <img src={{ detail.series[0].PC_THUMBNAIL }} alt="">
+    </div>
+    <div class="am">
+      <h3 class="tit">{{ detail.series[0].CAR_SERIES_CN }}</h3>
+      {% if detail.series[0].START_GUIDEPRICE >= 10000  %}
+      <p class="price">{{ '%.2f'|format(detail.series[0].START_GUIDEPRICE/10000) }}万起</p>
+      {% else %}
+      <p class="price">{{ detail.series[0].START_GUIDEPRICE/10000 }}元起</p>
+      {% endif %}
+    </div>
+    <div class="fr">
+      <a class="u-btn u-btn-app u-btn-block u-btn-lg" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-09-0000&car_series={{request.GET['series_id']}}">立即申请</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

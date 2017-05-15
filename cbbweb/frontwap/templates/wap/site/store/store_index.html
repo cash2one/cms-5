@@ -1,0 +1,465 @@
+{% extends 'wap/base/base.html' %}
+  {% block catalogsTitle %}
+     {{city.city_name}}东风日产启辰日产(进口)经销商_4s店地址、电话、活动
+  {% endblock %}
+  {% block catalogsDesc%}
+    <meta name="description" content="{{sign}}{{city.city_name}}汽车经销商频道为您提供{{city.city_name}}东风日产 启辰 日产(进口)4S店大全,包括{{city.city_name}}东风日产 启辰 日产(进口)4S店地址, {{city.city_name}}东风日产 启辰 日产(进口)4S店电话等联系方式,让您轻松了解汽车{北京}4S店各类信息。">
+    <meta name="Keywords" content="{{city.city_name}}东风日产 启辰 日产(进口)4s店, {{city.city_name}}东风日产 启辰 日产(进口), {{city.city_name}}东风日产 启辰 日产(进口)">
+  {% endblock %}
+  {% block css %}
+    <link href="//cdn.bootcss.com/Swiper/3.3.0/css/swiper.min.css" rel="stylesheet">
+  {% endblock %}
+  {% block hd_title%}找好店{% endblock%}
+  {% block body %}
+    <div class="g-wrap store-index-wrap">
+      {% set url = rest(API.DEALER_DEFAULT, city_id=city.city_id, county_id=0, brand_id=0, series_id=0, per_page=4, page=1) %}
+      <div class="m-pannel">
+        <div class="body">
+          <div class="u-filter j-filter f-cb">
+            <div id="city" class="item-half f-pr" city-id="{{city.city_id}}">
+              <span>{{ city.city_name }}</span>
+              <i class="u-icon u-icon-triangle"></i>
+            </div>
+            <div id="brand" class="item-half f-pr" brand-id="1">
+              <span>日产</span>
+              <i class="u-icon u-icon-triangle"></i>
+              {% set brand_list = list_objs(model=MODELS.T_BASE_CAR_BRAND,orderby=['id']) %}
+              {% if brand_list %}
+              <ul class="brand-select">
+                <li brand-id="1" class="sub-tit"><i class="i-df"></i>东风日产</li>
+                <li brand-id="2" class="blue-tit"><i class="i-qc"></i>启辰</li>
+                <li brand-id="6" class="sub-tit"><i class="i-df"></i>日产(进口)</li>
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {# <a class="f-db" href="javascript:;"><img class="f-db f-full" src="{{ static ('images/lib/store_index.png')}}"></a> #}
+      <div class="m-pannel j-output">
+        <div class="head">
+          <div class="tit">{{ city.city_name }}-日产-经销商</div>
+          {% set dealer_default=run(API.DEALER_DEFAULT,city_id = city.city_id,county_id=0,brand_id=0,series_id=0,per_page=4,page=1) %}
+          <div class="more">共有<span class="s-color-secondary">{{ dealer_default.city_count }}</span>家经销商</div>
+        </div>
+        <div class="body">
+          <div class="u-filter f-cb">
+            {% set default_url = rest(API.DEALER_DEFAULT) %}
+            <div class="item active-sort" data-url="{{ default_url }}" id="default" brand-id="1" city-id="{{city.city_id}}">
+              默认
+            </div>
+            {% set score_url = rest(API.DEALER_SCORE) %}
+            <div class="item" id="score" data-url="{{ score_url }}" brand-id="1" city-id="{{city.city_id}}">
+              好评优先
+            </div>
+            {% set place_url = rest(API.DEALER_DISTANCE) %}
+            <div class="item" data-url="{{ place_url }}" id="place" brand-id="1" city-id="{{city.city_id}}">
+              离我最近
+            </div>
+          </div>
+          <div class="m-shops">
+            {% if dealer_default.dealer_list %}
+              {% for dealer in dealer_default.dealer_list %}
+              <div class="shop2 f-ge">
+                <div class="title">
+                  <div class="al">
+                    {% if dealer.is_vip == 1 %}
+                    <span class="s-color-main">vip</span>
+                    {% endif %}
+                    {{ dealer.dlr_full_name }}
+                    <span class="s-color-secondary score">{{ '%.2f'|format(dealer.sales_score) }}</span>
+                  </div>
+                  <div class="fr">
+                    {% if dealer.is_sale_province == 1 %}
+                    <div class="u-store-lab">
+                      售本省
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <p class="info f-mar-top">
+                  {% if dealer.cont_address %}
+                  地址：{{ dealer.cont_address }}
+                  {% else %}
+                  地址：/
+                  {% endif %}
+                </p>
+                <p class="info">
+                  电话：{{ dealer.service_tel }}
+                </p>
+                {% if dealer.cbb_car_brand_code %}
+                <p class="info">
+                  品牌：
+                    {% for brand_code in dealer.cbb_car_brand_code %}
+                    <span>{{ brand_code }}</span>
+                    {% endfor %}
+                </p>
+                {% endif %}
+                {% if dealer_activity_list %}
+                <a class="activity f-db" href="{{ dealer_activity_list[0].url }}">
+                  <i class="label labelx">享</i>{{dealer_activity_list[0].activity_title}}
+                  <i class="u-icon u-icon-right"></i>
+                </a>
+                {% endif %}
+                <div class="m-btns2">
+                  <a href="{{catalog_url(model_table=MODELS.T_BASE_DEALER.name)}}/{{ dealer.id }}" class="u-btn u-full-btn u-btn-default ">去看看</a>
+                </div>
+              </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  {% endblock %}
+  {% block js %}
+   <script src="//cdn.bootcss.com/Swiper/3.3.0/js/swiper.jquery.min.js"></script>
+   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BMvPNolfzSZK2FTuPPk0i9Lp"></script>
+   <script type="text/javascript" src="{{ static('wap/site/js/lib/city_select.js') }}"></script>
+   <link rel="stylesheet" type="text/css" href="{{ static('wap/site/js/lib/city_sel.css') }}">
+   <script>
+    var del_url = '{{ catalog_url(model_table=MODELS.T_BASE_DEALER.name) }}',
+        sel_url = '{{ rest(API.DEALER_DEFAULT) }}',
+        brand_name = '日产',
+        city_name = '{{city.city_name}}',
+        pos = [],
+        goflag = true;
+    $(function(){
+
+      //品牌下拉框
+      $('#brand').click(function(e){
+        $('.brand-select').toggleClass('dropdown-show');
+        $('.brand-select').siblings('i').toggleClass('rotate');
+        if($('.brand-select').is(':hidden')){
+          $('.brand-select').show();
+        }else{
+          $('.brand-select').hide();
+        }
+        $('#city').find('i').removeClass('rotate');
+        $('.m-citypro').hide();
+        e.stopPropagation();
+      });
+      //品牌选择
+      $(document).click(function(e){
+        $('.brand-select').siblings('i').removeClass('rotate');
+        $('.brand-select').hide();
+        e.stopPropagation();
+      })
+      $('.brand-select').on("click", "li",function(e){
+        var brandId = $(this).attr('brand-id');
+        var brandClass;
+
+        brandId == 2? brandClass='s-color-blue':brandClass='s-color-main';
+        $('.brand-select').siblings('span').text($(this).text());
+        if(brandId == 2){
+          $('.brand-select').siblings('span').addClass('s-color-blue').removeClass('s-color-main');
+        }else{
+          $('.brand-select').siblings('span').addClass('s-color-main').removeClass('s-color-blue');
+        }
+        $('.brand-select').siblings('i').removeClass('rotate');
+        $('.brand-select').hide();
+        var brand = $('#brand');
+        var city = $('#city');
+        brand.attr('brand-id',$(this).attr('brand-id'));
+        brand_name = $(this).text();
+        selOutPut(brand,city);
+        e.stopPropagation();
+      });
+      //列表排序
+      $("body").on("click",".item",function(){
+        $(this).addClass('active-sort');
+        $(this).siblings().removeClass('active-sort');
+        $('.j-more').text('加载更多');
+        var that = $(this);
+        var ops = {
+          page:1,
+          per_page:4,
+          series_id:0,
+          county_id:0,
+          brand_id:$('#brand').attr('brand-id'),
+          city_id:$(this).attr('city-id')
+        }
+        switch($(this).attr('id')){
+          case 'default':
+            sortBy(ops,that);
+            break;
+          case 'score':
+            sortBy(ops,that);
+            break;
+          case 'place':
+            
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+              if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                pos.push(Number(r.point.lat));
+                pos.push(Number(r.point.lng));
+                ops.longitude = pos[1];
+                ops.latitude = pos[0];
+                sortBy(ops,that);
+              }
+            });
+            break;
+        }
+      })
+    });
+    //模板输出
+    function selOutPut(brand,city){
+      $.ajax({
+          type:'GET',
+          url:sel_url,
+          data:{
+                brand_id:brand.attr('brand-id'),
+                per_page:4,
+                city_id:city.attr('city-id'),
+                page:1,
+                series_id:0,
+                county_id:0,
+              }
+        })
+        .done(function(data){
+          if (!data.result) {
+            var number = 0;
+          }else{
+            var number = data.result.filter_count; 
+          }
+          html_head ='<div class="head">'
+                  +'<div class="tit">'+city_name+'-'+brand_name+'-经销商</div>'
+                  + '<div class="more">共有<span class="s-color-secondary">'+number+'</span>家经销商'
+                  + '</div>'
+                  +'</div>'
+                 +'</div>';
+          $('.j-output').html(html_head);
+          var brandId = String(brand.attr('brand-id')); 
+          var cityId = String(city.attr('city-id'));
+          var defaultUrl = "{{ rest(API.DEALER_DEFAULT) }}";
+          var scoreUrl = "{{ rest(API.DEALER_SCORE) }}";
+          var placeUrl = "{{ rest(API.DEALER_DISTANCE) }}";
+          html_nav='<div class="body">'
+                    +'<div class="u-filter f-cb">'
+                      +'<div class="item active-sort" id="default" data-url="'+defaultUrl+'" brand-id="'+brandId+'" city-id='+cityId+'>默认</div>'
+                      +'<div class="item" id="score" data-url="'+scoreUrl+'" brand-id="'+brandId+'" city-id='+cityId+'>好评优先</div>'
+                      +'<div class="item" id="place" data-url="'+placeUrl+'" brand-id="'+brandId+'" city-id='+cityId+'>离我最近</div>'
+                    +'</div>'
+                    +'<div class="m-shops"></div>'
+                  +'</div>';
+          $('.j-output').append(html_nav); 
+          if(data.result&&data.result.dealer_list.length > 0){
+            $.each(data.result.dealer_list,function(idx,itm){
+              itm.sales_score = Number(itm.sales_score).toFixed(2);
+              var brandcode = [];
+              for(var i = 0;i<itm.cbb_car_brand_code.length;i++){
+                brandcode.push('<span>'+itm.cbb_car_brand_code[i]+'</span>');
+              };
+              html_body='<div class="shop2 f-ge">'
+                        +'<div class="title">'
+                          +'<div class="al">';
+              if(itm.is_vip == 1){
+                html_body+='<span class="s-color-main">vip</span>';
+              }
+              html_body+=itm.dlr_full_name+'<span class="s-color-secondary score">'
+                        +itm.sales_score
+                        +'</span>'
+                      +'</div>'
+                      +'<div class="fr">';
+              if(itm.is_sale_province == 1){
+                html_body += '<div class="u-store-lab">;售本省</div>';
+              }
+              html_body+='</div>'
+                    +'</div>'
+                    +'<p class="info f-mar-top">';
+              if(itm.cont_address){
+                html_body+='地址：'+itm.cont_address;
+              }else{
+                html_body+='地址：/';
+              }
+              html_body+='</p>'
+                        +'<p class="info">'
+                          +'电话：'+itm.service_tel
+                        +'</p>'
+              if(brandcode.length>0){
+                html_body+='<p class="info">'
+                          +'品牌：'+brandcode.join()
+                        +'</p>';
+              }
+              if(itm.dealer_activity_list.length>0){
+                html_body+='<p class="activity">'
+                          +'<i class="label labelx">享</i>'
+                          +'全民齐砍价，最高3000元购车优惠劵！'
+                          +'<i class="u-icon u-icon-right"></i>'
+                        +'</p>'
+              }          
+                html_body+='<div class="m-btns2">'
+                  +'<a href="'+del_url+'/'+itm.id+'" class="u-btn u-full-btn u-btn-default ">去看看</a>'
+                +'</div>'
+              +'</div>';
+              $('.j-output>.body>.m-shops').append(html_body);
+            });
+          }else{
+            $('.j-output>.body>.m-shops').html('');
+            $('.j-output>.body>.m-shops').append("<img class='f-mt-m' src={{ static('images/lib/no_record.png') }}></img>")
+        }
+      });
+    }
+
+    function output(data,flag){
+      if (data.result) {
+        if(!flag){
+          $('.j-output>.body>.m-shops').html('');
+        }
+        if(data.result.dealer_list.length > 0){
+          $.each(data.result.dealer_list,function(idx,itm){
+            itm.sales_score = Number(itm.sales_score).toFixed(2);
+            var brand = [];
+            for(var i = 0;i<itm.cbb_car_brand_code.length;i++){
+              brand.push('<span>'+itm.cbb_car_brand_code[i]+'</span>');
+            }
+            html_body='<div class="shop2 f-ge">'
+                      +'<div class="title">'
+                        +'<div class="al">';
+            if(itm.is_vip == 1){
+              html_body+='<span class="s-color-main">vip</span>';
+            }
+              html_body+=itm.dlr_full_name+'<span class="s-color-secondary score">'
+                        +itm.sales_score
+                        +'</span>'
+                      +'</div>'
+                      +'<div class="fr">';
+              if(itm.is_sale_province == 1){
+                html_body += '<div class="u-store-lab">;售本省</div>';
+              }
+              html_body+='</div>'
+                    +'</div>'
+                    +'<p class="info f-mar-top">';
+            if(itm.cont_address){
+              html_body+='地址：'+itm.cont_address;
+            }else{
+              html_body+='地址：/';
+            }
+              html_body+='</p>'
+                        +'<p class="info">'
+                          +'电话：'+itm.service_tel
+                        +'</p>';
+            if(brand.length>0){
+              html_body+='<p class="info">'
+                          +'品牌：'+brand.join()
+                        +'</p>';
+            }
+            if(itm.dealer_activity_list.length){
+              html_body+=+'<p class="activity">'
+                          +'<i class="label labelx">享</i>'
+                          +'全民齐砍价，最高3000元购车优惠劵！'
+                          +'<i class="u-icon u-icon-right"></i>'
+                        +'</p>';
+            }
+              html_body+='<div class="m-btns2">'
+                +'<a href="'+del_url+'/'+itm.id+'" class="u-btn u-full-btn u-btn-default ">去看看</a>'
+              +'</div>'
+            +'</div>';
+            $('.j-output>.body>.m-shops').append(html_body);
+          });
+        }
+      }else{
+        $('.j-output>.body>.m-shops').html('');
+        $('.j-output>.body>.m-shops').append("<img class='f-mt-m' src={{ static('images/lib/no_record.png') }}></img>")
+      }
+    }    
+    function sortBy(ops,that){
+      $.ajax({
+        url:that.attr('data-url'),
+        type:'GET',
+        data:ops
+      })
+      .done(function(data){
+        output(data);
+      });
+    }
+
+    //滚动加载
+    $(window).scroll(function(){
+      var objHeight = $('.m-shops').height()+$('.m-shops').offset().top;
+      var winHeight = window.innerHeight?  window.innerHeight:$(window).height();
+      var scrollHeight = $(window).scrollTop() + winHeight;
+    if(scrollHeight>objHeight-10 && goflag){
+        goflag = false;
+        var active_item = $('.active-sort')[0];
+        var flag = 'more';
+        var ops = {
+          city_id:'{{city.city_id}}',
+          county_id:0,
+          brand_id:$(active_item).attr('brand-id'),
+          series_id:0,
+          per_page:4,
+          page:Math.ceil($('.shop2').length/4)+1
+        };
+        if($('#load').length<=0){
+            $('body').append("<div id='load' style='text-align: center;padding:40px 0 10px 0'><img src='{{ static('images/lib/loading.gif') }}' ></div>")
+        }
+        $.ajax({
+          url:$(active_item).attr('data-url'),
+          type:'GET',
+          data:ops
+        })
+        .done(function(data){
+          $('#load').remove();
+          if(data.result.dealer_list.length>0){
+            switch($(active_item).attr('id')){
+              case 'default':
+                output(data,flag);
+                break;
+              case 'score':
+                output(data,flag);
+                break;
+              case 'place':
+                output(data,flag);
+                break;
+            }
+          }else{
+            $('.j-more').text('');
+          }
+        })
+        .always(function(){
+          goflag = true;
+        });
+      }
+    });
+
+    //城市选择
+    $('.item-half:first').click(function(e){
+      $($(this).find('i')).addClass('rotate');
+      e.stopPropagation();
+    });
+    $('.item-half:first').citySelect({
+        url:'{{rest(API.CITY_DATA)|safe}}',
+        param:{},
+        parent:'.j-filter',
+        top:55,
+        left:18,
+        pro_id:'{{city.province_id}}',
+        city_id:'{{city.city_id}}',
+        callback:function(obj){
+          
+          $($('#city').find('i')).toggleClass('rotate');
+          $($('#city').find('span').addClass('s-color-main').text(obj.city_name));
+          $($('#city').attr('city-id',obj.city_id));
+          $($('#city').find('i')).removeClass('rotate');
+          var brand = $('#brand');
+          var city = $('#city');
+          city_name = obj.city_name;
+          selOutPut(brand,city);
+        },
+        beforeInit:function(e){
+          if($('.cnt').is(':hidden')){
+            $('#city').find('i').removeClass('rotate');  
+          }else{
+            $('#city').find('i').addClass('rotate');
+          }
+          $('#brand .brand-select').removeClass('dropdown-show').hide();
+          $('#brand .u-icon').removeClass('rotate');
+        },
+        docInit:function(){
+          $('#city').find('i').removeClass('rotate');
+        }
+      });
+  </script>
+  {% endblock %}

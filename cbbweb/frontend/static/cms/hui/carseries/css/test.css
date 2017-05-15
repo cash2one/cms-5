@@ -1,0 +1,18 @@
+
+.df_logo {
+	margin: 4px;
+	padding: 0;
+	/*width: 75px;*/
+    width: 112px;
+	height: 36px;
+}
+
+.breadcrumb {
+    background-color: #fff;
+}
+
+.breadcrumb > li + li:before {
+    color: #CCCCCC;
+    content: "> ";
+    padding: 0 5px;
+}

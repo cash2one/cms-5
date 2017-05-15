@@ -1,0 +1,306 @@
+{
+  "A": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "安徽"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "安徽1",
+      "city_alias": "anhui1"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽2",
+      "city_alias": "anhui2"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽3",
+      "city_alias": "anhui3"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽4",
+      "city_alias": "anhui4"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "安庆"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "安庆1",
+      "city_alias": "anqin1"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆2",
+      "city_alias": "anqin2"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆3",
+      "city_alias": "anqin3"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆4",
+      "city_alias": "anqin4"
+    }]
+  }],
+  "B": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "湖南"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "changsha"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "changde"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "chenzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "湖北"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "桂林",
+      "city_alias": "guilin"
+    }]
+  }],
+  "G": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "广东"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "深圳",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "广州",
+      "city_alias": "guangzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "广西"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "桂林2",
+      "city_alias": "guilin2"
+    }]
+  }],
+  "H": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "湖南"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "长沙3",
+      "city_alias": "changsha3"
+    }, {
+      "city_id": "211",
+      "city_name": "常德2",
+      "city_alias": "changde2"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州2",
+      "city_alias": "chenzhou2"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "湖北"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "三水",
+      "city_alias": "sanshui"
+    }]
+  }],
+  "J": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "安徽"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "安徽1",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽2",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽3",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "安徽4",
+      "city_alias": "guangzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "安庆"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "安庆1",
+      "city_alias": "guilin"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆1",
+      "city_alias": "guilin"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆1",
+      "city_alias": "guilin"
+    }, {
+      "city_id": "222",
+      "city_name": "安庆1",
+      "city_alias": "guilin"
+    }]
+  }],
+  "K": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "湖南"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "湖北"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "桂林",
+      "city_alias": "guilin"
+    }]
+  }],
+  "L": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "广东"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "深圳",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "广州",
+      "city_alias": "guangzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "广西"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "桂林",
+      "city_alias": "guilin"
+    }]
+  }],
+  "M": [{
+    "data": {
+      "province_id": "100",
+      "province_name": "湖南"
+    },
+    "citys": [{
+      "city_id": "212",
+      "city_name": "长沙",
+      "city_alias": "shenzhen"
+    }, {
+      "city_id": "211",
+      "city_name": "常德",
+      "city_alias": "guangzhou"
+    }, {
+      "city_id": "211",
+      "city_name": "郴州",
+      "city_alias": "guangzhou"
+    }]
+  }, {
+    "data": {
+      "province_id": "101",
+      "province_name": "湖北"
+    },
+    "citys": [{
+      "city_id": "222",
+      "city_name": "桂林",
+      "city_alias": "guilin"
+    }]
+  }]
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.5, user-scalable=0">
+    <meta name="applicable-device" content="mobile">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="author" content="m.chebaba.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="东风日产电商平台——车巴巴商城">
+    <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+    <title>惠挑车——登录页</title>
+    <link rel="stylesheet" href="../wap/site/css/lib/common.css">
+  </head>
+  <body>
+<div class="m-login-wrap">
+  <div class="m-login">
+    <div class="logo">
+      <img src="../wap/site/images/lib/logo.png" alt="">
+    </div>
+    <div class="city">
+      当前城市：<span class="c">广州</span>
+      <div class="change">切换</div>
+    </div>
+    <dl class="list">
+      <dt><a href=""><i class="u-icon u-icon-car"></i>车巴巴服务</a></dt>
+      <dd><a href=""><i class="u-icon u-icon-index"></i>首页</a></dd>
+      <dd><a href=""><i class="u-icon u-icon-hui"></i>惠挑车</a></dd>
+      <dd><a href=""><i class="u-icon u-icon-xiang"></i>享活动</a></dd>
+      <dd><a href=""><i class="u-icon u-icon-dian"></i>找好店</a></dd>
+      <dd><a href=""><i class="u-icon u-icon-dai"></i>任性贷</a></dd>
+      <dt><i class="u-icon u-icon-customer"></i>用户中心</dt>
+      <dd><i class="u-icon u-icon-ding"></i>订单查询</dd>
+      <dd><i class="u-icon u-icon-coupon"></i>车巴巴卡券</dd>
+    </dl> 
+  </div>
+  <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+</div>
+<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+   <script>
+    $(function(){
+
+      $('.j-menu').click(function(){
+        $('html').addClass('f-lock');
+        $('.m-login-wrap').addClass('g-slider-fix-active');
+      })
+
+      $('.j-back,dd').click(function(){
+        $('html').removeClass('f-lock');
+        $('.m-login-wrap').removeClass('g-slider-fix-active');
+      })
+    })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,799 @@
+{% extends 'wap/base/base.html' %}
+{% block hd_title %}任性贷{% endblock %}
+{% block body %}
+{% csrf_token %}
+<div class="g-wrap-bg">
+  {% if not request.GET.get('flag', 0) %}
+    <div class="g-process">
+      <ul class="m-process">
+        <li class="first active">1 基本资料</li>
+        <li>2 贷款方案</li>
+        <li>3 审贷资料</li>
+        <li class="last">4 审贷结果</li>
+      </ul>
+    </div>
+    <div class="g-page j-page0">
+        <div class="m-form">
+          <div class="item">
+            <input name="name" id= "j-name" data-type="name" class="u-input u-input-user j-input" type="text" placeholder="输入姓名"></div>
+          <div class="item">
+            <input name="phone" id="j-tel" data-type="tel" class="u-input u-input-tel j-input" type="tel" placeholder="手机号码">
+          </div>
+          <div class="item">
+            <input name="code" id='j-vcode' data-type="vcode" class="u-input u-input-code" type="number" placeholder="验证码">
+            <button class="vcode-btn">获取验证码</button>
+          </div>
+          <div class="item">
+            <div id="j-cartype" data-carId='' class="select">
+              <span class="u-icon u-icon-like"></span>
+              <span class="j-txt">意向车型 </span>
+              <i class="u-icon u-icon-right"></i>
+              <input name="car" type="hidden" value="" >
+            </div>
+          </div>
+          <div class="item">
+            <div id="j-dealer" class="select">
+              <span class="u-icon u-icon-dealer"></span>
+              <span class="j-txt">经销商 </span> 
+              <i class="u-icon u-icon-right"></i>
+              <input name="dealer" type="hidden" value="" >
+            </div>
+          </div>
+        </div>
+        <div class="m-next-btn"><button  data-page="1" class="u-btn u-btn-app j-btn j-next"> 下一步</button></div>
+    </div>
+    <div class="g-page j-page1 f-dn">
+      <div class="m-form">
+        <div class="item-lr">
+          <div class="fl">首付比例：</div>
+          <div class="ar">
+            <div class="select j-percent">
+              <span class="m j-onpay">30%</span>
+              <span class="j-oneprice">8.86万</span>
+              <i class="u-icon u-icon-right"></i>
+              <input name="pay_scale" type="hidden" value="" >
+            </div>
+          </div>
+        </div>
+        <div class="item-lr">
+          <div class="fl">还款期限：</div>
+          <div class="ar">
+            <div class="select j-times">
+              <span class="j-number">24期</span>
+              <i class="u-icon u-icon-right"></i>
+              <input name="loan_period" type="hidden" value="" >
+            </div>
+          </div>
+          </div>
+        </div>
+        <ul id="j-finance-list" class="m-finance-list-select f-mt-m">
+        </ul>
+        <input name="project" type="hidden" value="" >
+        <div class="m-next-btn-two"><button data-page="0" class="u-btn j-btn u-btn-app">上一步</button><button  data-page="2" class="u-btn j-btn j-next u-btn-app"> 下一步</button></div>
+      </div>
+  {% endif %}
+  <div class="g-page j-page2 {{ '' if request.GET.get('flag', 0) else 'f-dn' }}">
+    <div class="m-form">
+      <div class="item-lr">
+        <div class="fl">您的尊称</div>
+        <div id="j-sex" class="ar j-sex-select">
+          <a data-sex="M" class="active m" href="###"><i class="u-icon u-icon-male"></i>先生</a>
+          <a data-sex="F" href="###"><i class="u-icon u-icon-female"></i>女士</a>
+          <input name="loan_gender" type="hidden" value="M" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">证件类型</div>
+        <div class="ar">
+          <div id="idcard" data-index='8' data-type="slideSelect" data-value="" data-title="证件类型" class="select j-slide">
+            身份证
+          </div>
+          <input name="card_name" type="hidden" value="" >
+          <i class="u-icon u-icon-right"></i>
+        </div>
+      </div>
+      <div class="item-lr">
+          <div class="fl">证件号码</div>
+          <div class="ar">
+            <input name="card_number" id="codecard" data-type="codecard" type="text" class="ipt j-input" placeholder="请输入证件号">
+          </div>
+      </div>
+    </div>
+    <div class="m-form f-mar-top">
+      <div class="item-lr">
+        <div class="fl">房产状态</div>
+        <div class="ar">
+          <div id="fc-status"  data-index = '0' data-title="房产状态" class="select j-slide">
+            抵押买房居住
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="fangchan" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+          <div class="fl">婚姻状态</div>
+          <div class="ar">
+            <div id="j-merry" data-index="1" data-title="婚姻状态" class="select j-slide">
+            已婚
+            </div>
+            <i class="u-icon u-icon-right"></i>
+            <input name="marry" type="hidden" value="" >
+          </div>
+      </div>
+    </div> 
+    <div class="m-form f-mar-top">
+      <div class="item-lr">
+        <div class="fl">行业</div>
+        <div class="ar">
+          <div id="j-partment" data-index="2" data-title="行业" class="select j-slide">
+            制造业
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="trade" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">公司性质</div>
+        <div class="ar">
+          <div id="j-company"  data-index="3" data-title="公司性质" class="select j-slide">
+            国有机关
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="company" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">职位</div>
+        <div class="ar">
+          <div class="j-work select j-slide" data-index="4" data-title="职位" class="select j-slide">
+            私营业主
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="occupation" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">工作年限</div>
+        <div class="ar">
+          <div id="j-year" data-index="6" data-title="工作年限" class="select j-slide">
+            1年
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="working_years" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">月收入</div>
+        <div class="ar">
+          <div id="j-comein" data-index="7" data-title="月收入" class="select j-slide">
+            3000以下
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="income" type="hidden" value="" >
+        </div>
+      </div>
+      <div class="item-lr">
+        <div class="fl">学历</div>
+        <div class="ar">
+          <div id="j-study" data-index="5" data-title="学历" class="select j-slide">
+            研究生以上
+          </div>
+          <i class="u-icon u-icon-right"></i>
+          <input name="education" type="hidden" value="" >
+        </div>
+      </div>
+    </div>
+    {% if request.GET['flag'] %}
+      <input name="pay_scale" type="hidden" value="{{request.GET['percent']~'%'}}">
+      <input name="loan_period" type="hidden" value="{{request.GET['number']}}">
+      <input name="project" type="hidden" value="{{request.GET['id']}}">
+      <div class="m-next-btn">
+        <button data-card="card"  data-page="3" class="u-btn u-btn-app j-btn j-next"> 下一步</button>
+      </div>
+    {% else %}
+      <div class="m-next-btn-two">
+        <button data-page="1" class="u-btn u-btn-app j-btn">上一步</button>
+        <button  data-page="3" data-card="card" class="u-btn j-btn j-next u-btn-app"> 下一步</button>
+      </div>
+    {% endif %}
+</div>
+<div class="g-page j-page3 f-dn">
+  <div class="m-form">
+    <div class="tt">东风日产汽车金融网上预审批单</div>
+    <div class="item-lr">
+      <div class="fl">预审结果</div>
+      <div class="ar">
+        <i class="u-icon u-icon-fine"></i>恭喜您通过预审
+      </div>
+    </div>
+    <div class="item-lr">
+      <div class="fl">预审批单号</div>
+      <div class="ar">n2404709879840000000009</div>
+    </div>
+    <div class="item-lr">
+      <div class="fl">最大贷款额度</div>
+      <div class="ar"><span class="s-color-main">84560元</span></div>
+    </div>
+  </div>
+  <div class="m-form f-mar-top">
+    <div class="item-lr">
+      <div class="fl">经销商</div>
+      <div class="ar"><div class="c j-fullname">广州市风日汽车贸易有限公司</div></div>
+    </div>
+    <div class="item-lr">
+      <div class="fl">电话</div>
+      <div class="ar j-telnum">020-86871222 <button class="right-btn"><a class="j-telicon" href="##"><i class="u-icon u-icon-tel"></i><p>拨打电话</p></a></button></div>
+    </div>
+    <div class="item-lr">
+      <div class="fl">地址</div>
+      <div class="ar"><div class="c j-address">广东省广州市花都区风神大道8号</div></div>
+    </div>
+  </div>
+  <div class="m-more-1 f-mar-top">更多关于轩逸的优惠信息</div>
+</div>
+</div>
+{# 车系 #}
+<div id="j-series"  class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择自己心仪车系</div>
+    {% set series = run(API.FINANCE_GROUP_BRAND_CAR_SERIES)%}
+    {% if series %}
+    {% for itm1 in series %}
+      <ul  class="cars" style="height:auto">
+        <li class="{% if itm1.brand.name == '启辰' %} blue-tit {% else %} sub-tit {% endif %}">{{itm1.brand.name}}</li>
+        {% for itm2 in itm1.series_list %}
+          <li data-id="{{itm2.id}}" ><p class="c">{{itm2.name}}</p></li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+    {% endif %}
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+{# 车型 #}
+<div id="j-car" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择具体车型</div>
+    <ul class="cars j-cars">
+    </ul>
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+{# 经销商 #}
+<div id="j-slide-dealer" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择该车型的经销商</div>
+    <ul class="cars " >
+     
+    </ul>
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+{# 滑块 首付比例#}
+<div id="j-slide-dowpay" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择首付比例</div>
+    <ul class="cars j-selPay">
+      
+    </ul>
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+{# 滑块 还款期限#}
+<div id="j-slide-num" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择还款期限</div>
+    <ul class="cars j-selDate">
+      <li>
+        <p class="c"></p>
+      </li>
+    </ul>
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ static('wap/site/js/lib/slideSelect.js') }}"></script>
+<script>
+  $(function(){
+      $(".j-btn").click(function(){
+        var flag = false;
+        if($(this).data('card')=='card'){
+          flag = true;
+        }
+        var sign = checkFocus(flag);
+        hideTip();
+        var i = $(this).data("page");
+        if(i == 1){
+          var csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url: '{{rest(API.VERIFY_CODE)}}',
+                dataType: 'json',
+                type:'post',
+                data: {csrfmiddlewaretoken:csrfmiddlewaretoken,mobile:$('#j-tel').val(),entry_key:'NV-Chebabanew-Pc-V3-TO-Le-PoC-Msg8-03-0000',verify_code:$('#j-vcode').val()},
+            })
+            .done(function(data) {
+              console.log(data);
+              if(data.status == "success" && data.result.retnCode=='0'){
+                subForm(i,sign);
+              }else{
+                if( $('#j-vcode').siblings('.tips').length<=0){
+                  $('#j-vcode').parent().append('<div class="tips">'+data.result.retnDesc+'</div>');
+                  hideTip();
+                }
+              }
+              //
+            });
+        }else{
+           subForm(i,sign);
+        }
+
+      });
+
+      //提交表单
+      function subForm(i,sign){
+         if(sign){
+          //第一表单
+          if(i == 1){
+            var _data = $('.j-page0 input').serialize();
+            console.log(_data);
+            $.ajax({
+              url: '{{rest(API.CREDIT_CMBC_SAVE)}}',
+              type: 'GET',
+              dataType: 'json',
+              data: _data,
+            })
+            /*.done(function() {
+              $(".g-page").addClass("f-dn");
+              pagechange(i);
+            })
+            .fail(function() {
+              console.log("error");
+            }); */
+            $(".g-page").addClass("f-dn");    //删除
+            pagechange(i);                    //删除           
+          }
+          //第二表单
+          else if (i == 3){
+            //console.log('test')
+            var _data1 = $('.j-page1 input').serialize();
+            var _data2 = $('.j-page2 input').serialize();
+            if(_data1 !=''){
+              var _data = _data1+'&'+_data2;
+            }else{
+              var _data = _data2;
+            }
+             
+            $.ajax({
+              url: '{{rest(API.CREDIT_DNAF_QUERY)}}',
+              type: 'GET',
+              dataType: 'json',
+              data: _data,
+            })
+            .done(function(data) {
+              $(".g-page").addClass("f-dn");
+              pagechange(i);
+              var data = JSON.parse(data.result);
+              console.log(data);
+            })
+            .fail(function() {
+              console.log("error");
+            })                              
+          }
+          else{
+            $(".g-page").addClass("f-dn");
+            pagechange(i);
+          }
+        }  
+      }
+
+      //页面切换
+      function pagechange(i){
+        $(".j-page"+ i).removeClass("f-dn");
+        $(".m-process li").removeClass("active").eq(i).addClass("active");
+        $(".m-process li").removeClass("fine");
+        if(i<3){
+            for(var a=0;a<i;a++){
+            $(".m-process li").eq(a).addClass("fine");
+          }
+        }else{
+          $(".m-process li").removeClass("active").addClass("fine");
+        } 
+      }
+
+      //验证
+      $("body").on("click",".m-form .tips",function(){
+         $(this).remove();
+       });
+      $('.j-input').blur(function(){      
+        checked($(this));
+        hideTip();
+      })
+
+      //提示框消失
+      function hideTip(){
+        if($('.tips').length>0){
+          $('.tips').fadeOut(3000,function(){
+            $('.tips').remove();
+          })
+        }
+      }
+
+      function checked(el){
+        if(el.data('type')=='name'){
+          reg=/^([\u4e00-\u9fa5]){2,7}$/;
+          if(el.val()==""){
+            el.parent().append('<div class="tips">姓名不能为空</div>')
+          }else{
+              if(!reg.test(el.val())){
+              el.parent().append('<div class="tips">对不起，请输入您的中文名字</div>')
+            }
+          }
+        }
+        if(el.data('type')=='vcode'){
+          if(el.val()==""){
+            el.parent().append('<div class="tips">验证码不能为空</div>')
+          }
+          if(el.val()!="" && el.val().length !=4){
+            el.parent().append('<div class="tips">验证码错误</div>')
+          }
+        }
+        if(el.data('type')=='tel'){
+          reg=/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+          if(el.val()==""){
+            el.parent().append('<div class="tips">电话号码不能为空</div>')
+          }else{
+            if(!reg.test(el.val())){
+              el.parent().append('<div class="tips">对不起，请输入正确的手机号码</div>')
+            }
+          }
+        }
+
+        if(el.data('type')=='codecard'){
+           reg = /^(\d{6})(18|19|20)?(\d{2})([01]\d)([0123]\d)(\d{3})(\d|X)?$/;
+           if(el.val()==""){
+            el.parent().append('<div class="tips">证件号不能为空</div>')
+            }else{
+            if($('#idcard').data('value') == "身份证" && !reg.test(el.val())){
+              el.parent().append('<div class="tips">对不起，请输入正确的身份证号码</div>')
+            }
+          }
+        }
+      } //end of checked
+
+      function checkFocus(flag){
+          var sign = true;
+          if($('#j-name').val()==''&& $('#j-name').siblings('.tips').length<=0){
+            $('#j-name').parent().append('<div class="tips">姓名不能为空</div>');
+            sign = false;
+          }
+          if($('#j-tel').val()=='' && $('#j-tel').siblings('.tips').length<=0){
+            $('#j-tel').parent().append('<div class="tips">电话号码不能为空</div>');
+             sign = false;
+          }
+          if(flag && $('[name="card_name"]').val() == "身份证" && $('#codecard').siblings('tips').length<=0){
+            if($('#codecard').val()==''){
+              $('#codecard').parent().append('<div class="tips">身份证号不能为空</div>');
+               sign = false;
+            }
+          }
+          if(flag && $('[name="card_name"]').val() != "身份证" && $('#codecard').siblings('tips').length<=0){
+            if($('#codecard').val()==''){
+              $('#codecard').parent().append('<div class="tips">证件号码不能为空</div>');
+               sign = false;
+            }
+          }
+
+          if($('#j-vcode').val()=="" && $('#j-vcode').siblings('.tips').length<=0){
+            $('#j-vcode').parent().append('<div class="tips">验证码不能为空</div>');
+             sign = false;
+          }
+
+          if($('#j-vcode').val()!="" && $('#j-vcode').val().length !=4){
+            $('#j-vcode').parent().append('<div class="tips">验证码错误</div>');
+             sign = false;
+          }
+
+          if(!$('#j-cartype').data('carId') && $('#j-cartype').siblings('.tips').length<=0){
+            $('#j-cartype').parent().append('<div class="tips">请选择车型</div>');
+             sign = false;
+          }
+
+          if(!$('#j-dealer').data('dlr_code') && $('#j-dealer').siblings('.tips').length<=0){
+            $('#j-dealer').parent().append('<div class="tips">请选择车型</div>');
+             sign = false;
+          }
+          return sign;
+        }
+        
+ })
+
+  //选择车型
+  $('#j-cartype').click(function(event) {
+    $('html').addClass('f-lock');
+    $('#j-series').addClass('g-slider-fix-active');
+    
+  });
+  //选择车型
+  $('#j-series li').click(function(event) {
+    $('#j-car').addClass('g-slider-fix-active');
+    $('#j-cartype').data('seriesId',$(this).data('id'));
+    $.ajax({
+      url: '{{rest(API.FINANCE_CAR_SERIES_CAR_TYPE)}}',
+      type: 'GET',
+      dataType: 'json',
+      data: {car_series_id:$(this).data('id'),city_id:'{{city.city_id}}'}
+    })
+    .done(function(data) {
+      console.log(data);
+      var html = '';
+      if(data.status == 'success' && data.result.length>0){
+        $.each(data.result,function(index,el){
+          html +='<li data-carid="'+el.id+'"><p class="c">'+el.name+'</p><div class="r">￥'+(el.guide_price/10000).toFixed(2)+'万</div></li>';
+        });
+        $('#j-car').find('.j-cars').html(html);
+      }    
+    })
+    .fail(function() {
+      console.log("error");
+    });
+    //设置首付比例
+    $.ajax({
+        url: '{{rest(API.DOWNPAYS)}}',
+        type: 'GET',
+        dataType: 'json',
+        data: {series_id:$(this).data('id')},
+      })
+      .done(function(data) {
+        if(data.status == "success" && data.result.length>0){
+          $('.j-onpay').text(data.result[0]+'%');
+          $('[name="pay_scale"]').val(data.result[0]);
+          var html = '';
+          $.each(data.result,function(index,el){
+            html += '<li data-dow="'+el+'"><p class="c">'+ el+'%</p></li>'
+          });
+          $('#j-slide-dowpay .cars').html(html);
+        }
+      })
+
+    //设置期数 
+     $.ajax({
+        url: '{{rest(API.PERIODS)}}',
+        type: 'GET',
+        dataType: 'json',
+        data: {series_id:$(this).data('id')},
+      })
+      .done(function(data) {
+        if(data.status == "success" && data.result.length>0){
+          $('.j-number').text(data.result[0]+'期');
+          $('[name="loan_period"]').val(data.result[0]);
+           var html = '';
+          $.each(data.result,function(index,el){
+            html += '<li data-num="'+el+'"><p class="c">'+ el +'</p></li>'
+          });
+          $('#j-slide-num .cars').html(html);
+        }
+      }) 
+  });
+  $('body').on('click','#j-car li',function(event) {
+    $('#j-cartype .j-txt').text($(this).find('.c').text());
+    $('#j-cartype').data('carId',$(this).data('carid'));
+    $('#j-cartype input').val($(this).data('carid'));
+    $('html').removeClass('f-lock');
+    $('#j-car,#j-series').removeClass('g-slider-fix-active');
+  });
+
+  //经销商
+  $('#j-dealer').click(function(){
+
+    if($('#j-cartype').data('carId')){
+      $('#j-slide-dealer').addClass('g-slider-fix-active');
+      $.ajax({
+        url: '{{rest(API.FINANCE_CAR_TYPE_DEALER)}}',
+        type: 'GET',
+        dataType: 'json',
+        data: {county_id:0,per_page:50,page:1,car_type_id:$('#j-cartype').data('carId'),city_id:'{{city.city_id}}'}
+      })
+      .done(function(data) {
+        if(data.status == 'success' && data.result.length>0){
+          var html = '';
+          $.each(data.result,function(index, el) {
+            html +='<li data-id="'+el.dealer.id+'" data-fullname="'+el.dealer.dlr_full_name+'" data-phone="'+el.dealer.service_tel+'"  data-code="'+el.dealer.dlr_code+' data-address="'+el.dealer.cont_address+'">\
+                      <p class="" style="width:20%;float:left;">'+el.dealer.county_name+'</p>\
+                      <p class="c" style="width:55%">'+el.dealer.dlr_short_name+'</p>\
+                      <div data-price="'+el.offer_price.price+'" class="r">￥'+(el.offer_price.price/10000).toFixed(2) +'万</div>\
+                    </li>'
+          });
+        }
+        $('#j-slide-dealer .cars').html(html);
+       
+      })
+      .fail(function() {
+        console.log("error");
+      })    
+    }else{
+      $("#j-cartype").parent().append('<div class="tips">请选择车型</div>');
+      $('.tips').fadeOut(3000,function(){$('.tips').remove();});
+      return;
+    }
+  })
+
+  //选经销商
+  $('body').on('click', '#j-slide-dealer li', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $('#j-dealer .j-txt').text($(this).find('.c').text());
+    $('#j-slide-dealer').removeClass('g-slider-fix-active');
+    $('#j-dealer input').val($(this).data('code'));
+
+    //设置第二页首付
+    var price = $(this).find('.r').data('price');
+    var percent = $('.j-onpay').text().substring(0,2);
+    var onepay = ((price*percent)/(100*10000)).toFixed(2);
+    $('#j-dealer').data('price',price);
+    $('#j-dealer').data('dlr_code',$(this).data('code'));
+    $('#j-dealer').data('id',$(this).data('id'));
+    $('.j-oneprice').text(onepay+'万');
+
+    //设置尾页信息
+    $('.j-fullname').text($(this).data('fullname'));
+    $('.j-deltel').text($(this).data('phone'));
+    $('.j-telnum').attr('href','tel:'+$(this).data('phone'));
+    $('.j-address').text($(this).data('address'));
+    finance();
+  });
+
+  //金融
+  function finance(){
+    $.ajax({
+      url: '{{rest(API.LIST_FINANCIALS)|safe}}',
+      type: 'GET',
+      dataType: 'json',
+      data: {city_id:'{{city.city_id}}',car_series_id:$('#j-cartype').data('seriesId'),car_type_id:$('#j-cartype').data('carId'),dealer_id:$('#j-dealer').data('id'),first_pay_percent:$('.j-onpay').text().substring(0,2),sku_item:$('.j-number').text().substring(0,2)},
+    })
+    .done(function(data) {
+      console.log(data)
+      if(data.status == "success"&&data.result.length>0){
+        var html = '';
+        $('.m-finance-list-select').html('');
+        $('.m-finance-list-select').next('[type="hidden"]').val(data.result[0].ID);
+        $.each(data.result,function(index, el) {
+            html += '<li data-select="'+el.corp_id+'">\
+                        <div class="u-title">\
+                          <h3 class="text"><i class="u-icon u-icon-nissan"></i>'+el.corp_name+'<small class="s-color-secondary">'+el.financial_product_name+'</small></h3>\
+                        </div>\
+                        <p class="p">\
+                          月供（含利息）：<span class="s-color-secondary mr">'+el.monthly_pay_amount+'元</span>\
+                          总利息：<span class="s-color-secondary">'+el.loan_cost+'元</span>\
+                        </p>\
+                         <div class="check"> <i class="u-icon u-icon-check"></i></div>\
+                      </li>'
+        });
+        $('.m-finance-list-select').html(html);
+        $('.m-finance-list-select li').eq(0).addClass('checked');
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })  
+  }
+
+  //首付比例选择
+  $('body').on('click','.j-percent',function(){
+    $('html').addClass('f-lock');
+    $('#j-slide-dowpay').addClass('g-slider-fix-active')
+  })
+  $('#j-slide-dowpay').on('click','li',function(){
+    $('.j-onpay').text($(this).find('.c').text());
+    var price = $('#j-dealer').data('price');
+    var percent = $(this).find('.c').text().substring(0,2);
+    var onepay = ((price*percent)/(100*10000)).toFixed(2);
+    $('.j-oneprice').text(onepay+'万');
+    $('html').removeClass('f-lock');
+    $('#j-slide-dowpay').removeClass('g-slider-fix-active');
+    $('[name="pay_scale"]').val($(this).data('dow'));
+    finance();
+   })
+  //期数选择
+   $('body').on('click','.j-times',function(){
+    $('html').addClass('f-lock');
+    $('#j-slide-num').addClass('g-slider-fix-active')
+  })
+   $('#j-slide-num').on('click','li',function(){
+     $('.j-number').text($(this).find('.c').text()+'期');
+     $('html').removeClass('f-lock');
+     $('#j-slide-num').removeClass('g-slider-fix-active');
+     $('[name="loan_period"]').val($(this).data('num'));
+     finance();
+   })
+  //选择金融
+   $('body').on('click','.m-finance-list-select li',function(){
+    $('.m-finance-list-select li').removeClass('checked');
+    $(this).addClass('checked');
+    $('.m-finance-list-select').next('[type="hidden"]').val($(this).data('select'));
+   });
+  //
+  $('body').on('click','.j-sex-select a',function(event){
+    event.preventDefault();
+    $('.j-sex-select a').removeClass('active');
+    $(this).addClass('active');
+    $('[name="loan_gender"]').val($(this).data('sex'));
+  })
+
+  //婚姻状态
+  var data1 = [{name:'已婚', value:'已婚'},{name:'已婚没有子女',value:'已婚没有子女'},{name:'单身',value:'单身'},{name:'离异',value:'离异'}];
+  //房产状态
+  var data2 = [{name:'抵押买房居住',value:'抵押买房居住'},{name:"寄居",value:'寄居'},{name:'借住直系亲属',value:'借住直系亲属'},{name:'无产权房',value:'无产权房'},{name:'自有无贷',value:'自有无贷'},{name:'租房',value:'租房'}];
+  // 所属行业
+  var data3 = [{name:'农/林/牧/渔业',value:'农/林/牧/渔业'},{name:'采矿业/能源业',value:'采矿业/能源业'},{name:'制造业',value:'制造业'},{name:'批发/零售/贸易',value:'批发/零售/贸易'},{name:'金融业',value:'金融业'},{name:'网络/软件/信息技术服务/电子商务',value:'网络/软件/信息技术服务/电子商务'},{name:'酒店/旅游/餐饮',value:'酒店/旅游/餐饮'},{name:'水利/环境/公共设施管理业',value:'水利/环境/公共设施管理业'},{name:'建筑业/房地产业',value:'建筑业/房地产业'},{name:'政府机构/科研/培训',value:'政府机构/科研/培训'},{name:'交通运输/仓储/邮政/物流',value:'交通运输/仓储/邮政/物流'},{name:'法律',value:'法律'},{name:'商业咨询/顾问服务',value:'商业咨询/顾问服务'},{name:'卫生/社会保障/福利业',value:'卫生/社会保障/福利业'},{name:'文化/体育/娱乐业',value:'文化/体育/娱乐业'},{name:'媒体/公关/出版业',value:'媒体/公关/出版业'},{name:'租赁/商务服务业',value:'租赁/商务服务业'},{name:'居民服务/修理/其他服务业',value:'居民服务/修理/其他服务业'},{name:'教育',value:'教育'},{name:'其他',value:'其他'}]
+  // 职业
+  var data4 = [{name:'私营业主/合伙人',value:'私营业主/合伙人'},{name:"企事业高级管理层/法人/大股东",value:'企事业高级管理层/法人/大股东'},{name:'中层管理人员',value:'中层管理人员'},{name:'普通员工',value:'普通员工'},{name:'操作层面蓝领',value:'操作层面蓝领'},{name:'其他人员',value:'其他人员'}];
+  //公司性质
+  var data5 = [{name:'国家机关/国有企事业单位',value:'国家机关/国有企事业单位'},{name:"股份公司",value:'股份公司'},{name:'外资本或/合资公司',value:'外资本或/合资公司'},{name:'民营企业',value:'民营企业'},{name:'个体经济',value:'个体经济'},{name:'自由职业',value:'自由职业'},{name:'其他性质无法归类的企业',value:'其他性质无法归类的企业'}];
+  //学历情况
+  var data6 = [{name:'研究生及以上',value:'研究生及以上'},{name:"大专",value:'大专'},{name:'中等技术学校',value:'中等技术学校'},{name:'中学',value:'中学'},{name:'小学及以下',value:'小学及以下'}];
+  //工作年限
+  var data7 = [{name:'1年',value:'1年'},{name:'2年',value:'2年'},{name:'3年',value:'3年'},{name:'4年',value:'4年'},{name:'5年',value:'5年'},{name:'6年',value:'6年'},{name:"7年",value:'7年'},{name:"8年",value:'8年'},{name:"9年",value:'9年'},{name:"10年",value:'10年'}];
+  //月收入
+  var data8 = [{name:'3000以下',value:''},{name:"3000-5000",value:''},{name:'5000-8000',value:'zj'},{name:'8000-12000',value:''},{name:'12000以上',value:''}];
+  //证件类型
+  var data9 = [{name:'身份证',value:'身份证'},{name:"军官证",value:'军官证'},{name:'护照',value:'护照'},{name:'港澳台胞证',value:'港澳台胞证'}];
+
+
+  var data = [data2,data1,data3,data5,data4,data6,data7,data5,data9];
+
+ $('.j-slide').slideSelect({
+    data:data,
+    sign:'index',
+    callback:function(obj,itm){
+      obj.text(itm.name);
+      //obj.data('value',itm.value);
+      obj.siblings('[type="hidden"]').val(itm.value);
+    }
+  });
+
+ $.each($('.j-slide'),function(index,itm){
+    var index = $(itm).data('index');
+    $(itm).text(data[index][0].name);
+    $(itm).siblings('[type="hidden"]').val(data[index][0].name);
+ });
+
+  //获取验证码
+    $('.vcode-btn').on('click',function(){
+        var csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
+        var that= $(this);
+          $.ajax({
+              url: '{{rest(API.SEND_VERIFY_CODE)}}',
+              dataType: 'json',
+              type:'post',
+              data: {csrfmiddlewaretoken:csrfmiddlewaretoken,mobile:$('#j-tel').val(),entry_key:'NV-Chebabanew-Pc-V3-TO-Le-PoC-Msg8-03-0000'},
+          })
+          .done(function(data) {
+            console.log(data);
+            if(data.status == 'success' && data.result.retnCode == '0'){
+              countDown(function() {
+                  that.text('获取验证码').removeAttr('disabled')
+              })
+
+              function countDown(callback) {
+                  var count = 60;
+
+                  (function fcount() {
+                      if(count < 0) return callback();
+                      that.text('重新获取('+ count-- + ')');
+                      that.attr('disabled',true);
+                      setTimeout(fcount, 1000);
+                  })();
+              }
+            }else{
+              if($('#j-tel').siblings('.tips').length<=0){
+                $('#j-tel').parent().append('<div class="tips">电话号码不能为空</div>');
+                hideTip();
+              }
+            }
+          })
+    });
+</script>
+{% endblock %}

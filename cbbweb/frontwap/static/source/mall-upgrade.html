@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telphone=no, email=no" />
+<meta name="MobileOptimized" content="320">
+<title>upgrade</title>
+<style>
+/*reset*/
+body, dl, dd, h1, h2, h3, h4, h5, h6, p, form{margin:0;}   
+ol,ul{margin:0; padding:0;}
+html,body,form,fieldset,p,div,h1,h2,h3,h4,h5,h6{-webkit-text-size-adjust:100%;}
+h1,h2,h3,h4,h5,h6,input,textarea,select,button,label{font-size:100%;vertical-align:middle;}
+ul,dl,ol{list-style:none;}
+img,fieldset{border:none;}
+img{display:inline-block;overflow:hidden;vertical-align:top;}
+em,address,i{font-style:normal;}
+textarea{word-wrap:break-word;resize:none;}
+article,aside,dialog,figure,footer,header,hgroup,nav,section{display:block;}
+body{font-size:12px;line-height:1.6em;font-family:"Helvetica Neue",Helvetica,STHeiTi,sans-serif;-webkit-overflow-scrolling:touch;overflow-scrolling:touch;-webkit-touch-callout:none;color:#000;}
+img{max-width:100%;height:auto;}
+a {text-decoration:none;}
+a,button,input,label,select {-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none;}
+::-webkit-scrollbar {display:none;}
+
+.bg-f9f9f9 {background:#f9f9f9;}
+.error-wp {padding:35px 0;text-align:center;}
+.bg-upgrd {display:inline-block;border-radius:95px;overflow:hidden;width:190px;height:190px;background:#a9edff;position:relative;}
+.bg-upgrd>.bg {width:92px;height:106px;left:50%;position:absolute;top:50%;background:url(../imgcache/image/bg-upgrd.png) no-repeat;background-size:100% 100%;margin-left:-46px;margin-top:-53px;}
+.bg-upgrd>.bg>.rd1 {width:41px;height:41px;background: url(../imgcache/image/bg-upgrd-rd.png) no-repeat;background-size:100% 100%;position:absolute;right:-5px;top:18px;animation:rd 3s infinite linear;-webkit-animation:rd 3s infinite linear;}
+.bg-upgrd>.bg>.rd2 {width:27px;height:27px;background: url(../imgcache/image/bg-upgrd-rd.png) no-repeat;background-size:100% 100%;position:absolute;right:-30px;bottom:13px;animation:rd2 1.5s infinite linear;-webkit-animation:rd2 1.5s infinite linear;}
+.error-wording {margin-top:22px;font-size:16px;line-height:1.6em;}
+.error-btn {margin-top:72px;font-size:14px;}
+.error-btn>a {width:175px;height:40px;display:inline-block;line-height:40px;border:1px #aaa solid;border-radius:3px;color:#2b2b2b;}
+.error-btn>a:active {background:#fff;}
+@-webkit-keyframes rd {
+  0%{
+    -webkit-transform:rotate(0);
+	transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(360deg);
+	transform:rotate(360deg);
+  }
+}
+
+@keyframes rd {
+  0%{
+    -webkit-transform:rotate(0);
+	transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(360deg);
+	transform:rotate(360deg);
+  }
+}
+@-webkit-keyframes rd2 {
+  0%{
+    -webkit-transform:rotate(0);
+	transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(-360deg);
+	transform:rotate(-360deg);
+  }
+}
+
+@keyframes rd2 {
+  0%{
+    -webkit-transform:rotate(0);
+	transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(-360deg);
+	transform:rotate(-360deg);
+  }
+}
+</style>
+</head>
+
+<body class="bg-f9f9f9">
+	
+    <div class="error-wp">
+
+        <section class="bg-upgrd">
+            <div class="bg"><span class="rd1"></span><span class="rd2"></span></div>
+        </section>
+        
+        <section class="error-wording">
+            <p>吼吼！</p>
+            <p>网站升级维护中……</p>
+        </section>
+        
+        <section class="error-btn">
+            <a href="#">刷新</a>
+        </section>
+        
+    </div>
+    
+</body>
+
+
+</html>

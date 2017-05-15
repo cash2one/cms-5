@@ -1,0 +1,37 @@
+{% extends 'wap/base/base.html' %}
+
+{% block body %}
+  {% set key = request.GET['key'] %}
+  <div class="g-topNav">
+    <div class="m-topNav">
+      <div class="left"><i class="u-icon u-icon-left" onclick="history.go(-1)"></i></div>
+      <div class="title">获取优惠成功</div>
+      <div class="right">
+        <ul class="u-menu f-fr f-cb">
+          <li><i class="u-icon u-icon-menu j-menu"></i></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="g-wrap">
+    <img class="ok" src="{{ static('images/lib/get_discount_success.png') }}">
+    <h1 class="m-clue-tit s-color-main">很高兴通知您，您的需求我们已经收到！</h1>
+    <p class="m-clue-content">相关客服人员，会在24小时内跟您取得联系，告知厂家最新的优惠政策。您可以关注车巴巴官方微博或者微信随时查看相关信息。</p>
+    <div class="m-hot-link">
+      <script>
+      (function() {
+          var s = "_" + Math.random().toString(36).slice(2);
+          document.write('<div id="' + s + '"></div>');
+          (window.slotbydup=window.slotbydup || []).push({
+              id: '2433181',
+              container: s,
+              size: '690,230',
+              display: 'inlay-fix'
+          });
+      })();
+      </script>
+      <script src="http://dup.baidustatic.com/js/om.js"></script>
+    </div>
+  </div>
+  
+{% endblock %}

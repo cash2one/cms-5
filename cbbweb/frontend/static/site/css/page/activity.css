@@ -1,0 +1,15 @@
+.activity .f-width-mian {
+  position: relative;
+}
+.activity .f-width-mian .discount-info {
+  position: absolute;
+  background: url(../../images/page/activity/top-discount-info.png);
+  width: 250px;
+  height: 350px;
+  z-index: 100;
+  right: 0;
+}
+.activity .g-ad-lg {
+  max-width: 1920px;
+  width: 100%;
+}

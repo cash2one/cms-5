@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>city</title>
+  <link rel="stylesheet" href="city_select.css">
+</head>
+<body>
+<div class="city_select_wrap">
+  <span id="cityName">广州</span> <a href="###" id="trigger">切换城市</a>
+  <div class="city_select">
+    
+  </div>
+</div>
+
+<style>
+  .city_select{
+    position: absolute;
+    top:20px;
+    left:20px;
+  }
+  .city_select_wrap{
+    position: relative;
+  }
+</style>
+
+<script src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="jq.citySelect.js"></script>
+<script>
+$(function(){
+  $('#trigger').click(function(){
+    $.citySelect({
+      // target:$('#selectCity'),
+      // api_allCitys:'data.json',
+      // api_hotCitys:'',
+      // fail: function(){
+      //   alert('艹尼🐴，🈚️网络')
+      // },
+      selected: function(data){
+        alert(JSON.stringify(data));
+        $('#cityName').text(data.city_name);
+        $('.m-citySelect').fadeOut(400);
+      }
+    });
+  })
+})
+  
+
+
+</script>
+</body>
+</html>

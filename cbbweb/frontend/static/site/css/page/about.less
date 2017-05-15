@@ -1,0 +1,179 @@
+@import "../lib/variable.less";
+.m-sidebar{
+	width: 250px;
+	background: #FFF;
+	float: left;
+	padding-bottom: 10px;
+	margin-right: 20px;
+	dl{
+		margin-top: 20px;
+	}
+	dt{
+		line-height: 22px;
+		font-size: 14px;
+		color: #333;
+		margin-bottom:15px; 
+		i{
+			width: 5px;
+			height: 22px;
+			float:left;
+			background: #ca023a;
+			margin-right: 15px;
+		}
+		span{
+			float: right;
+			margin:3px 10px 0 0;
+		}
+		a{
+			color:#494949;
+			font-size: 18px;
+		}
+	}
+	dd{
+		height: 32px;
+		line-height: 32px;
+		a{
+			display: block;
+			color: #858484;
+			margin:0 15px;
+			padding:0 8px;
+			&.active{
+				padding:0 8px;
+				background: #F9F9F9;
+				color:@color-deepred
+			}
+			&:hover{
+				color:@color-deepred;
+				background-color: #f9f9f9;
+			}
+		}
+	}
+}
+.about-wrap{
+	.content{
+		background: #FFF;
+		width: 720px;
+		float:right;
+		padding:10px 0;
+		h1,h2{
+			font-weight: normal;
+			color: #444;
+		}
+		h1{
+			line-height: 50px;
+			font-size:20px;
+			border-bottom:1px solid #E8E8E8;
+			text-align: center;
+		}
+		h2{
+			line-height: 22px;
+			font-size: 20px;
+			margin:0 10px 15px 20px;
+			i{
+				width: 6px;
+				height: 22px;
+				background:#fd5958;
+				margin-right: 10px;
+				display: inline-block;
+				float: left;
+			}
+		}
+		h3{
+			font-weight: normal;
+			color: #C9052B;
+			text-indent: 0;
+		}
+		li{
+			margin-top:40px;
+		}
+		.article{
+			font-size: 12px;
+			line-height: 30px;
+			text-indent: 2em;
+			padding:0 40px;
+			position: relative;
+			.contract-ewm{
+				position: absolute;
+				right:43px;
+				top:-30px;
+				.img{
+					background: url(../../images/lib/bg-common.png) no-repeat;
+					background-position: -275px -5px;
+					height: 90px;
+					width: 90px;
+				}
+				p{
+					text-align: center;
+					color:#858585;
+					font-size: 14px;
+				}
+			}
+		}
+		.job{ 
+			.tabBar{
+				height: 40px;
+				border-top:5px solid #707070;
+				background: #F0F0F0;
+				position: relative;
+				margin-bottom: 25px;
+				span{
+					float:left; 
+					width: 147px;
+					line-height: 40px;
+					font-size: 17px;
+					text-align: center;
+					cursor: pointer;
+					position: relative;
+					top:-5px;
+					border-top:5px solid #707070;
+					&.active{
+						background: #FFF;
+						border-top:5px solid #C90028;
+						color: #C90028;
+					}
+				}
+			}
+			.job-list{
+				margin-bottom: 15px;
+			}
+			p{
+				font-size: 12px;
+				line-height: 30px;
+				padding: 0 40px;
+			}
+			.name{
+				font-size: 20px;
+				color: #525252;
+				span{
+					font-size: 12px;
+					margin-left: 10px;
+				}
+			}
+			.salary{
+				font-size: 14px;
+				strong{
+					color:#CD1136;
+				}
+			}
+			.line{
+				height: 1px;
+				background: #E2E2E2;
+				margin:10px;
+			}
+		}
+		.tel{
+			font-size: 20px;
+			color: #333;
+		}
+		.ft-14{
+			font-size: 14px;
+		}
+	}
+	.map{
+		height: 300px;
+	}
+}
+
+#contract .article p{
+	text-indent: 0;
+}

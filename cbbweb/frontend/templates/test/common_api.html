@@ -1,0 +1,29 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='通用',
+            tag_id='common',
+            api_list=[
+                {
+                    'api_name': API.PLACE_PROVINCE_BY_ID,
+                    'kwargs': {
+                        'province_id': 1,
+                    }
+                },
+                {
+                    'api_name': API.PLACE_CITY_BY_ID,
+                    'kwargs': {
+                        'city_id': 20001,
+                    }
+                },
+                {
+                    'api_name': API.PLACE_COUNTY_BY_ID,
+                    'kwargs': {
+                        'county_id': 3,
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

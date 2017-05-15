@@ -1,0 +1,318 @@
+{% extends 'base/base.html' %}
+{% block title %}在线审贷 - {{platform}}{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/checkLoan.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{# 省 #} 
+{% set province = get_object(MODELS.T_BASE_PROVINCE, province_id=city.province_id) %}
+{# 城市 #} 
+{% set cityList = list_objs(model=MODELS.T_BASE_CITY,  province_id=city.province_id) %}
+{# 区 #}
+{% set countyList=run(API.FINANCE_CAR_SERIES_COUNTY_INFO,city_id=city.city_id,car_series_id='') %}
+
+{% block js %}
+    {{ super() }}
+    <script>
+        //省列表接口
+        var proinceListOps = {
+          url:'{{rest(API.FINANCE_CAR_SERIES_PROVINCE_INFO)}}',
+          param:{car_series_id:''}
+        }
+        //车系接口
+        var seriesOps = {
+          url:'{{rest(API.CAR_SERIES_BY_ID) }}',
+          param:{car_series_id:''}          
+        }
+        //车型接口
+        var typeOps = {
+          url:'{{rest(API.CAR_SERIES_GROUP_CAR_TYPES) }}',
+          param:{car_series_id:'',property_key:'pailiang'}
+        } 
+        //获取市接口
+        var proinceOps = {
+          url:'{{rest(API.FINANCE_CAR_SERIES_CITY_INFO)}}',
+          param:{province_id:'',car_series_id:''}
+        }
+        //获取区接口
+        var cityOps = {
+          url:'{{rest(API.FINANCE_CAR_SERIES_COUNTY_INFO)}}',
+          param:{city_id:'{{city.city_id}}',car_series_id:''}
+        }
+        //获取价格接口
+        var carTypeOps = {
+          url:'{{rest(API.CAR_TYPE_DATA)}}',
+          param:{city_id:'{{city.city_id}}',car_type_id:'229'}
+        }
+        //首付比例接口
+        var downpayOps = {
+          url:'{{rest(API.DOWNPAYS)|safe }}',
+          param:{series_id:''}  
+        }
+        //期数接口
+        var periodyOps = {
+          url:'{{rest(API.PERIODS)|safe }}',
+          param:{series_id:''}  
+        }
+        //金融方案接口
+        var financialOps = {
+          url:'{{rest(API.LIST_FINANCIALS)|safe }}', 
+          // param:{price:'',downpay:20,period:12}    261-日产,258招行
+          param:{first_pay_percent:30,sku_item:12,car_series_id:'',car_type_id:'',dealer_id:'',city_id:'{{city.city_id}}',corp_ids:'258,261'}  
+        }
+        //经销商接口
+        var dealerOps = {
+          url:'{{rest(API.DEALER_DEFAULT)|safe }}',
+          param:{city_id:{{city.city_id}},county_id:'0',series_id:'0',per_page:'50',page:'1'}  
+        }
+        //获取验证码
+        var mobileOps = { 
+          url:'{{rest(API.SEND_VERIFY_CODE)|safe }}',
+          param:{mobile:''}
+        } 
+        //验证
+        var verifyMobile ={
+          url:'{{rest(API.VERIFY_CODE)|safe }}',
+          param:{mobile:'',verify_code:''}
+        }  
+        //征信申请
+        var creditQueryOps = {
+          url:'{{rest(API.CREDIT_DNAF_QUERY)|safe }}',
+          param:{}
+        }    
+        //资料保存
+        var creditSaveOps = {
+          url:'{{rest(API.CREDIT_DNAF_SAVE)|safe }}',
+          param:{}
+        }   
+        //金融留资
+        var clueSave = {
+          url:'{{rest(API.CLUE_SAVE_API)}}',
+          param:{} 
+        }
+        
+        //数据
+        var pythonData = {
+            provinceName:'{{province.province_name}}',
+            provinceId:'{{province.province_id}}',
+            cityName:'{{city.city_name}}',
+            cityId:'{{city.city_id}}',
+            cityJson:{{ dumps_json(cityList)|safe }},
+            typePriceOps:'{{ rest(API.FINANCE_DEALER_CAR_TYPES_PRICE) }}'
+        }
+    </script>
+    <script src="{{ static('site/js/lib/button.js') }}"></script>
+    <script src="{{ static('site/js/lib/popWin.js') }}"></script>
+    <script src="{{ static('site/js/lib/validate.js') }}"></script> 
+    <script src="{{ static('3rd/avalon/avalon.js') }}"></script>
+    <script src="{{ static('site/js/page/checkloan.js') }}"></script>
+{% endblock %}
+{% block header_nav %}
+  <div class="loan-nav mainbody">
+    <div class="logo clearfix">
+      <div class="fl">
+        <a href="/{{city.city_alias}}/">
+          <i class="u-icon icon-logo"></i>
+        </a>
+      </div>
+      <ul class="fr logo-right">
+          <li class="f-br padding-lr">
+            <i class="u-icon u-icon-jzbj"></i>
+            <span class="cc s-main">精准报价</span>
+          </li>
+          <li class="f-br padding-lr" >
+            <i class="u-icon u-icon-hlhd"></i>
+            <span class="cc s-main">海量活动</span>
+          </li>
+          <li class="padding-l">
+            <i class="u-icon u-icon-qfw"></i>
+            <span class="cc s-main">全方位购车优惠</span>
+          </li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
+{% block main %}
+{% csrf_token %}
+{# 车系 #}
+{% set car_series_list=run(API.FINANCE_GROUP_BRAND_CAR_SERIES) %}
+{# <p>{{ dumps_json(car_series_list, add_pre=True)|safe }}</p>  #}
+    <div class="check-loan-wrap mainbody">
+        <ul class="J-loan-nav hd clearfix">
+            <li class="active u-popover left">基本资料<span class="arrow"></span></li>
+            <li class="u-popover left">贷款方案<span class="arrow"></span></li>
+            <li class="u-popover left">审贷资料<span class="arrow"></span></li>
+            <li>审贷结果</li>
+        </ul>
+        <div class="J-wirte-data bd"> 
+            {% include 'site/checkload_step1.html' %}
+            {% include 'site/checkload_step2.html' %}
+            {% include 'site/checkload_step3_rc.html' %}
+            {% include 'site/checkload_step3_zs.html' %}
+        </div>
+        <div id="J-result-wrap" class="result bd" style="display:none;">
+          <div class="result-hd">
+              东风日产汽车金融网上预审批单
+          </div>
+          <div class="result-bd">
+            <table ms-controller="c-result">
+              <tr>
+                <td class="label">预审结果</td>
+                {# 成功 #}
+                <td class="success" ms-visible="sucessBool">
+                  <i class="cbb cbb-check-circle"></i>
+                  <!-- <i class="cbb cbb-exclamation-circle"></i> -->
+                  恭喜您通过预审
+                </td>
+                {# 失败 #}
+                <td class="success" ms-visible="!sucessBool">
+                  <i class="cbb cbb-exclamation-circle"></i>
+                  <!-- <i class="cbb cbb-exclamation-circle"></i> -->
+                  恭喜您提交成功
+                </td>
+              </tr>   
+              <tr>
+                <td class="label">预审批单号</td>
+                <td id="J-result-order">N240472003666687267</td>
+              </tr>
+              {# 成功有价格 #}
+              <tr ms-visible="priceBool && sucessBool">
+                <td class="label">最大贷款额度</td>
+                <td id="J-result-limit"><span class="price">84560</span> 元</td>
+              </tr>
+              {# 成功无价格 #}
+              <tr>
+                <td class="priceTd" colspan="2">
+                  <p id="J-query-message"></p>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">车型</td>
+                <td id="J-result-type">轩逸·经典 1.6 XE MT 舒适版</td>
+              </tr>
+              <tr>
+                <td class="label">最低首付</td>
+                <td id="J-result-downpay">20%</td>
+              </tr>
+              <tr>
+                <td class="label">可贷款年限</td>
+                <td id="J-result-period">5年</td>
+              </tr>
+              <tr>
+                <td class="label">经销商</td>
+                <td id="J-result-dealer">广州市风日汽车贸易有限公司</td>
+              </tr>
+              <tr>
+                <td class="label">电话</td>
+                <td id="J-result-tel">020-86871222</td>
+              </tr>
+              <tr>
+                <td class="label">地址</td>
+                <td id="J-result-address">广东省广州市花都区风神大道10号</td>
+              </tr>
+            </table>
+            <div class="table-bar">
+              <span class="icon-l"></span>
+              <span class="icon-r"></span>
+            </div>
+            <dl class="result-tips">
+              <dt><i class="cbb cbb-exclamation-circle"></i>温馨提示</dt>
+              <dd>1) 请携带您的身份证。</dd>
+              <dd>2) 请携带居住证明（房产证优先）、收入证明（最近6个月银行流水优先）、驾驶证明（驾照优先）。</dd>
+              <dd>3) 您申请的贷款金额较高，请将您的申请材料递交到经销商处，审批人员将根据您提交的材料再次核准贷款额度。</dd>
+            </dl>
+            <a id="J-jump" class="jump" href="javascript:;" data-city="/{{city.city_alias}}" target="_blank">
+              <span class="icon-l"></span>
+              <span class="icon-r"></span>
+              <span class="arrow"></span>
+              <img id="J-result-pic" class="pic fl" src="{{ static('site/images/test/p1.jpg') }}"/>
+              <div class="frame">
+                <p id="J-result-series" class="name">轩逸·经典</p>
+                <p class="more">更多优惠信息尽在车巴巴</p>
+              </div>
+            </a>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {# 经销商选择 #}
+    <div ms-controller="c-dealer" ms-visible="dialogBool">
+      <div class="u-popWin select-dealer">
+        <span class="close" ms-click="closeDialog"><i class="cbb cbb-close"></i></span>
+        <div class="tit">
+          <i></i><span>选择您所在的经销商</span>
+        </div>
+        <div class="content">
+          <div class="filter J-select-link">
+              <div class="m-btn-group city" data-from-select="true" ms-controller="c-proinceList">
+                 <div class="btn btn-default btn-form">
+                    <input class="form-select" type="text" name="loan_province" placeholder="选择省" ms-data-id="proinceListId" ms-attr-value="proinceListName"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>  
+                 <ul class="dropdown-ul">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.province_id" ms-click="click">[% el.province_name %]</a></li>
+                 </ul>
+              </div>
+              <div class="m-btn-group city" data-from-select="true" ms-controller="c-city">
+                 <div class="btn btn-default btn-form">
+                    <input class="form-select" type="text" name="loan_city" placeholder="选择市" ms-data-id="cityId" ms-attr-value="cityName"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul" >
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.city_id" ms-click="click">[% el.city_name %]</a></li> 
+                 </ul> 
+              </div>
+              <div class="m-btn-group city J-county" ms-controller="c-county" ms-if="array != ''">
+                 <div class="btn btn-default btn-form">
+                    <input class="form-select" type="text" name="loan_count" placeholder="选择区县" ms-attr-value="countyName" ms-data-id="countyId"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.county_id" ms-click="click">[% el.county_name %]</a></li> 
+                 </ul>
+              </div>
+          </div>
+          <div class="m-loading" ms-controller="c-loading" ms-visible="flag"><img src="/static/site/images/lib/loding.gif"/></div> 
+          <ul class="result" ms-visible="loading">
+            <li ms-repeat="array">
+              <label class="clearfix">
+                <input class="fl input-radio" type="radio" name="dealer_id" ms-attr-value="el.id" ms-data-code="el.dlr_code"/>
+                <div class="frame">
+                  <div class="clearfix">
+                    <div class="fl name">[%el.dlr_short_name%]</div>
+                    <div class="country fr">[%el.county_name%]</div>
+                  </div>
+                  <p class="address">地址:[%el.cont_address%]</p>
+                </div>
+              </label>
+              <input class="hidden-tel" type="hidden" ms-attr-value="[%el.service_tel%]">
+              <input class="hidden-address" type="hidden" ms-attr-value="[%el.cont_address%]">
+            </li>
+          </ul>
+          <div class="dealer-btn">
+            <a class="u-btn-deepred" href="javascript:;" ms-click="sureBtn">确定选择</a>
+          </div>
+        </div>
+      </div>
+      <div class="m-mask"></div>
+    </div>
+
+    {# 加载中 #} 
+    <div id="J-load-dialog" class="load-dialog" style="display:none"> 
+      <div class="m-mask-dialog"></div>
+      <div class="u-popWin">
+        <i class="u-icon fl"></i>
+        <div class="frame f-tc fl">
+          <h1>您的申请还在审核中…<span>（请耐心等待）</span></h1>
+          <p>亲，您的评估申请已成功提交，正在玩命审核中！</p>
+          <p>整个过程大概需要<strong>10</strong>秒。</p>
+          <p>审核完成后，我们将通过短信发送给您。</p>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

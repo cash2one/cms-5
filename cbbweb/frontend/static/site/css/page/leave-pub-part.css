@@ -1,0 +1,53 @@
+.model-list-wrap {
+  position: absolute;
+  top: 38px;
+  left: -1px;
+  width: 100%;
+  display: none;
+  border: 1px solid #e2e2e2;
+  background: #ffffff;
+}
+.model-list-wrap .u-plug-model {
+  position: relative;
+  top: 0;
+}
+#pop-dealer-ul img {
+  margin: 30px auto;
+  display: block;
+}
+.m-popup-title {
+  position: relative;
+}
+.m-popup-title .close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  font-size: 22px;
+}
+.price-price-r li {
+  width: 100px;
+}
+.m-box-btns span {
+  color: #ffffff;
+}
+.m-popup .close {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  width: 15px;
+  height: 15px;
+}
+.m-popup .close i {
+  color: #999999;
+}
+.price-price-r li .s-main {
+  font-size: 13px;
+  color: #7d7d7d;
+}
+#price-block-name span {
+  color: #7d7d7d;
+}

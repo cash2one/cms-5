@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.5, user-scalable=0">
+    <meta name="applicable-device" content="mobile">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="author" content="m.chebaba.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="东风日产电商平台——车巴巴商城">
+    <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+    <title>惠挑车——获取优惠服务页</title>
+    <link rel="stylesheet" href="../wap/site/css/lib/common.css">
+  </head>
+  <body>
+    <div class="g-topNav">
+      <div class="m-topNav">
+        <div class="left"><i class="u-icon u-icon-left"></i></div>
+        <div class="title">获取优惠服务</div>
+      </div>
+    </div>
+    <div class="g-wrap">
+      <div class="m-pannel">
+        <div class="head">
+          <div class="tit">请选择您中意的车型并填写个人信息</div>
+        </div>
+        <div class="body">
+          <ul class="m-lists-lg">
+            <li>
+              <a class="j-slider" data-flag="series" href="javascirpt:;">新势代奇骏 <i class="u-icon u-icon-right"></i>
+              </a>
+            </li>
+            <li>
+              <a class="j-slider" data-flag="type" href="javascript:;">2015年款 1.5L 自动时尚 <i class="u-icon u-icon-right"></i>
+              </a>
+            </li>
+            <li><input class="u-input-user" type="text" placeholder="请输入您的姓名"/></li>
+            <li><input class="u-input-tel" type="text" placeholder="请输入您的手机号"/></li>
+          </ul>
+        </div>
+      </div>
+      <div class="m-pannel">
+        <div class="head">
+          <div class="tit">选择经销商，最多可选择3家</div>
+        </div>
+        <div class="body">
+          <ul class="m-lists-check">
+            <li>
+              <div class="fl">
+                <i class="u-icon u-icon-radio"></i>
+              </div>
+              <div class="am">
+                <h3>广州东风南方广大（广州大道南）</h3>
+                <p class="d">广州市海珠区广州大道南1688号（洛溪桥下公交站）</p>
+              </div>
+              <div class="fr">
+                <p class="map"><i class="u-icon u-icon-map"></i></p>
+                <p>0.2km</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="../wap/site/js/lib/jq.carSelect.js"></script>
+    <script>
+      $(function(){
+        getLocation();
+        $('.j-slider').click(function(){
+          var options = {
+            target:'body',
+            type:$(this).data('flag'),
+          }
+          $('this').selectCar(options);
+        });
+      });
+      //获取当前经纬度
+      function getLocation(){
+        if(navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(showPosition,showError);
+        }else{
+          console.log('Wrong!');
+        }
+      }
+      function showPosition(position){
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        console.log(latitude+"  "+longitude);
+      }
+      function showError(){
+        var latitude = '';
+        var longitude = '';
+      }
+      //车型车系选择回调函数
+      function fixedWatch(el) {
+      if(document.activeElement.nodeName == 'INPUT'){
+        el.css('position', 'static');
+        } else {
+          el.css('position', 'fixed');
+        }
+      }
+
+    setInterval(function () {
+      fixedWatch($('.g-topNav'));
+    }, 500);
+    </script>
+  </body>
+</html>

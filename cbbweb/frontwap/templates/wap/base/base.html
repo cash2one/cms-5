@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    {% block meta %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.5, user-scalable=0">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="Cache-Control" content="no-cache">
+      <meta http-equiv="Pragma" content="no-cache">
+      <meta name="author" content="m.chebaba.com">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="Expires" content="-1">
+      <meta http-equiv="Cache-Control" content="no-cache">
+      <meta http-equiv="Pragma" content="no-cache">
+      <meta name="applicable-device" content="mobile">
+      <link rel="shortcut icon" href="{{ static('wap/site/images/lib/favicon.ico') }}" type="image/x-icon" />
+    {% endblock %}
+    {% set sign = '东风日产汽车电商车巴巴'%}
+    {% block seo %}
+      {% if catalogs %} 
+        <title>
+          {% block catalogsTitle %}【{{city.city_name}}】{{catalogs.title}}{% endblock %} - {{sign}}
+        </title>
+        {% block catalogsDesc %}
+          <meta name="description" content="{{city.city_name}}{{sign}},{{catalogs.description}}">
+          <meta name="Keywords" content="{{city.city_name}}东风日产, {{city.city_name}}启辰, {{catalogs.keywords}}">
+        {% endblock %}
+      {% else %}
+        <title>{% block title %}车巴巴{% endblock %} - {{sign}}</title>
+        {% block description %}
+          <meta name="description" content="东风日产电商平台 - {{sign}}">
+          <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+        {% endblock %}
+      {% endif %}
+    {% endblock %}
+    <link href="{{ static('./wap/site/css/lib/common.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ static('wap/site/js/lib/city_sel.css') }}">
+    {% block css %}{% endblock %}
+    <script src="{{ static('./wap/3rd/vue/vue.js') }}"></script>
+    <script>var StaticPath = '{{static('')}}'</script>
+    <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+
+  </head>
+    <body>
+      <div class="m-mark">
+        <div class="info">
+          <div class="hd">获取定位</div>
+          <div class="cnt">是否重新定位到您当前所在城市</div>
+          <div class="ft">
+            <div class="btn ">取消</div>
+            <div class="btn ">确定</div>
+          </div>
+        </div>
+      </div>
+      <div class="m-login-wrap">
+          <div class="m-login">
+            <div class="logo">
+              <img src="{{ static('wap/site/images/lib/logo.png') }}" alt="车巴巴大法好！">
+            </div>
+            <div class="city">
+              当前城市：<span class="c">{{city.city_name}}</span>
+              <div id="cityHd" class="change">切换</div>
+            </div>
+            <dl class="list">
+              <dt><i class="u-icon u-icon-car"></i>车巴巴服务</dt>
+              <dd><a href="/{{city.city_alias}}/" class="f-db"><i class="u-icon u-icon-index"></i>首页</a></dd>
+              <dd><a href="/{{city.city_alias}}/car" class="f-db"><i class="u-icon u-icon-hui"></i>惠挑车</a></dd>
+              <dd><a href="http://m.chebaba.com/topic/sylphy/sylphy.html" class="f-db"><i class="u-icon u-icon-xiang"></i>厂家钜惠</a></dd>
+              <dd><a href="/{{city.city_alias}}/dealer" class="f-db"><i class="u-icon u-icon-dian"></i>找好店</a></dd>
+              <dd><a href="/{{city.city_alias}}/finance" class="f-db"><i class="u-icon u-icon-dai"></i>任性贷</a></dd>
+            </dl> 
+          </div>
+          <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+        </div>  
+      {% block head %}
+        <div class="g-topNav">        
+          <div class="m-topNav">
+            <div class="left"><i onclick="history.go(-1)" class="u-icon u-icon-left"></i></div>
+            <div class="title">{% block hd_title %}惠挑车{% endblock %}</div>
+            <div class="right">
+              <ul class="u-menu f-fr f-cb">
+                <li><i class="u-icon u-icon-menu j-menu"></i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endblock%} 
+
+      {% block body %}
+      {% endblock %}
+      <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+      <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BMvPNolfzSZK2FTuPPk0i9Lp"></script>
+      <script type="text/javascript" src="{{ static('wap/site/js/lib/city_select.js') }}"></script>
+      <script type="text/javascript" src="{{ static('wap/site/js/lib/base.js') }}"></script>
+      <script src="{{ static('./wap/site/js/lib/key_name.js') }}"></script>
+      {# 统计代码 #}  
+      <script src="{{ static('./wap/site/js/lib/statistics.js') }}"></script>
+      {# 统计代码 END #} 
+      <script>
+        //根据浏览器获取当前经纬度
+        function getCurrent(callback){
+          var city='';
+          var geolocation = new BMap.Geolocation();
+          var geoc = new BMap.Geocoder(); 
+          geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+              geoc.getLocation(r.point, function(rs){
+                var addComp = rs.addressComponents;
+                city = addComp.city;
+                callback(city);
+              });   
+            }
+            else {
+              alert('failed'+this.getStatus());
+            }        
+          },{enableHighAccuracy: true});
+        }
+
+        //城市切换
+        var cook = CBB.Cookie.get('city');
+        // if(cook =='' && cook !='{{city.city_name}}'){
+        if(cook !='{{city.city_name}}'){
+           getCurrent(function(city){
+              var city = city.replace('市','');
+              $.ajax({
+              url: '{{rest(API.GET)|safe}}',
+              type: 'GET',
+              dataType: 'json',
+              data: {model:'TBaseCity',city_name:city},
+              })
+              .done(function(data) {
+                if(!$.isEmptyObject(data.result)&&data.result.city_name!='{{city.city_name}}'){
+                  $('.m-mark').show();
+                  $('.m-mark .btn').click(function(event) {
+                    if($(this).index()=='0'){
+                      $('.m-mark').hide();
+                    }else{
+                      var arr = window.location.href.split('/');
+                      arr[3] = data.result.city_alias;
+                      window.location.href = arr.join('/');
+                      CBB.Cookie.set('city',data.result.city_name);
+                      $('.m-mark').hide();
+                    }
+                  });
+                }
+              })
+              .fail(function() {
+                console.log("error");
+              })
+            });
+        }   
+        //城市选择
+        $('#cityHd').citySelect({
+          url: '{{rest(API.CITY_DATA)|safe}}',
+          param: {},
+          parent: '.city',
+          direction: 'right',
+          top: 65,
+          right: 15,
+          pro_id: '{{city.province_id}}',
+          city_id: '{{city.city_id}}',
+          callback: function(obj) {
+            $('.city .c').text(obj.city_name);
+            var arr = window.location.href.split('/');
+            arr[3] = obj.city_en;
+            window.location.href = arr.join('/');
+          }
+        });
+
+        $('.j-menu').click(function() {
+          $('html').addClass('f-lock');
+          $('.m-login-wrap').addClass('g-slider-fix-active');
+        });
+
+        $('.j-back,.m-login .list dd').click(function() {
+          $('html').removeClass('f-lock');
+          $('.m-login-wrap').removeClass('g-slider-fix-active');
+        });
+
+        //setting smartCode
+        var sc = CBB.getUrlParam("SMARTCODE");
+        if (sc && sc.length > 0) {
+          CBB.Cookie.set("SMARTCODE", sc, 30);
+        } 
+
+        // ajax预处理
+        $.ajaxPrefilter(function(options) {
+          var _ftuc = CBB.getUrlParam('__ftuc');
+          var mark = '';
+
+          if (_ftuc) {
+            options.url.indexOf('?') >= 0 ? mark = '&' : mark = '?';
+            options.url += mark + '__ftuc=1';
+          }
+
+          //add smartCode
+          if (options.url.indexOf("/api/clue_save_api/") > -1) {
+
+            if (options.type.toUpperCase() == 'get'.toUpperCase()) {
+              var _url = options.url;
+              if (_url.indexOf("?") > -1) {
+                options.url += "&smartCode=" + CBB.Cookie.get("SMARTCODE");
+              } else {
+                options.url += "?smartCode=" + CBB.Cookie.get("SMARTCODE");
+              }
+            } else if (options.type.toUpperCase() == 'post'.toUpperCase()) {
+              if (options.data) {
+                options.data += "&smartCode=" + CBB.Cookie.get("SMARTCODE");
+              } else {
+                options.data = "smartCode=" + CBB.Cookie.get("SMARTCODE");
+              }
+            }
+
+          }
+        });
+      </script>
+      {% block js %}{% endblock %}
+    </body>
+</html>

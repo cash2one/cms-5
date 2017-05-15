@@ -1,0 +1,164 @@
+{% extends 'wap/base/base.html' %}
+
+{% block body %}
+  {% set car_series_id = request.GET['car_series'] %}
+  {% set car_series = get_object(MODELS.T_BASE_CAR_SERIES, id=car_series_id) %}
+    <div class="g-topNav">
+      <div class="m-topNav">
+        <div class="left"><i class="u-icon u-icon-left" onclick="history.go(-1)"></i></div>
+        <div class="title">获取优惠服务</div>
+        <div class="right">
+          <ul class="u-menu f-fr f-cb">
+            <li><i class="u-icon u-icon-menu j-menu"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="g-wrap">
+      <img class="ok" src="{{ static('images/lib/complete.jpg') }}">
+      <p class="m-clue-content">尊敬的用户 XXX 您好，感谢您对东风日产车巴巴的关注，为让您享受更多厂家福利，拥有一个更好的购车体验，建议您完善如下信息，非常感谢！！</p>
+      <div class="m-clue-info">
+        <div class="m-info-tit"><span>1.</span>您所在的城市为限购城市，您的牌照状态为？
+        </div>
+        <div class="m-info-choice">
+          <a class="u-rad j-drive">
+            <i name="drive" class="rad"></i><span>已有牌照</span>
+          </a>
+          <a class="u-rad j-drive">
+            <i name="drive" class="rad"></i><span>上外地牌</span>
+          </a>
+          <a class="u-rad j-drive">
+            <i name="drive" class="rad"></i><span>摇号中</span>
+          </a>
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>2.</span>
+          您的置换车型为：
+          <a class="tit-link">二手车免费估值</a>
+        </div>
+        <div class="m-info-choice">
+          <i class="substitution"></i><input type="text" placeholder="请输入您的车型品牌">
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>3.</span>
+          您是否已经体验过<span class="s-color-main">{{ car_series.car_series_cn }}</span>？
+        </div>
+        <div class="m-info-choice">
+          <a class="u-rad-half j-experience">
+            <i class="rad"></i><span>体验过了</span>
+          </a>
+          <a class="u-rad-half j-experience">
+            <i class="rad"></i><span>从没体验过</span>
+          </a>
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>3.</span>
+          您是否考虑过其他车型？
+        </div>
+        <div class="m-info-choice">
+          <a class="u-rad-half j-others">
+            <i class="rad"></i><span>认准了买{{ car_series.car_series_cn }}</span>
+          </a>
+          <a class="u-rad-half j-others">
+            <i class="rad"></i><span>还有几个对比车型</span>
+          </a>
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>5.</span>
+          您目前买车的心里价位是多少？
+        </div>
+        <div class="m-info-choice">
+          <i class="price"></i><input type="number" placeholder="请输入价格">
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>6.</span>
+          您想买哪种颜色的{{ car_series.car_series_cn }}？
+        </div>
+        <div class="m-info-choice s-bottom">
+          <a class="u-rad-full j-changeCol" data-flag="outer">
+            <i class="appearance"></i><span id="outer">请选择外观颜色</span><i class="u-icon u-icon-right f-fr"></i>
+          </a>
+        </div>
+        <div class="m-info-choice">
+          <a class="u-rad-full j-changeCol" data-flag="inner">
+            <i class="interior"></i><span id="inner">请选择内饰颜色</span><i class="u-icon u-icon-right f-fr"></i>
+          </a>
+        </div>
+      </div>
+      <div class="m-clue-info">
+        <div class="m-info-tit">
+          <span>7.</span>
+          您的其他要求
+        </div>
+        <div class="m-info-choice">
+          <i class="pen"></i>
+          <textarea></textarea>
+        </div>
+      </div>
+      <div class="gray-blank"></div>
+      <button class="u-submit">确认提交</button>
+    </div>
+    <div class="g-slider-fix">
+      <div class="m-changeCar">
+        <div id="template">
+          
+        </div>
+        <div class="back j-back">
+          点击此处返回
+          <span class="icon">
+            <i class="u-icon u-icon-left-white"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  
+    <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="{{ static ('wap/site/js/lib/jq.colorSelect.js') }}"></script>
+  </body>
+  <script>
+  var car_type = {{ request.GET['car_type'] }};
+  $(function(){
+    $('.j-drive').click(function(){
+      $('.j-drive').find('.rad').removeClass('active');
+      $(this).children('.rad').addClass('active');
+    });
+    $('.j-experience').click(function(){
+      $('.j-experience').find('.rad').removeClass('active');
+      $(this).children('.rad').addClass('active');
+    });
+    $('.j-others').click(function(){
+      $('.j-others').find('.rad').removeClass('active');
+      $(this).children('.rad').addClass('active');
+    });
+    $('.j-changeCol').click(function(){
+      var options ={
+        ajaxData:{
+          url:'{{ rest(API.CAR_TYPE_BY_ID) }}',
+          type:'GET',
+          data:{
+            car_type_id:car_type
+          }
+        },
+        flag:$(this).attr('data-flag'),
+        target:$(this)
+      }
+      $(this).colorSel(options);
+    });
+    
+    $('.u-submit').click(function(){
+      window.location.href = "{{ city_url('site.left_done') }}"
+    })
+  })
+  </script>
+{% endblock %}

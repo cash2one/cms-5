@@ -1,0 +1,141 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='金融留资相关页面',
+            tag_id='finance',
+            api_list=[
+                {
+                    'api_name': API.FINANCE_GROUP_BRAND_CAR_SERIES,
+                    'kwargs': {
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_TYPE_DEALER,
+                    'kwargs': {
+                        'city_id': 20136,
+                        'county_id': 0,
+                        'car_type_id': 445,
+                        'per_page': 2,
+                        'page': 1,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_CAR_TYPE,
+                    'kwargs': {
+                        'city_id': 20136,
+                        'car_series_id': 10220,
+                        'car_type_id': 445,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_AND_CAR_TYPE,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_PROVINCE_INFO,
+                    'kwargs': {
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_CITY_INFO,
+                    'kwargs': {
+                        'province_id': 9,
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_COUNTY_INFO,
+                    'kwargs': {
+                        'city_id': 20391,
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CAR_SERIES_LIST,
+                    'kwargs': {
+                        'dealer_id': 432
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_CITY_BRAND_DEALER,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_brand_id': 1,
+                        'per_page': 2,
+                        'page': 1
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_COUNTY_BRAND_DEALER,
+                    'kwargs': {
+                        'county_id': 761,
+                        'car_brand_id': 1,
+                        'per_page': 2,
+                        'page': 1
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_GROUP_SERIES_CAR_TYPES,
+                    'kwargs': {
+                        'car_series_id': 47710,
+                        'property_key': 'pailiang',
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_DEALER_CAR_TYPES_PRICE,
+                    'kwargs': {
+                        'dealer_id': 432,
+                        'car_type_id': 391,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_PROVINCE_CITY_COUNTY,
+                    'kwargs': {
+                        'province_id': 30,
+                        'city_id': 20305,
+                        'county_id': 761,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_ALL_PROVINCE,
+                    'kwargs': {
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_ALL_CITY,
+                    'kwargs': {
+                        'province_id': 30,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_ALL_COUNTY,
+                    'kwargs': {
+                        'city_id': 20001
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_DEALER_PROVINCE,
+                    'kwargs': {
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_DEALER_CITY,
+                    'kwargs': {
+                        'province_id': 30,
+                    }
+                },
+                {
+                    'api_name': API.FINANCE_DEALER_COUNTY,
+                    'kwargs': {
+                        'city_id': 20001
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

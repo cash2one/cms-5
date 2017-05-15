@@ -1,0 +1,212 @@
+{% extends 'base/base.html' %}
+{% block title %}{{city.city_name}}东风日产、启辰汽车报价_官方优惠活动-{{platform}}{% endblock %}
+{% block description %}
+<meta name="description" content="为您提供{{city.city_name}}东风日产、{{city.city_name}}启辰最新报价，{{city.city_name}}东风日产、{{city.city_name}}启辰官网价格，{{city.city_name}}东风日产、{{city.city_name}}启辰促销优惠信息，{{city.city_name}}东风日产、{{city.city_name}}启辰优秀4s店等信息。了解最新{{city.city_name}}东风日产、{{city.city_name}}启辰信息就上{东风日产汽车电商车巴巴}！">
+<meta name="Keywords" content="{{city.city_name}}东风日产, {{city.city_name}}启辰, {{city.city_name}}东风日产报价,{{city.city_name}}启辰报价">
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/index.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ static('site/js/lib/flexslider.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/page/index.js') }}"></script>
+{% endblock %}
+{% block main %}
+	<div class="index-wrap">
+		<div id="J-banner" class="banner">
+			<ul class="slides"> 
+				<li>   
+					<a class="banner-list" target="_blank" href="http://fun.chebaba.com/activities/sylphy.html" style="background:url({{ static('site/images/page/index/banner_1.jpg') }}) 50% 50%">
+					</a>
+				</li> 
+				<li>
+					<a class="banner-list" target="_blank" href="http://fun.chebaba.com/activities/lannia.html" style="background:url({{ static('site/images/page/index/banner_2.jpg') }}) 50% 50%">
+					</a>
+				</li>
+				<li>
+					<a class="banner-list" target="_blank" href="http://fun.chebaba.com/activities/rate.html" style="background:url({{ static('site/images/page/index/banner_3.jpg') }}) 50% 50%">
+					</a>
+				</li>
+				<li>
+					<a class="banner-list" target="_blank" href="http://www.chebaba.com/chenfeng.htm" style="background:url({{ static('site/images/page/index/banner_4.jpg') }}) 50% 50%">
+					</a>
+				</li>
+				{# <li>
+					<a class="banner-list" target="_blank" href="/{{city.city_alias}}/checkloan" style="background:url({{ static('site/images/page/index/banner_5.jpg') }}) 50% 50%">
+					</a>
+				</li> #}
+			</ul>
+		</div>
+		<div class="main">
+			<div class="hot-car">
+				<div class="m-index-title">
+					<div class="t-left">
+						<h1>热销车推荐</h1>
+						<h2>车巴巴人气王，热门车，他们都爱！</h2>
+					</div>
+					<a class="t-right" href="/{{city.city_alias}}/car">
+						<i class="cbb cbb-plus"></i>更多车型
+					</a>
+				</div>
+				<div class="bd clearfix">
+					<div class="ad"> 
+						<a href="http://www.chebaba.com/financial.htm" target="_blank"><img src=" {{ static('site/images/page/index/hot_ad1.jpg') }}"/></a>
+						<a class="mt-10" target="_blank" href="http://www.chebaba.com/rentcar.htm"><img src="{{static('site/images/page/index/hot_ad2.jpg') }}"/></a>
+					</div>
+					<ul class="clearfix"> 
+						<li>
+							<div class="pic">   
+								<a href="/{{city.city_alias}}/car/x-trail" target="_blank"><img src="{{static('site/images/page/index/car_xqj.jpg') }}"  title="东风日产 新势代奇骏" alt="东风日产 新势代奇骏"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/x-trail" target="_blank">东风日产 新势代奇骏</a></div>
+								<div class="row price">官方指导价：<strong>18.18</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=10220&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+						<li>  
+							<div class="pic">
+								<a href="/{{city.city_alias}}/car/sylphy" target="_blank"><img src="{{ static('site/images/page/index/car_xxy.jpg') }}"  title="东风日产 全新轩逸" alt="东风日产 全新轩逸"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/sylphy" target="_blank">东风日产 全新轩逸</a></div>
+								<div class="row price">官方指导价：<strong>12.50</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=492915&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+						<li>
+							<div class="pic">  
+								<a href="/{{city.city_alias}}/car/lannia" target="_blank"><img src="{{ static('site/images/page/index/car_xln.jpg') }}"  title="东风日产 蓝鸟" alt="东风日产 蓝鸟"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/lannia" target="_blank">东风日产 蓝鸟</a></div>
+								<div class="row price">官方指导价：<strong>10.59</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=50001&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+						<li>
+							<div class="pic">  
+								<a href="/{{city.city_alias}}/car/teana" target="_blank"><img src="{{ static('site/images/page/index/car_xtl.jpg') }}"  title="东风日产 新天籁" alt="东风日产 新天籁"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/teana" target="_blank">东风日产 新天籁</a></div>
+								<div class="row price">官方指导价：<strong>17.78</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=49291&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+						<li>
+							<div class="pic">  
+								<a href="/{{city.city_alias}}/car/qashqai" target="_blank"><img src="{{ static('site/images/page/index/car_xxk.jpg') }}"  title="东风日产 全新逍客" alt="东风日产全 新逍客"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/qashqai" target="_blank">东风日产 全新逍客</a></div>
+								<div class="row price">官方指导价：<strong>13.98</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=101401&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+						<li>
+							<div class="pic">
+								<a href="/{{city.city_alias}}/car/t70" target="_blank"><img src="{{ static('site/images/page/index/car_t70.jpg') }}"  title="东风日产 启辰T70" alt="启辰T70"/></a>
+							</div>
+							<div class="info">
+								<div class="row name"><a href="/{{city.city_alias}}/car/t70" target="_blank">东风日产 启辰T70</a></div>
+								<div class="row price">官方指导价：<strong>8.98</strong>万起</div>
+								<a class="btn u-btn-pink" target="_blank" href="/{{city.city_alias}}/info/apply?series_id=49300&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-09-0000">获取优惠</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!-- <ul class="bd">
+					<li>
+						<div class=""></div>
+					</li>
+				</ul> -->
+			</div>
+			<div class="activity">
+				<div class="m-index-title">
+					<div class="t-left">
+						<h1>厂家活动</h1>
+						<h2>厂家给力促销活动，买车更实惠！</h2>
+					</div>
+					<a class="t-right" href="https://df.shopmodule.jaeapp.com/index.php/active">
+						<i class="cbb cbb-plus"></i>更多活动
+					</a>
+				</div>
+				<div class="bd">
+					<div class="big u-scale" class="u-scale"> 
+						<a href="http://www.chebaba.com/chenfeng.htm" target="_blank">
+							<img src="{{ static('site/images/page/index/activity_1.jpg') }}"  title="还可享受1000元购车优惠券！" alt="9.9元租晨风"/>
+							<div class="info">
+								<div class="name">9.9元租晨风</div>
+								<div class="sign">还可享受1000元购车优惠券！</div>
+							</div>
+							<div class="mask"></div>
+						</a>
+					</div>
+					<div class="small u-scale">
+						<a href="http://fun.chebaba.com/activities/sylphy.html" target="_blank">
+							<img src="{{ static('site/images/page/index/activity_2.jpg') }}"  title="科技升级 智驱登场" alt="全新轩逸"/>
+							<div class="info">
+								<div class="name">全新轩逸</div>
+								<div class="sign">科技升级 智驱登场</div>
+							</div>
+							<div class="mask"></div>
+						</a>
+					</div>
+					<div class="small u-scale"> 
+						<a href="http://fun.chebaba.com/activities/lannia.html" target="_blank">
+							<img src="{{ static('site/images/page/index/activity_3.jpg') }}"  title="全民约驾 为蓝鸟点赞" alt="春天来了春天礼"/>
+							<div class="info">
+								<div class="name">春天来了春天礼</div>
+								<div class="sign">全民约驾 为蓝鸟点赞</div>
+							</div>
+							<div class="mask"></div>
+						</a>
+					</div>
+					<div class="small u-scale"> 
+						<a href="http://fun.chebaba.com/activities/rate.html" target="_blank">
+							<img src="{{ static('site/images/page/index/activity_4.jpg') }}"  title="贷款购车无压力" alt="低首付零利率"/>
+							<div class="info">
+								<div class="name">低首付零利率</div>
+								<div class="sign">贷款购车无压力</div>
+							</div>
+							<div class="mask"></div>
+						</a>
+					</div>
+					<div class="small u-scale"> 
+						<a href="javascript:;" target="_blank">
+							<img src="{{ static('site/images/page/index/activity_5.jpg') }}" title="我能贷10万，你能贷多少？ 新势代奇骏" alt="贷款额度查询"/>
+							<div class="info">
+								<div class="name">贷款额度查询</div>
+								<div class="sign">我能贷10万，你能贷多少？</div>
+							</div>
+							<div class="mask"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block footerinfo %}
+	<div class="service">
+		<img src="{{ static('site/images/page/index/service.jpg') }}">
+	</div>	  
+	{{ super() }}
+{% endblock %}
+{% block copyright %}
+    <div class="chebaba-footer-bottom"> 
+        <div class="chebaba-container">
+            <a href="/{{city.city_alias}}" class="btn-logo-footer"></a>
+            <!-- 修改位置 -->
+            <p>友情链接：<a href="http://http://dongfeng-nissan.com.cn/" target="_blank">东风日产官方网站</a><a href="http://dongfeng-nissan.tmall.com" target="_blank">东风日产天猫旗舰店</a><a class="last" href="http://www.bitauto.com" target="_blank">易车网</a><br/>
+				Copyright<sup>&copy;</sup>2008-2015 chebaba.com，All Rights Reserved
+                粤ICP备1505 版权所有<span>东风日产乘用车公司</span></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

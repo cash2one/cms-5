@@ -1,0 +1,23 @@
+.m-citypro{color: #333; width:70%;position: absolute;top: 50px;  text-align: center;}
+.m-citypro .hd{height: 30px; width: 100%; }
+.m-citypro .hd i,.m-citypro .hd em{display:inline-block; position: absolute; border:15px solid transparent;}
+.m-citypro .hd i{top:2px; border-bottom-color: #fff}
+.m-citypro .hd em{top:1px; border-bottom-color: #999}
+.m-citypro .cnt{overflow: hidden;border: solid 1px #ccc;border-radius: 3px;}
+.m-citypro .cnt .list_l,.m-citypro .cnt .list_r{float: left;  height: 670px;overflow-y:scroll;}
+.m-citypro .cnt .list_l{border-right: 1px solid #ccc;background-color: #f5f5f5;width:45%;}
+.m-citypro .cnt .list_r{width:55%;background-color: #fff;}
+.m-citypro .cnt .list_l .itm,.m-citypro .cnt .list_r .itm {line-height: 5.5rem;}
+.m-citypro .cnt .list_l .width{ background-color: #fff}
+.m-citypro .cnt .list_r .red{ color: #d56e7a}
+.m-citypro .cnt .list_r .itm {border-bottom: 1px solid #f0eff7;} 
+
+
+/*遮罩层*/
+.m-mark{height: 100%;width: 100%;background-color: rgba(0,0,0,.6);z-index: 100;position: fixed;top: 0;display: none;}
+.m-mark .info{position: absolute;width: 80%;opacity: 1;background-color: #fff;border-radius: 8px;left: 50%;top: 30%;margin-left:-40%;color: #2b2b2b;font-size: 3rem;}
+.m-mark .hd{color: #c90028;font-size: 3.2rem;padding: 15px 15px 10px 25px;border-bottom: 1px solid #c90028;}
+.m-mark .cnt{padding: 15px 25px 30px 25px;color: #666;line-height: 4rem;}
+.m-mark .ft{border-top: 1px solid #dcdcdc;overflow: hidden;}
+.m-mark .ft .btn:first-child{border-right:1px solid #dcdcdc;}
+.m-mark .ft .btn{float: left;text-align: center;padding:15px 0;width: 50%;box-sizing:border-box;-webkit-box-sizing:border-box;}

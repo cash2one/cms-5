@@ -1,0 +1,116 @@
+{% import 'test/headmacro.html' as headmacro %}
+{% import 'test/common.html' as common with context %}
+
+{% if DEBUG %}
+    {% if sub_id == '100' %}
+        <div>begin export</div>
+            {{ save_page('test/all_api.html', 'test/export.html') }}
+        <div>end export</div>
+    {% else %}
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                {% block meta %}
+                    <meta charset="utf-8" />
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <meta name="applicable-device" content="pc">
+                {% endblock %}
+
+                <title>
+                    {% block title %}
+                        li chuang test
+                    {% endblock %}
+                </title>
+
+                {% block css %}
+                    <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+                    <link href="{{ static('3rd/jsonview/jquery.jsonview.min.css') }}" rel="stylesheet" type="text/css" />
+
+                    <link href="{{ static('test/css/test.css') }}" rel="stylesheet" type="text/css" />
+                    <link href="{{ static('test/css/basic.css') }}" rel="stylesheet" type="text/css" />
+                    <link href="{{ static('test/css/classic.css') }}" rel="stylesheet" type="text/css" />
+                    <link href="{{ static('test/css/pygments.css') }}" rel="stylesheet" type="text/css" />
+                {% endblock %}
+
+                {% block js %}
+                    <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ static('3rd/jsonview/jquery.jsonview.min.js') }}"></script>
+
+                    <script type="text/javascript" src="{{ static('test/js/test.js') }}"></script>
+
+                    <script type="text/javascript">
+                        var json_dict = {};
+                        window.onload = function() {
+                            init_page();
+                        };
+                    </script>
+                {% endblock %}
+            </head>
+
+            {% block body %}
+                <body>
+                    <div id="navbar" class="navbar navbar-default">
+                        <div id="navbar-container" class="navbar-container">
+                            <a href="#" class="pull-left">
+                                <img class="df_logo" src="{{ static('test/images/logo.png') }}" alt="logo" />
+                            </a>
+                            <div class="navbar-header pull-left">
+                                <a href="#" class="navbar-brand">
+                                    <small>
+                                        车巴巴
+                                    </small>
+                                </a>
+                            </div>
+                            <div class="navbar-buttons navbar-header pull-right ">
+                                <ul class="nav">
+                                </ul>
+                            </div>
+                            <nav class="navbar-menu pull-left">
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="main-container" id="main-container">
+                        <div class="panel-group" id="accordion">
+                            
+                                {% set car_catalog_data=run(API.CAR_CATALOG_DATA,city_id=20222,car_type=3) %}
+                                {{ dumps_json(car_catalog_data, add_pre=True)|safe }}
+                            
+
+                            <br />
+
+                            <br />
+                            datetime_now = {{ datetime_now() }}<br />
+                            {{ "2016-01-29 00:00:00" < datetime_now()|date("Y-m-d H:i:s") }}
+                            {{ 'abc' if 1 > 2 else ('123' if 2 > 3 else ('456' if 3 > 4 else '789')) }}
+                            {{ 
+                                common.api_tag(
+                                    name='test',
+                                    tag_id='test',
+                                    api_list=[
+                                        {
+                                            'api_name': API.CAR_CATALOG_DATA,
+                                            'kwargs': {
+                                                'city_id': 20222,
+                                                'car_type': 3,
+                                            }
+                                        },
+                                       
+                                    ]
+                                )
+                            }}
+                        </div>
+                    </div>
+                </body>
+            {% endblock %}
+        </html>
+    {% endif %}
+{% else %}
+    test
+{% endif %}
+
+
+
+

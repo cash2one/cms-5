@@ -1,0 +1,202 @@
+{% extends 'base/base.html' %}
+{# 获取区域 #}
+{% set rCounty  = request.GET.get('county',0)|int %}
+{# 获取品牌 #}
+{% set rBrand  = request.GET.get('brand',0)|int %}
+{# 获取车系 #}
+{% set rSeries  = request.GET.get('series',0)|int %}
+{# 经销商、筛选条件 #}
+{% set dealer=run(API.DEALER_DEFAULT, city_id=city.city_id, county_id=rCounty,brand_id=rBrand,series_id=rSeries,per_page=10, page=1,newest_activity=1) %}
+{# 经销商-总页数 #}
+{% if dealer and dealer.filter_count %}
+    {% set pageTotal = dealer.page_count%}
+    {% set dealerList = dealer.dealer_list%}
+{% endif %}
+{% block seo %}
+{% set cur_county=run(API.PLACE_COUNTY_BY_ID, county_id=rCounty) %}
+{% set cur_brand=run(API.CAR_BRAND_LIST_BY_ID, car_brand_id=rBrand) %}
+{% set cur_series=run(API.CAR_SERIES_BY_ID, car_series_id=rSeries) %}
+{#<p> {{ dumps_json(cur_brand, add_pre=True)|safe }}</p>
+<p> {{ dumps_json(cur_county, add_pre=True)|safe }}</p>#}
+{% set str_county = "" %}}{#全部时不显示,不为空时重置#}
+{% set str_series = "" %}{#全部时不显示,不为空时重置#}
+{% if cur_county%}
+{% set str_county = cur_county.county_name %}
+{%endif%}
+{% if cur_series%}
+{% set str_series = cur_series.name %}
+{%endif%}
+<title>{{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}经销商_4s店地址、电话、活动 - {{platform}}</title>
+<meta name="description" content="{{platform}}{{city.city_name}}汽车经销商频道为您提供{{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}4S店大全,包括{{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}4S店地址, {{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}4S店电话等联系方式,让您轻松了解汽车{{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}4S店各类信息。">
+<meta name="Keywords" content="{{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}4s店, {{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}, {{city.city_name}}{{str_county}}{{cur_brand|map(attribute='name')|join()}}{{str_series}}">
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/dealer.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+    {{ super() }} 
+    <script>
+        var dealerOps = {
+          url:'{{rest(API.DEALER_DEFAULT)|safe }}',
+          param:{city_id:{{city.city_id}},county_id:{{rCounty}},brand_id:{{rBrand}},series_id:{{rSeries}},per_page:10,page:1,newest_activity:1}
+        }
+        // 总页数
+        {% if pageTotal %}
+            var pageToal = {{pageTotal}};
+            //数据
+            var pythonData = {
+                dealer:{{ dumps_json(dealerList)|safe }}
+            }
+        {% else %}
+            var pageToal = 1;
+            //数据
+            var pythonData = {
+                dealer:[]
+            }
+        {% endif %}
+        
+    </script>
+    <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/pagePlug.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/page/dealer.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/common.js') }}"></script>
+{% endblock %}
+{% block main %}
+{% set county=run(API.LIST, model=MODELS.T_BASE_COUNTY,city_id=city.city_id) %}
+{% set brandAll=run(API.LIST, model=MODELS.T_BASE_CAR_BRAND) %}
+
+{# <p> {{ dumps_json(dealer, add_pre=True)|safe }}</p> #}
+    <div class="dealer-wrap">
+       <!-- <div class="m-crumb">
+            <span>当前位置：</span>
+            <a href="/{{city.city_alias}}">首页</a>
+            <span class="separator">></span>
+            <a href="/{{city.city_alias}}/dealer">找好店</a>
+        </div>-->
+        <div class="city g-box">
+            {# <div id="J-select-link" class="hd">
+                当前城市：{{city.city_name}} 
+                <div class="m-btn-group">
+                    <div class="btn">
+                      <span class="val">切换城市</span>
+                      <span class="cbb cbb-angle-down"></span>
+                    </div>
+                   <ul class="dropdown-ul">
+                        {% set cityList = list_objs(model=MODELS.T_BASE_CITY,  province_id=city.province_id) %}
+
+                        {% for voCity in cityList %}
+                          <li><a href="javascript:;" data-cityId="{{ voCity.city_id }}">{{ voCity.city_name }}</a></li>
+                        {% endfor %} 
+                   </ul>
+                </div>
+            </div> #}
+            <div id="J-filter" class="bd m-filter-a">
+                {% set rCounty  = request.GET.get('county',0)|int %}
+                <dl class="J-filter-county clearfix" data-type="county">
+                    <dt>区域</dt>
+                    <dd>
+                        <a {% if rCounty == 0 %} class="active" {% endif %} href="javascript:;">全部</a>
+                        {% set areaList=run(API.LIST, model=MODELS.T_BASE_COUNTY,city_id=city.city_id) %}
+                        {% for voAreaList in areaList %}
+                             <a {% if voAreaList.county_id|int == rCounty %}class="active"{% endif %} href="javascript:;" data-id="{{voAreaList.county_id}}">{{voAreaList.county_name}}</a>
+                        {% endfor %} 
+                    </dd>
+                </dl>
+                <dl class="J-filter-brand clearfix" data-type="brand">
+                    {% set rBrand  = request.GET.get('brand',0)|int %}
+                    <dt>品牌</dt>
+                    <dd> 
+                        <a {% if rBrand == 0 %} class="active" {% endif %} href="javascript:;">全部 </a>
+                        {% set brandList=run(API.LIST, model=MODELS.T_BASE_CAR_BRAND) %}
+                        {# <p> {{ dumps_json(brandList, add_pre=True)|safe }}</p> #}
+                        {% for voBrandList in brandList %}
+                            <a {% if voBrandList.id|int == rBrand %}class="active" {% endif %} href="javascript:;" data-id="{{voBrandList.id}}">{{ voBrandList.car_brand_cn }}</a>
+                        {% endfor %} 
+                    </dd>
+                </dl>
+                {%if rBrand>0 %}
+                <dl class="J-filter-series clearfix" data-type="series">
+                    <dt>车系</dt>
+                    <dd>
+                        <!-- 492912 -->
+                        <a {% if rSeries == 0 %} class="active" {% endif%} href="javascript:;">全部</a>
+                        {# {% set seriesList=run(API.LIST, model=MODELS.T_BASE_CAR_SERIES) %} #}
+                        {% if dealer and dealer.car_series_list %}
+                            {% for voSeriesList in dealer.car_series_list %}
+                                 <a {% if voSeriesList.id|int == rSeries %}class="active" {% endif %} href="javascript:;" data-id="{{voSeriesList.id}}">{{ voSeriesList.name }}</a>
+                            {% endfor %} 
+                        {% endif %}
+                    </dd>
+                </dl>
+                {% endif %}
+            </div>
+        </div>
+        <div class="condition g-box">
+            <div class="hd clearfix">
+                <div id="J-condition" class="hd-l fl">
+                    当前找店条件：
+                </div>
+                <div class="more fr">
+                    {% if dealer %}
+                    {{city.city_name}}共 {{dealer.city_count}} 家专营店　其中 <b class="num">{{dealer.filter_count}}</b> 家专营店满足条件
+                    {% endif %}
+                </div>  
+            </div>
+            {% if dealer and dealer.filter_count > 0 %}
+            <ul class="bd" ms-controller="c-dealer">
+                <div class="m-loading" ms-visible="loading"><img src="/static/site/images/lib/loding.gif"/></div>
+                <li ms-repeat="array" ms-visible="!loading">
+                    <div class="block-l fl"> 
+                        <a class="pic" ms-attr-href="/{{city.city_alias}}/dealer/[%el.id%]"><img ms-attr-src="[%el.dlr_image_url%]" ms-attr-alt="[% el.dlr_short_name %]"/></a>
+                        <div class="m-star clearfix">
+                            <span class="label">评分:</span> 
+                            <div class="icon">
+                                <i ms-css-width="[%el.sales_score*20%]%"></i>
+                                <i class="icon_bg"></i>
+                            </div>
+                            <span class="score">[% el.sales_score|number(2) %]</span>
+                        </div> 
+                    </div> 
+                    <div class="block-r m-dealer-data">
+                        <div class="data">
+                            <a class="title" ms-attr-href="/{{city.city_alias}}/dealer/[%el.id%]">
+                                <i ms-if="el.is_vip == 1" class="vip"></i>
+                                [% el.dlr_short_name %]
+                            </a>
+                            <p>地址：[% el.cont_address %]<a class="map" ms-attr-href="/dealer/[%el.id%]#map" target="_blank"><i class="cbb cbb-map-marker"></i>地图</a></p>
+                            <p>电话：[% el.service_tel %]</p>
+                            <p>品牌：[% el.cbb_car_brand_code|join(',') %]</p>
+                        </div>
+                        <dl class="m-promotion">
+                            <dt>促销活动</dt>  
+                            <dd><a ms-attr-href="[% el.dealer_activity_list[0].url%]"><i class="new"></i>[%el.dealer_activity_list!=''?el.dealer_activity_list[0].activity_title:'暂无内容'%]</a></dd>
+                            <dd class="last" ms-if="el.activity_list !='' && el.activity_list!=null"><a ms-attr-href="[% el.activity_list[0].url%]"><i class="hot"></i>[%el.activity_list[0].activity_title%]</a></dd>
+                            <dd class="last" ms-if="el.activity_list =='' || el.activity_list ==null"><!--行内样式暂时使用-->
+                                <a><i class="hot"></i>暂无内容</a>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="m-label">
+                        <span ms-repeat="el.service_auth">
+                            <a ms-class="[% color[$index]%]" href="javascript:;"> [% el %]</a> 
+                        </span>
+                    </div>
+                    <a class="enter-btn u-popover top" ms-attr-href="/beijing/dealer/[%el.id%]">
+                        去这家逛逛吧！
+                        <span class="arrow"></span>
+                    </a>
+                </li> 
+            </ul>
+            {% else %}
+            <div class="select-null">
+                    <p><img src="{{ static('site/images/lib/not-find.jpg')  }}"> 没有找到符合条件的专营店</p>
+            </div>
+            {% endif %}
+            {% if pageTotal and pageTotal>1 %}
+                <div class="m-page"></div>
+            {% endif %}    
+        </div>
+    </div>
+{% endblock %}
+

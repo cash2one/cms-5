@@ -1,0 +1,8 @@
+
+{% macro head_macro(head_type) -%}
+    {% if not head_type %}
+        <p> head type is null </p>
+    {% elif head_type %}
+        <p>has head type : {{ head_type }}</p>
+    {% endif %}
+{%- endmacro %}

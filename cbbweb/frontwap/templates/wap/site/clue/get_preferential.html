@@ -1,0 +1,305 @@
+{% extends 'wap/base/base.html' %}
+{% set key = request.GET['key'] %}
+{% if request.GET['car_series'] %}
+  {% set car_series_id = request.GET['car_series'] %}
+{% endif %}
+{% if request.GET['car_type'] %}
+  {% set car_type_id = request.GET['car_type'] %}
+{% endif %}
+{% if request.GET['dealer_id'] %}
+  {% set dealer_id = request.GET['dealer_id'] %}
+{% endif %}
+{% set clueType  = request.GET.get('clueType',7)|int %} 
+
+{% block title %}   
+    {% if clueType == 2%}预约试驾{% else %}获取优惠{% endif %}
+{% endblock %}
+ 
+{% block description%}
+  <meta name="Keywords" content="获取优惠，预约试驾">
+  <meta name="description" content="{{sign}}获取优惠，预约试驾">
+{% endblock %}
+
+{% block body %}
+  {% csrf_token %}
+  <div class="g-topNav">
+      <div class="m-topNav">
+        <div class="left"><i class="u-icon u-icon-left" onclick="history.go(-1)"></i></div>
+        <div class="title">获取优惠</div>
+        <div class="right">
+          <ul class="u-menu f-fr f-cb">
+            <li><i class="u-icon u-icon-menu j-menu"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="g-wrap">
+      <div class="m-pannel">
+        <div class="head">
+          <div class="tit">请选择您中意的车型并填写个人信息</div>
+        </div>
+        <div class="body">
+          <ul class="m-lists-lg">
+          {% if car_series_id %}
+            {# {{ dumps_json(car_series_id,add_pre=True)|safe }} #}
+            {% set car_series = get_object(MODELS.T_BASE_CAR_SERIES, id=car_series_id) %}
+            {% set series_cn = car_series.car_series_cn %}
+          {% else %}
+            {% set car_series_list = run(API.FINANCE_CAR_SERIES_LIST,dealer_id=dealer_id) %}
+            {% set car_series = car_series_list[0] %}
+            {% set series_cn = car_series.name %}
+            {% set car_series_id = car_series_list[0].id %}
+          {% endif %}
+            <li>
+              <div class="j-slider" data-flag="series" href="javascirpt:;"><span id="series" data-series="{{ car_series_id }}" >{{ series_cn }}</span> 
+                <i class="u-icon u-icon-right"></i>
+              </div>
+            </li>
+            <li>
+              <div class="j-slider" data-flag="type" href="javascirpt:;">
+                {% if car_type_id %}
+                  <span id="type" data-type="{{ car_type_id }}">
+                  {% set car_type =get_object(MODELS.T_BASE_CAR_TYPE,id=car_type_id) %}
+                  {{ car_type.car_type_name }}
+                  </span>
+                {% else %}
+                  {% set car_type = list_objs(model=MODELS.T_BASE_CAR_TYPE, orderby=['-guide_price'],car_series_id=car_series_id,is_enable=1) %}
+                  
+                  <span id="type" data-type="{{ car_type[0].id }}">
+                  {{ car_type[0].car_type_name}}
+
+                {% endif %}
+                </span>
+                <i class="u-icon u-icon-right"></i>
+              </div>
+            </li>
+            <li class="f-pr"><input id="userName" class="u-input-user" type="text" placeholder="请输入您的姓名"/>
+            <span class="error-tip" style="display:none">请输入姓名</span></li>
+            <li class="f-pr"><input id="userTel" class="u-input-tel" type="text" placeholder="请输入您的手机号"/>
+            <span class="error-tip" style="display:none">请输入正确的手机号码</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="m-pannel f-pb-100">
+        <div class="head">
+          <div class="tit">选择经销商，最多可选择3家</div>
+        </div>
+        <div id="J-dealer-frame" class="body">
+          <ul class="m-lists-check j-checkD">
+          {# {% if request.GET['dealer_id'] %}
+            {% set dealerId = request.GET['dealer_id'] %}
+            {% set dealer = run(API.DEALER_BY_ID,dealer_id=dealerId) %}
+            <li>
+              <div class="fl f-lineH">
+                <i class="u-icon u-icon-radio j-radio"></i>
+              </div>
+              <div class="am" data-store="{{ dealer.dlr_code }}">
+                <h3 >{{ dealer.dlr_full_name }}</h3>
+                <p class="d">{{ dealer.cont_address }}</p>
+              </div>
+              <div class="fr">
+                
+              </div>
+            </li>
+          {% endif %} #}
+          </ul>
+        </div>
+      </div>
+      {# <div class="gray-blank"></div> #}
+      <button class="u-submit f-button-fixed">确认提交</button>
+    </div>
+  
+    <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BMvPNolfzSZK2FTuPPk0i9Lp"></script>
+    <script src="{{ static ('wap/site/js/lib/jq.carSelect.js') }}"></script>
+    <script src="{{ static ('wap/site/js/lib/jq.clueSave.js') }}"></script>
+    <script>
+      var car_series_id ="{{ car_series_id }}",
+          car_type_id ="{{ car_type_id }}",
+          api_car_type = null,
+          pos = [];
+
+      var dealerOps = {
+        city_id:'{{city.city_id}}',
+        county_id:'0',
+        series_id:car_series_id,
+        latitude:'',
+        longitude:'',
+        per_page:4,
+        page:1
+      };
+
+      function ajaxDealer(){
+        
+        CBB.loading('J-loading','.m-lists-check');
+ 
+        $.ajax({
+          url:'{{ rest(API.DEALER_DISTANCE) }}',
+          data:dealerOps,
+          type:'GET',
+        })
+        .done(function(data){
+          var content = '';
+          $('.m-lists-check').empty();
+          if(data.result.dealer_list.length>0){
+            $.each(data.result.dealer_list,function(idx,itm){
+              if(itm){
+                itm.cont_address=itm.cont_address?itm.cont_address:'/';
+                content = '<li>\
+                      <div class="fl f-lineH">\
+                        <i class="u-icon u-icon-radio j-radio"></i>\
+                      </div>\
+                      <div class="am" data-store="'+itm.dlr_code+'">\
+                        <h3 >'+itm.dlr_full_name+'</h3>\
+                        <p class="d">'+itm.cont_address+'</p>\
+                      </div>\
+                      <div class="fr">\
+                        <p class="map"><i class="u-icon u-icon-map"></i></p>\
+                        <p>'+itm.distance.toFixed(2)+'km</p>\
+                      </div>\
+                    </li>';
+                $('.m-lists-check').append(content);
+              }
+            })
+            for(var i = 0;i<3&&i<($('.m-lists-check li').length);i++){
+              $('.m-lists-check li:eq('+i+') .u-icon-radio').addClass('dealer_checked');
+            }
+          }else{
+            content = '<li class="li-no-record"><img class="no-record" src="{{ static ('images/lib/no_record.png') }}"/></li>' 
+            $('.m-lists-check').html(content);
+          }
+          $('#J-loading').remove();
+        });
+      }
+
+      $(function(){
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            pos.push(Number(r.point.lat));
+            pos.push(Number(r.point.lng));
+
+            dealerOps.latitude = pos[0];
+            dealerOps.longitude = pos[1];
+            ajaxDealer(dealerOps);
+          }
+          else {
+            console.log('fail');
+          }        
+        },{enableHighAccuracy: true});
+        
+        $('body').on('click',".j-checkD li",function(){
+          $(this).find('.j-radio').toggleClass('dealer_checked');
+          if($('.j-checkD .dealer_checked').length>3){
+            $(this).find('.j-radio').removeClass('dealer_checked');
+          }
+        });
+
+        $('body').delegate('.j-choseSeries', 'click', function(event) {
+          var seriesId = $(this).attr('series-id');
+          dealerOps.series_id = seriesId;
+          ajaxDealer(dealerOps);
+        });
+
+        $('.u-input-user').blur(function(){
+          if(!$(this).val()){
+            $('.error-tip:first').show();
+            errorGone();
+          }
+        });
+        $('.u-input-tel').blur(function(){
+          var tel = $(this).val();
+          if(!validatemobile(tel)) {
+            $('.error-tip:last').show();
+            errorGone();
+          }
+        });
+        $('.error-tip').click(function(){
+          $(this).hide();
+          $($(this).siblings()[0]).val('').focus();
+        });
+        //车型车系选择插件
+        $('.j-slider').click(function(){
+          var options = {
+            target:'body',
+
+            type:$(this).data('flag'),
+
+            api_car_type:{{ dumps_json(run(API.CAR_TYPES_BY_CAR_SERIES_ID,car_series_id=car_series_id), add_pre=false)|safe }},
+
+            api_car_series:{{ dumps_json(list_objs(model=MODELS.T_BASE_CAR_SERIES,is_enable=1, orderby=['-id']), add_pre=false)|safe }},
+
+            car_series_name:{{ dumps_json(get_object(MODELS.T_BASE_CAR_SERIES, id=car_series_id),add_pre=false)|safe }},
+
+            reset_url:'{{ rest(API.CAR_TYPES_BY_CAR_SERIES_ID) }}'
+          };
+          $(this).selectCar(options);
+        });
+
+        //错误提示自动消失
+        function errorGone (){
+          setTimeout(function(){
+            $('.error-tip').hide();
+          },3000);
+        };
+        
+        //手机号码验证
+        function validatemobile(mobile) { 
+          if(mobile.length==0) {  
+            return false; 
+          }
+
+          if(mobile.length!=11) {  
+             return false; 
+          } 
+          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+          if(!myreg.test(mobile)) {  
+             return false; 
+          } 
+          return true;
+        }
+
+        $('.u-submit').click(function(){
+          $('.g-wrap').append('<div id="clueFlock" class="f-black-lock"></div>');
+          $('.g-wrap').append('<img id="clueLoading" class="m-clue-loading" src="{{ static ('images/lib/clue_loading.gif') }}">');
+          var name = $.trim($('#userName').val()),
+              phone = $.trim($('#userTel').val()),
+              options = {
+                ajaxData:{
+                  url:'{{ rest(API.CLUE_SAVE_API) }}',
+                  type:'POST',
+                  data:{
+                    name:name,
+                    phone:phone,
+                    dlrCode:'',
+                    carTypeId:$('#type').data('type'),
+                    carSeriesId:$('#series').data('series'),
+                    pageId:"{{ key }}",
+                    activityName:key_name['{{ key }}'],
+                    csrfmiddlewaretoken:jQuery("[name='csrfmiddlewaretoken']")[0].attributes["value"].value,
+                    clueType:"{{ clueType }}",
+                    source:17
+                  }
+                },
+                locationData:{
+                  // url:'{{ city_url('site.perfect_data') }}?car_series={{ car_series_id }}'+'&car_type='+$('#type').data('type')
+                  url:'{{ city_url('site.left_done') }}',
+                  flag:'{{ key }}',
+                  callback:function(data){
+                    _smq.push(['custom','cbb-lead-done',data.clueCode]);
+                    console.log(_smq)
+                  }
+                }
+              };
+          for(var i = 0;i<$('.dealer_checked').length;i++){
+            options.ajaxData.data.dlrCode = $.attr($('.am')[i],'data-store');
+            $(this).clueSave(options);
+          };
+        });
+        console.log(_smq)
+      });
+
+
+    </script>
+{% endblock  %}

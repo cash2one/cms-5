@@ -1,0 +1,119 @@
+.hui-wrap .bd ul {
+  width: 1100px;
+}
+.hui-wrap .bd li {
+  width: 480px;
+  height: 335px;
+  background: #FFF;
+  position: relative;
+  margin: 30px 30px 0 0;
+  float: left;
+}
+.hui-wrap .bd li:hover .info-r {
+  color: #7a7a7a;
+}
+.hui-wrap .bd li:hover .info-r strong {
+  color: #ca0329;
+}
+.hui-wrap .bd li a,
+.hui-wrap .bd li img {
+  display: block;
+}
+.hui-wrap .bd li .pic {
+  width: 480px;
+  height: 240px;
+  position: relative;
+}
+.hui-wrap .bd li .pic .intro {
+  display: none;
+  width: 100%;
+  background: #666;
+  background: rgba(0, 0, 0, 0.5);
+  height: 44px;
+  line-height: 44px;
+  color: #FFF;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.hui-wrap .bd li .pic a,
+.hui-wrap .bd li .pic img {
+  height: 100%;
+  margin: 0 auto;
+}
+.hui-wrap .bd li .pic a {
+  overflow: hidden;
+  height: 240px;
+}
+.hui-wrap .bd li .pic:hover .intro {
+  display: block;
+}
+.hui-wrap .bd li .info {
+  height: 63px;
+  margin-top: 15px;
+  padding: 0 15px;
+}
+.hui-wrap .bd li .info:hover .name {
+  color: #ca0329;
+}
+.hui-wrap .bd li .info:hover .price {
+  color: #494949;
+}
+.hui-wrap .bd li .info:hover .info-r {
+  color: #ca0329;
+}
+.hui-wrap .bd li .info:hover .info-r strong {
+  color: #fd0131;
+}
+.hui-wrap .bd li .info-l {
+  width: 257px;
+  float: left;
+  border-right: 1px solid #EAE9E9;
+}
+.hui-wrap .bd li .info-r {
+  margin-left: 307px;
+  color: #7a7a7a;
+}
+.hui-wrap .bd li .info-r strong {
+  color: #ca0329;
+  font-family: 'Arial';
+  font-size: 38px;
+  margin-right: 5px;
+}
+.hui-wrap .bd li .name {
+  height: 35px;
+  overflow: hidden;
+  font-size: 26px;
+  color: #4F4F4F;
+  font-weight: bold;
+}
+.hui-wrap .bd li .name:hover {
+  color: #c90329;
+}
+.hui-wrap .bd li .price {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.hui-wrap .bd li .label {
+  width: 54px;
+  height: 44px;
+  background: url(../../images/page/bg-detail.png) no-repeat;
+  background-position: -445px -187px;
+  position: absolute;
+  left: 20px;
+  top: -7px;
+  color: #FFF;
+  font-family: '宋体';
+  text-align: center;
+  padding-top: 8px;
+}
+.hui-wrap .bd li .label p {
+  line-height: 15px;
+}
+.hui-wrap .bd li .label strong {
+  font-size: 14px;
+  font-weight: normal;
+}

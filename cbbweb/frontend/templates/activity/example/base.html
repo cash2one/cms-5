@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                example base
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('activity/example/css/example.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <div>
+                <a href="{{ city_url('activity.girl') }}"><button>工服</button></a>
+                <a href="{{ city_url('activity.vest') }}"><button>运动</button></a>
+                <a href="{{ city_url('activity.skirt') }}"><button>礼服</button></a>
+            </div>
+            <div id="girl">
+                <div id="girl_body">
+                    {% block girl_body %}
+                        <img src="{{ static('activity/example/images/girl.png') }}" alt="girl_body">
+                    {% endblock %}
+                </div>
+                <div id="girl_trousers">
+                    {% block girl_trousers %}
+                        <img src="{{ static('activity/example/images/trousers.png') }}" alt="girl_trousers">
+                    {% endblock %}
+                </div>
+                <div id="girl_jacket">
+                    {% block girl_jacket %}
+                        <img src="{{ static('activity/example/images/jacket.png') }}" alt="girl_jacket">
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>

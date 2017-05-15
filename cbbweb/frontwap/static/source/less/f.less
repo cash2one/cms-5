@@ -1,0 +1,107 @@
+/* function */
+.f-pd-s{padding: 10px;}
+.f-pd-m{padding: 30px;}
+.f-pd-l{padding: 50px;}
+.f-pb-l{padding-bottom:135px }
+.f-pb-100{padding-bottom:100px;}
+.f-mt-s{margin-top: 10px;}
+.f-mt-m{margin-top: 20px;}
+.f-cb:after,.f-cbli li:after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
+.f-cb,.f-cbli li{zoom:1;}
+.f-ib{display:inline-block;}
+.f-dn{display:none;}
+.f-db{display:block;}
+.f-fl{float:left;}
+.f-fr{float:right;}
+.f-pr{position:relative;}
+.f-pa{position: absolute;}
+.f-oh{overflow:hidden;}
+.f-fwn{font-weight:normal;}
+.f-fwb{font-weight:bold;}
+.f-tal{text-align:left;}
+.f-tac{text-align:center;}
+.f-tar{text-align:right;}
+.f-taj{text-align:justify;}
+.f-vam,.f-vama *{vertical-align:middle;}
+.f-wsn{word-wrap:normal;white-space:nowrap;}
+.f-pre{overflow:hidden;text-align:left;white-space:pre-wrap;word-wrap:break-word;word-break:break-all;}
+.f-wwb{white-space:normal;word-wrap:break-word;word-break:break-all;}
+.f-ti{overflow:hidden;text-indent:-30000px;}
+.f-ti2{text-indent:2em;}
+.f-lhn{line-height:normal;}
+.f-tdu,.f-tdu:hover{text-decoration:underline;}
+.f-tdn,.f-tdn:hover{text-decoration:none;}
+.f-toe{overflow:hidden;word-wrap:normal;white-space:nowrap;text-overflow:ellipsis;}
+.f-csp{cursor:pointer;}
+.f-csd{cursor:default;}
+.f-csh{cursor:help;}
+.f-csm{cursor:move;}
+.f-usn{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}
+.f-slh(@width){
+  text-overflow: ellipsis;/*这就是省略号喽*/     
+  overflow: hidden;/*设置超过的隐藏*/
+  white-space: nowrap;/*设置不折行*/
+  max-width: @width;
+}
+.f-ge{
+  position: relative;
+  margin-bottom: 16px;
+  &:after{
+    border-top: 1px solid @color-border;
+    display: block;
+    content: ' ';
+    height: 16px;
+    background: #f9f9f9;  
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom:-16px;
+  }
+}
+.f-nbb{
+  border-bottom: 0!important;
+}
+.s-color-main{
+  color: @color-main;
+}
+.s-color-secondary{
+  color:@color-main;
+}
+.s-color-blue{
+  color:@color-blue;
+}
+.s-color-font-light{
+  color: @color-font-light;
+}
+.f-lock, .f-lock body{
+  height: 100%;
+  overflow: hidden;
+}
+.f-mar-top{
+  margin-top: 30px;
+}
+.f-full{
+  width: 100%;
+}
+.s-bottom{
+  border-bottom: 2px solid @color-border-lighter;
+}
+.f-fs-lg{
+  font-size: 4.8rem;
+}
+.f-fs-md{
+  font-size: 4rem;
+}
+.f-mr-l{
+  margin-right: 15px;
+}
+.f-mr-r-percent{
+  margin-right: 2%;
+}
+.f-lineH{
+  line-height: 88px !important;
+}
+.f-button-fixed{
+  position:fixed;
+  bottom:0;
+}

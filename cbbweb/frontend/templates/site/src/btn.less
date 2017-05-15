@@ -1,0 +1,124 @@
+// out: null
+//.btn{
+//  border-radius: 0;
+//}
+//@color_r:#c9042a;
+//@color_p:#fb5b5a;
+//@color_pp:#feeeec;
+//@color_b:#0172bb;
+//@color0:#0c0c0c;
+//@color1:#333;
+//@color2:#3c3c3c;
+//@color3:#4f4f4f;
+//@color4:#636363;
+//@color5:#999;
+.u-btn{
+  display: inline-block;
+  *display:inline;
+  zoom:1;
+  font-size: 16px;
+}
+.btn-s (@c, @bgc, @bc) {
+  color: @c;
+  background-color: @bgc;
+  border-color: @bc;
+}
+.u-btn-bg-r{
+  width:140px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 500;
+  .btn-s (@color_pp, @color_r, @color_r);
+  &:hover {
+    .btn-s (@color_pp, @color_p, @color_r);
+  }
+  &:focus {
+    .btn-s (@color_pp, @color_p, @color_r);
+  }
+}
+.u-btn-bg-p{
+  width:140px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-weight: 500;
+  border:1px solid;
+  .btn-s (@color_r, @color_pp, @color_p);
+  &:hover {
+    .btn-s (@color_pp, @color_r, @color_r);
+  }
+  &:focus {
+    .btn-s (@color_pp, @color_r, @color_r);
+  }
+}
+.u-btn-select {
+  width:123px;
+  height: 38px;
+  border:1px solid;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 500;
+  margin-right: 10px;
+  .btn-s (@color0, #f9f9f9, #f9f9f9);
+  &:hover {
+    .btn-s (@color0, #f9f9f9, @color_p);
+  }
+ &:focus {
+    .btn-s (@color0, #f9f9f9, @color_p);
+  }
+}
+.u-btn-bg-g{
+  
+}
+.u-btn-main{
+  width:140px;
+}
+.u-btn-lg{
+  width:180px;
+}
+//.btn-app {
+//  .btn-s(@color1,@main-c);
+//}
+//.btn-black {
+//  .btn-s(#fff,@color1);
+//  &:hover {
+//    color: #fff;
+//  }
+//  &:focus {
+//    color: #fff;
+//  }
+//}
+//.btn-grey{
+//  .btn-s(#fff,@color6);
+//  &:hover {
+//    color: #fff;
+//  }
+//  &:focus {
+//    color: #fff;
+//  }
+//}
+//.u-btn{
+//  display: inline-block;
+//  text-align: center;
+//}
+//.btn-p{
+//  width:180px;
+//}
+//.btn-m {
+//  width: 240px;
+//}
+//.btn-l {
+//  width: 400px;
+//}
+//.btn-more{
+//  width: 142px;
+//  height: 33px;
+//  line-height: 33px;
+//  text-align: center;
+//  font-weight: bold;
+//  padding: 0;
+//}
+//.btn-b{
+//  letter-spacing: 24px;
+//}

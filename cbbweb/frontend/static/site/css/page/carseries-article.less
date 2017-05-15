@@ -1,0 +1,189 @@
+.pagination{
+  text-align: center;
+  font-size: 14px;
+  padding: 40px 0;
+  height: 30px;
+  line-height: 30px;
+  dt{
+    display: inline-block;
+    margin-right: 10px;
+  }
+  dd{
+    display: inline;
+
+  }
+  a{
+    display: inline-block;
+    padding:2px 10px;
+    border-top: 1px solid #e2e2e2;
+    border-left: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    &:last-of-type{
+      border-right: 1px solid #e2e2e2;
+    }
+    &:hover{
+      background-color: #dfdddd;
+    }
+
+  }
+
+}
+
+.carseries-t-l{
+  float: left;
+  width: 745px;
+  .mod-wrap{
+    background-color: #fff;
+    padding: 30px;
+    margin-bottom: 25px;
+  }
+  .txt{
+    h1{
+      text-align: center;
+      font-size:28px;
+      color: #333;
+      font-weight: normal;
+    }
+    h6{
+      text-align: center;
+      font-size:12px;
+      color: #999;
+      border-bottom: 1px solid #e2e2e2;
+      height: 30px;
+      line-height: 30px;
+      font-weight: normal;
+      margin-top: 30px;
+    }
+    .banner{
+      display: block;
+      margin: 15px 0;
+    }
+    p{
+      color: #3c3c3c;
+      font-size: 16px;
+      line-height: 1.8;
+      text-indent: 2em;
+      margin: 10px 0;
+    }
+  }
+
+
+}
+
+.carseries-t-r{
+  float: right;
+  width: 225px;
+  .mod-block{
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 25px;
+    font-size: 12px;
+    color: #6c6b6b;
+  }
+
+  .dealer-info{
+    padding: 5px 0;
+    dt{
+      font-size: 16px;
+      color: #3c3c3c;
+      line-height: 3;
+      img{
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+    }
+    dd{
+      height: 28px;
+      line-height: 28px;
+      span{
+        float: right;
+        width: 50px;
+      }
+      a{
+        .word(70%);
+        float: left;
+        &.qa{
+          display: none;
+          float: right;
+          width:45px;
+          height: 18px;
+          line-height: 18px;
+          color: #c90329;
+          border: 1px solid #c90329;
+          background-color: #ffeded;
+          text-align: center;
+        }
+
+      }
+      &.more{
+        text-align: right;
+        a{
+          width: auto;
+          float: none;
+        }
+      }
+
+      &:hover{
+        span{
+
+          display: none;
+        }
+        a{
+          &.qa{
+            display: block;
+          }
+        }
+      }
+
+    }
+  }
+
+  h3{
+    position: relative;
+    color: #000;
+    font-size: 16px;
+    border-left: 5px solid #c90329;
+    left:-15px;
+    padding-left: 10px;
+    font-weight: normal;
+  }
+  h4{
+    color: #6c6b6b;
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px;
+    padding-top: 20px;
+    border-bottom: 1px dashed #cccccc;
+  }
+  .list{
+    padding-top: 20px;
+    text-align: center;
+    dd{
+      color: #808080;
+    }
+    dt{
+      font-size: 14px;
+      line-height: 2;
+    }
+  }
+
+  .article{
+    padding-top: 12px;
+    li{
+      line-height: 2;
+    }
+    a{
+      color: #808080;
+      .word();
+    }
+  }
+}
+
+.word(@length : 95%){
+  display:block;
+  width:@length;
+  overflow:hidden;
+  white-space:nowrap;
+  -o-text-overflow:ellipsis;
+  text-overflow:ellipsis;
+}

@@ -1,0 +1,233 @@
+<div class="m-pannel" id="test">
+  <div class="head">
+    <div class="tit">经销商活动</div>
+  </div>
+  <div class="body">
+    <div class="u-filter j-filter f-cb city_select">
+      <div id="city" data-type="2" class="item"><span>{{city.city_name}}</span><i class="u-icon u-icon-triangle"></i></div>
+      <div data-type="false" data-filter="price" class="item">按价格 <i class="u-icon u-icon-filter-up"></i> </div>
+      <div data-type="false" data-filter="discount" class="item">按降幅 <i class="u-icon u-icon-filter-up"></i></div>
+    </div>
+    <div class="m-shops" style="min-height: 700px;">
+    {# 根据是否有 sub_id 判断是车型页面还是车系页面 #}
+    {% if sub_id %}
+      {# TODO: 这里写死了 sub_id 48 #}
+      {% set flag = 1 %}
+      {% set sign = sub_id %}
+      {% set shops=run(API.CAR_TYPE_DEALER, city_id=city.city_id, car_type_id=sub_id, per_page=3, page=1, orderby='price', descending=false) %}
+    {% else %}
+      {# TODO: 这里写死了车系car_series_id 492915#}
+      {% set flag = 0 %}
+      {% set sign =0 %}
+      {% set shops=run(API.CAR_SERIES_DEALER, city_id=city.city_id,car_series_id=catalogs.model_instanceid, per_page=3, page=1, orderby='price', descending=false) %}
+    {% endif %}
+    {% if shops %}
+      
+      {% for shop in shops %}
+        <div class="shop">
+          <div class="title">
+            <div class="al">
+              <div class="{{ "vip" if shop.is_vip == 1 }}">{{ shop.dlr_full_name }}</div>
+            </div>
+            <div class="fr">
+              <div class="u-star">
+                <div class="light" style="width:{{ shop.sales_score | float(default=5.00) * 20 }}%">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="grey">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="price">
+            <div class="l">本地参考报价: <span class="s-color-main">{{ '%.2f' | format(shop.offer_price.price/10000) }}万</span> 起</div>
+            <div class="r">
+              {# TODO: 优惠大于 1 万，用万为单位 #}
+              <i class="u-icon u-icon-down"></i> {{ shop.offer_price.discount if shop.offer_price.discount < 10000 else '%.2f' | format(shop.offer_price.discount/10000) ~ '万'}}元
+            </div>
+          </div>
+          {# TODO: 这里缺少了 链接去经销商 的地址字段  shop.link  #}
+          {% if shop.address %}
+          <div class="pos"><a href="{{ shop.link | default(default_value="###") }}"><i class="u-icon u-icon-pos"></i>{{ shop.address }}</a></div >
+          {% endif %}
+          <div class="m-btns2">
+            <a class="u-btn u-btn-default" href="{{ city_url('site.left_data') }}?key={{dealerDriveKey}}&dealer_id={{shop.id}}&clueType=2">预约试驾</a>
+            <a class="u-btn u-btn-default f-fr" href="{{ city_url('site.left_data') }}?key={{dealerDiscountKey}}&dealer_id={{shop.id}}&clueType=7">获取优惠</a>
+          </div>
+        </div>
+        <div class="{{'f-ge' if not loop.last else ''}}">
+          {% if shop.dealer_activity_list %}
+            <a class="u-hotLink" href="{{ shop.dealer_activity_list.url }}}">
+              <h3 class="text"><i class="label labelx">享</i>{{ shop.dealer_activity_list[0].activity_title }}</h3>
+              <i class="u-icon u-icon-right"></i>
+            </a>          
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+    <!--  <div class="more">
+     加载更多
+        </div>  -->
+    </div>
+    <div class="m-shops f-dn" style="min-height: 700px;" ></div>
+    <div class="m-shops f-dn" style="min-height: 700px;" ></div>
+  </div>
+</div>
+<link rel="stylesheet" type="text/css" href="{{ static('wap/site/js/lib/city_sel.css') }}">
+<script type="text/javascript" src="{{ static('wap/site/js/lib/tab.js') }}"></script>
+<script type="text/javascript" src="{{ static('wap/site/js/lib/city_select.js') }}"></script>
+<script>
+  $(function(){
+
+     if({{flag}}==0){
+        var ops ={
+            nav:$('.j-filter'),
+            navItm:$('.j-filter .item'),
+            cnt:$('.m-shops'),
+            cntItm:$('.m-shops .shop'),
+            sign:'page',
+            index:0,
+            lis:'.item',
+            param:{url:'{{rest(API.CAR_SERIES_DEALER)|safe }}',
+                  param:{city_id:{{city.city_id}},car_series_id:{{catalogs.model_instanceid}},per_page:3,page:1,orderby:'price',descending:false}
+                  }
+          }
+      }else{
+         var ops ={
+            nav:$('.j-filter'),
+            navItm:$('.j-filter .item'),
+            cnt:$('.m-shops'),
+            cntItm:$('.m-shops .shop'),
+            sign:'page',
+            index:0,
+            lis:'.item',
+            param:{url:'{{rest(API.CAR_TYPE_DEALER)|safe }}',
+                  param:{city_id:{{city.city_id}},car_type_id:{{sign}},per_page:3,page:1,orderby:'price',descending:false}
+                  }
+          }
+      }
+      main.init(ops);
+      main.cnt.changeReset = function(obj,index){
+        if(index != 0){
+          $('.m-shops').eq(index).html('');
+          $('.j-filter .item .u-icon').eq(index).toggleClass('u-icon-filter-up').toggleClass('u-icon-filter-down');
+          var filter = $('.j-filter .item').eq(index).data('filter');
+          var type = $('.j-filter .item').eq(index).data('type');
+          $('.j-filter .item').eq(index).data('type',!type);
+          obj.ops.param.orderby = filter;
+          obj.ops.param.descending= !type;
+          return true;
+        }else{
+          return false;
+        }
+      }
+      main.scroll.loading = function(index){
+        if($('#load').length<=0){
+            $('.m-shops').eq(index).append("<div id='load' style='text-align: center;padding:40px 0 10px 0'><img src='{{ static('images/lib/loading.gif') }}' ></div>")
+        }
+      }
+      main.scroll.respondData = function(data,index){
+        $('#load').remove();
+        if(!$.isEmptyObject(data) && !$.isEmptyObject(data.result)){
+            var html = '';
+            $.each(data.result,function(ind,shop){
+              var discount = (shop.offer_price.discount/10000) > 1? (shop.offer_price.discount/10000).toFixed(2)+'万':shop.offer_price.discount+'元';
+              var vip = shop.is_vip == 1? vip:"";
+              var width = shop.sales_score? shop.sales_score*20 : 5.00*20;
+              html += '<div class="shop">\
+                        <div class="title">\
+                          <div class="al">\
+                            <div class="'+vip+ '">'+shop.dlr_full_name+'</div>\
+                          </div>\
+                          <div class="fr">\
+                            <div class="u-star">\
+                              <div class="light" style="width:'+ width +'%">\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                              </div>\
+                              <div class="grey">\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                              </div>\
+                            </div>\
+                          </div>\
+                        </div>\
+                        <div class="price">\
+                          <div class="l">本地参考报价: <span class="s-color-main">'+(shop.offer_price.price/10000).toFixed(2)+'</span> 起</div>\
+                          <div class="r">\
+                            <i class="u-icon u-icon-down"></i> '+discount+'</div>\
+                        </div>';
+                        if(shop.address){
+                          var link = shop.link? shop.link:"##";
+                          html += '<div class="pos"><a href="'+link+'"><i class="u-icon u-icon-pos"></i>'+shop.address+'</a></div >'
+                        }
+                        html +='<div class="m-btns2">\
+                          <a class="u-btn u-btn-default" href="{{ city_url('site.left_data') }}?key={{dealerDriveKey}}&dealer_id='+shop.id+'&clueType=2">预约试驾</a>\
+                          <a class="u-btn u-btn-default f-fr" href="{{ city_url('site.left_data') }}?key={{dealerDiscountKey}}&dealer_id='+shop.id+'&clueType=7">获取优惠</a>\
+                        </div>\
+                      </div>\
+                      <div class="f-ge">';
+                      if(!$.isEmptyObject(shop.dealer_activity_list)){
+                        html += '<a class="u-hotLink" href="'+shop.dealer_activity_list[0].page_url+'">\
+                                  <h3 class="text"><i class="label labelx">享</i>'+shop.dealer_activity_list[0].activity_title+'"</h3>\
+                                  <i class="u-icon u-icon-right"></i>\
+                                </a>';
+                      }
+                        
+                      html +='</div>';                    
+            });
+            $('.m-shops').eq(index).append(html);
+            return true;
+          }
+          if($.isEmptyObject(data.result)){
+            return false;
+          }
+      }
+
+      //城市选择
+      $('#city').citySelect({
+      url:'{{rest(API.CITY_DATA)|safe}}',
+      param:{},
+      parent:'.city_select',
+      top:55,
+      left:18,
+      pro_id:'{{city.province_id}}',
+      city_id:'{{city.city_id}}',
+      beforeInit:function(){
+        if($('.m-citypro').is(":hidden")){
+          $('#city').find('i').removeClass('rotate');
+        }else{
+          $('#city').find('i').addClass('rotate');
+        }
+       },
+      docInit:function(){  
+        $('#city').find('i').removeClass('rotate')
+       },
+      callback:function(obj){
+        main.scroll.ops.param.city_id = obj.city_id;
+        main.scroll.ops.param.page = 1;
+        main.cnt.ops.param.city_id = obj.city_id;
+        main.scroll.flag = false;
+        $('.m-shops').html('');
+        main.scroll.ajaxData(main.scroll.ops);
+        $('#city span').text(obj.city_name)
+      } 
+    });
+      
+  })
+</script>

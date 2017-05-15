@@ -1,0 +1,135 @@
+{% extends 'base/base.html' %}
+{% block title %}500页面 - {{platform}}{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/global.css') }}" rel="stylesheet" type="text/css" />
+     <link href="{{ static('site/css/page/breakdown500.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+     <script>
+       //获取热门车系
+        var carHot = {
+          url:'{{rest(API.DEALER_HOT_CAR_SERIES )|safe }}',
+          param:{count:4}  
+        }
+        
+    </script>
+     <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+
+    <script type="text/javascript" src="{{ static('site/js/page/breakdown500.js') }}"></script>
+    <script>
+       var vmcarHot = avalon.define({
+            $id: "c-carHot",
+            arrcarHot:[]
+        })
+       
+   </script>
+{% endblock %}
+
+{% block main %}
+
+{% block header_nav %}
+
+
+{% endblock %}
+<!--
+<div class="g-head">
+  <div class="m-header f-cb">
+    <div class="f-fl">
+      <i></i><span class="s-sm">车巴巴服务热线：</span><span>400-830-8899</span>
+    </div>
+    <div class="f-fr">
+      <i></i><a href="javascript:void(0);">请登录</a><span>|</span><a href="javascript:void(0);">请登录</a><span>|</span><i></i><a href="javascript:void(0);">关注车巴巴</a>
+    </div>
+  </div>
+</div>
+-->
+ <div class="g-body f-pr f-ov">
+ <div class="m-notfound505-tt f-cb">
+    <div class="f-fl">
+      <img src="{{ static('site/images/page/500img.jpg') }}" alt="500" class="f-va-b">
+    </div>
+   <div class="f-ib f-tl f-ml5 f-fl">
+      <div class="tt1">
+        <span class="f-db tt s-lg"> 哎呀！系统繁忙，</span>
+        <span class="f-db tt s-lg"> 暂时无法处理您的请求......</span>
+      </div>
+      <div class="tt2">
+        <span class="f-db cc s-list-info">可能因为：</span>
+        <div class="cc1">
+          <span class=" cc s-list-info s-color-b3"> 缓冲问题 <i class="u-icon u-icon-arright"></i> </span><span class="s-list-info">等待15分钟后，重新进入</span>
+        </div>
+        <div class="cc2">
+          <span class=" cc s-list-info s-color-b3"> 网络问题 <i class="u-icon u-icon-arright"></i> </span><span class="s-list-info">请检查网络，或者休息，休息一下......</span>
+        </div>
+      </div>
+      <div class="tt3">
+        <!--<a href="javascript:void(0);" class="s-anchor s-sm s-a-blue">反馈意见>></a>-->
+        <div class="cc3">
+          <span class=" cc s-list-info"> 或者逛逛：</span>
+          <a href="/{{city.city_alias}}" class="s-nm s-a-blue">车巴巴首页</a> <span class="s-color-b">|</span>
+          <a href="/{{city.city_alias}}/car" class="s-nm s-a-blue">惠挑车</a> <span class="s-color-b">|</span>
+          <a href="https://df.shopmodule.jaeapp.com/index.php/active" class="s-nm s-a-blue">享活动</a> <span class="s-color-b">|</span>
+          <a href="/{{city.city_alias}}/dealer" class="s-nm s-a-blue">找好店</a> <span class="s-color-b">|</span>
+          <a href="/{{city.city_alias}}/finance" class="s-nm s-a-blue">任性贷</a>
+        </div>
+      </div>
+   </div>
+ </div>
+ 
+ <div class="m-notfound505-cc">
+  <div class="f-cb">
+    <span class="s-md tt">热门车系推荐</span>
+    <a href="/{{city.city_alias}}/car" class="s-sm f-fr ttr" data="跳到惠挑车页">查看更多&nbsp;&nbsp;<i class="u-icon u-icon-rightss"></i></a>
+  </div>
+  <div class="cc">
+<!--
+    <div class="left j-left"><i class="u-icon u-icon-toleft toleft"></i></div>
+    <div class="right j-right"><i class="u-icon u-icon-toright toright"></i></div>
+-->
+    <ul class="m-tuijian-list f-cb" ms-controller="c-carHot">
+      <li class="m-tuijian  " ms-repeat="arrcarHot">
+<!--
+         <div class="topright">
+           <i class="u-icon u-icon-youhui">
+           <span class="f-db s-sm text">优惠</span>
+           <span class="f-db s-sm text">2万</span></i>
+         </div>
+-->
+         <div>
+           <img ms-attr-src="el.pc_thumbnail" alt="车辆图片" class="img">
+         </div>
+         <span class="s-nm s-color-b4 cc2 f-ib">[% el.name %]</span>
+         <div class="cc3 f-cb">
+          <span class="s-ss s-color-b5">官方报价: </span><span class="s-sm s-color-r">[% (el.start_guideprice/10000).toFixed(2) %]  </span><span class="s-ss s-color-b5"> 万 </span>
+          <span class="s-ss s-color-b5">起</span>
+<!--         <span class="s-ss s-color-b5 x f-fr"> ￥15.28 万 </span>-->
+         </div>
+
+         <a ms-attr-href="el.url" class="u-btn u-btn-bg-p u-btn-list cc4">点击进入</a>
+       </li>
+      
+   </ul>
+  </div>
+   
+ </div>
+ </div>
+<script>
+  //向左
+//  $('.j-left').on('click',function(){
+//    
+//  });
+//  //向右
+//  $('.j-left').on('click',function(){
+//    
+//  });
+  
+ 
+</script>
+ {% block footerinfo %}
+
+  {% endblock %}
+{% endblock %}
+

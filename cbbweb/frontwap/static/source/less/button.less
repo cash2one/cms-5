@@ -1,0 +1,53 @@
+.btn-variant(@color;@background;@border){
+  color:@color;
+  background-color:@background;
+  border-color:@border;
+  &:focus,
+  &:active{
+    color:@color;
+    background-color:darken(@background,10%);
+    border-color:darken(@background,12%)
+  }
+}
+.btn-size(@padding-vertical;@padding-horizontal;@font-size;@line-height;@border-radius){
+  padding:@padding-vertical @padding-horizontal;
+  font-size:@font-size;
+  line-height:@line-height;
+  border-radius:@border-radius;
+}
+.u-btn{
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor:pointer;
+  border:1px solid transparent;
+  background-image:none;
+  white-space: nowrap;
+  .btn-size(24px;30px;2.8rem;26px;8px)
+}
+.u-btn-default{
+  .btn-variant(@color-main;@background:#fff;@color-main)
+}
+.u-btn-app{
+  .btn-variant(@color:#fff;@color-main;@color-main)
+}
+.u-btn-gray{
+  .btn-variant(@color:#fff;@background:#d1d1d1;#d1d1d1;)
+}
+.u-btn-app-l{
+  .btn-variant(@color:#fff;@color-secondary;@color-secondary)
+}
+.u-btn-sm{
+  .btn-size(18px;12px;2.8rem;28px;7px)
+}
+.u-btn-lg{
+  .btn-size(26px;25px;2.6rem;26px;8px)
+}
+.u-btn-block{
+  display: block;
+  width: 100% !important;
+}
+.u-btn-one-third{
+  width: 29%;
+  margin-right: 15px;
+}

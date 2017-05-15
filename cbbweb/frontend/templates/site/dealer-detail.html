@@ -1,0 +1,217 @@
+{% extends 'base/base.html' %}
+{% set dealer_info=run(API.DEALER_BY_ID,dealer_id=activity.dealer_id)%}
+
+{% block title %}
+【{{dealer_info.dlr_short_name}}】{{activity.activity_title}} - 东风日产汽车电商车巴巴
+{% endblock %}
+{% block description %}
+{% if activity.activity_type== '1' %}
+<meta name="description" content="{{dealer_info.cbb_car_brand_code|join()}}{{dealer_info.dlr_short_name}}:{{activity.activity_title}} {{activity.activity_content[:180]}}">
+<meta name="Keywords" content="{{dealer_info.dlr_short_name}},{{dealer_info.dlr_short_name}}{{activity.series.name}},{{dealer_info.dlr_short_name}}{{activity.series.name}}促销活动">
+{% elif activity.activity_type== '2' %}
+<meta name="description" content="{{dealer_info.dlr_short_name}} {{activity.activity_title}} {{activity.activity_content[:180]}}">
+<meta name="Keywords" content="{{dealer_info.dlr_short_name}}店头活动,{{city.city_name}}店头活动">
+{% endif %}
+{% endblock %}
+{% block css %}
+{{ super() }}
+<link href="{{ static('site/css/page/dealer-detail.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+{{ super() }}
+<script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/page/dealer-detail.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/lib/popWin.js') }}"></script>
+{% endblock %}
+{% block main %}
+
+{% if activity.activity_type== '1' %}
+{% set product_images=run(API.PRODUCT_IMAGES,series_id=activity.car_series_id|string) %}
+{% set model_info=run(API.DEALER_ACTIVITY_SERIES_CAR_TYPES,dealer_id=activity.dealer_id,car_series_id=activity.car_series_id|string) %}
+{% set hot_series=run(API.DEALER_HOT_CAR_SERIES,count=3|string) %}
+{% endif %}
+<!--同城经销商活动-->
+{% set city_activity=run(API.DEALER_CITY_ACTIVITY,city_id=20041,activity_type=activity.activity_type,count=6) %}
+{% set dshop_activity=run(API.DEALER_PROMOTION_ACTIVITY,dealer_id=activity.dealer_id,count=6) %}
+<!--关联车系数据-->
+{% set series_activity=run(API.DEALER_CAR_SERIES_PROPERTY,car_series_id=activity.car_series_id,prop_keys=['pailiang','zhengchezhibao','jibie','biansuxiangxingshi']) %}
+<!--最高价最低价-->
+{% set price_series=run(API.DEALER_ACTIVITY_SERIES_CAR_TYPES,dealer_id=activity.dealer_id,car_series_id=activity.car_series_id) %}
+
+<!--container-->
+<div class="chebaba-container">
+    {#{{ dumps_json(activity, add_pre=True)|safe }}#}
+   <!-- <p class="page-nav">当前位置：<a href="">首页</a><span>&gt;</span><a href="">首页</a><span>&gt;</span><a href="">首页</a><span>&gt;</span><a
+            href="">逍客</a></p>-->
+
+    <div class="dealer-t-l">
+        <div class="mod-wrap">
+            <div  class="txt">
+                <h1>{{activity.activity_title}}</h1>
+                <h6>发布时间：{{activity.updated_date|date("Y-m-d")}}&nbsp;&nbsp;&nbsp;&nbsp;发布来源：{{dealer_info.dlr_short_name}}&nbsp;&nbsp;&nbsp;类型：{{activity.activity_type_name|safe}}&nbsp;&nbsp;&nbsp;&nbsp;分享<span class="ico-find-share"></span></h6>
+                <div class="ad-img">
+                    <script>
+                    (function() {
+                        var s = "_" + Math.random().toString(36).slice(2);
+                        document.write('<div id="' + s + '"></div>');
+                        (window.slotbydup=window.slotbydup || []).push({
+                            id: '2430811',
+                            container: s,
+                            size: '681,59',
+                            display: 'inlay-fix'
+                        });
+                    })();
+                </script>
+                <script src="http://dup.baidustatic.com/js/os.js"></script>
+                </div>
+                <p class="time">促销时间：{{activity.activity_begin_date|date("Y-m-d")}} -- {{activity.activity_end_date|date("Y-m-d")}}</p>
+                <!-- #is-passed-activity 活动过期标识 -->
+                {% if activity.activity_end_date|date("Y-m-d H:i:s") < datetime_now()|date("Y-m-d H:i:s") %}
+                <!--<div id="is-passed-activity"></div> //暂时没做-->
+                {% endif %}
+                <div>{{activity.activity_content|safe}}</div>
+            </div>
+            {% if activity.activity_type== '1' %}
+            <div class="price">
+                <div class="t-title">
+                    <h5>车型最新报价</h5>
+                    <div class="clearfix"></div>
+                </div>
+                <table>
+                    <caption>{{dealer_info.dlr_short_name}} {{model_info.series.name}}车型最新报价</caption>
+                    <tr>
+                        <td>车型</td>
+                        <td>厂商指导价<br />（万元）</td>
+                        <td>优惠金额<br />（万元）</td>
+                        <td>裸车价<br />（万元）</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    {% for car in model_info.car_type_list%}
+                    <tr>
+                        <td>{{car.name}}</td>
+                        <td>{{'%.2f'|format(car.offer_price.guide_price/10000)}}</td>
+                        <td class="change"><span class="ico-find-down"></span>{{'%.2f'|format(car.offer_price.discount/10000)}}</td>
+                        <td>{{'%.2f'|format(car.offer_price.price/10000)}}</td>
+                        <td><a href="/{{city.city_alias}}/info/apply?series_id={{activity.car_series_id}}&dealer_id={{activity.dealer_id}}&lead_key=NV-Chebabanew-pc-V2-Ch-Le-PoC-Msg1-03-0000" class="btn-qa">询价</a>
+                            <a href="/{{city.city_alias}}/info/apply?series_id={{activity.car_series_id}}&dealer_id={{activity.dealer_id}}&server=2&lead_key=NV-Chebabanew-pc-V2-Ch-Le-PoC-Msg3-03-0000" class="btn-try2">试驾</a>
+                            <a href="/{{city.city_alias}}/finance_detail/{{activity.car_series_id}}" class="btn-cre"><span class="ico-credit"></span>贷款</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+            {% if product_images %}
+             <div class="pic">
+                 <div class="t-title">
+                     <h5>车型图片</h5>
+                     <div class="clearfix"></div>
+                 </div>
+                 <div class="pic-images clearfix">
+                     {% for img in product_images  %}
+                     {% if loop.index==1 %}
+                     <img src="{{img.CDNPATH}}" width="680" alt="">
+                     {% else %}
+                     {% if loop.index%2==0 %}
+                     <img src="{{img.CDNPATH}}" class="fl" width="330" alt="">
+                     {% else %}
+                     <img src="{{img.CDNPATH}}" class="fr" width="330" alt="">
+                     {% endif%}
+                     {% endif%}
+                     {% endfor %}
+                 </div>
+             </div>
+            {% endif %}
+            {% endif %}
+         </div>
+        {% if activity.activity_type== '1' %}
+        <div class="mod-wrap">
+            <div class="info">
+                <div class="t-title">
+                    <h5>车型关联</h5>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="detail">
+                    <img src="{{price_series.series.pc_thumbnail}}" width="230" height="155" alt="">
+                    <div class="car-detail">
+                        <h5><strong>{{price_series.series.name}}&nbsp;&nbsp;&nbsp;<var>{{'%.2f'|format(price_series.series.car_type_price_min/10000)}}-{{'%.2f'|format(price_series.series.car_type_price_max/10000)}}</var>&nbsp;&nbsp;&nbsp;万</strong>&nbsp;&nbsp;&nbsp;&nbsp;指导价：{{'%.2f'|format(price_series.series.start_guideprice/10000)}}-{{'%.2f'|format(price_series.series.end_guideprice/10000)}}万</h5>
+                        <p>排&nbsp;&nbsp;&nbsp;量：{% for pl in series_activity.pailiang%}{{pl.property_value}}L {% endfor %}　  车  型：{% for jb in series_activity.jibie%}{{jb.property_value}} {% endfor %}&nbsp;&nbsp;&nbsp;变速箱：{% for bxx in series_activity.biansuxiangxingshi%}{{bxx.property_value }} {% endfor %}</p>
+                        <p>整车质保：{% for zhibao in series_activity.zhengchezhibao%}{{zhibao.property_value }}{% endfor %}</p>
+                        <br>
+                        <p><a class="btn-cupon" href="/info/apply?series_id={{price_series.series.id}}&lead_key=NV-Chebabanew-pc-V2-Ch-Le-PoC-Msg1-04-0000">获取优惠</a>
+                            <a class="btn-try" href="/info/apply?series_id={{price_series.series.id}}&server=2&lead_key=NV-Chebabanew-pc-V2-Ch-Le-PoC-Msg3-04-0000">预约试驾</a>
+                            <!--<a href="/{{city.city_alias}}/finance_detail/{{price_series.series.id}}?lead_key=NV-Chebabanew-pc-V2-Ch-Le-PoC-Msg8-04-0000"><span class="ico-credit"></span>月供低至725元起！</a>-->
+                            <!--todo 确认URL地址-->
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="tab-find-sale">
+            <p id="activity-nav">
+                <span class="active">同城促销</span>
+                <span>本店促销活动</span>
+            </p>
+            <div class="tab-find-c">
+                <ul id="city-activity" class="clearfix">
+                    {% for activity in city_activity %}
+                    <li><a href="/{{city.city_alias}}{{activity.url}}">·&nbsp;{{activity.activity_title}}</a><span>{{activity.created_date|date("Y-m-d")}}</span></li>
+                    {% endfor %}
+                </ul>
+                <ul id="dshop-activity" class="clearfix">
+                    {% for dsp_activity in dshop_activity %}
+                    <li><a href="/{{city.city_alias}}{{dsp_activity.url}}">·&nbsp;{{dsp_activity.activity_title}}</a><span>{{dsp_activity.created_date|date("Y-m-d")}}</span></li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="dealer-t-r">
+        <i class="cbb cbb-caret-left cbb-3x"></i>
+        <div class="mod-block">
+            <a href="/{{city.city_alias}}{{dealer_info.url}}" class="dl_img"><img src="{{dealer_info.dlr_image_url}}" width="195" height="130" alt=""></a>
+            <div class="star">评分：<div class="u-star" data-star="{{'%.2f'|format(dealer_info.sales_score)}}"></div></div>
+            <dl class="dealer-info">
+                <dt><a href="/{{city.city_alias}}{{dealer_info.url}}">{% if dealer_info.is_vip %}<img src="/static/site/images/lib/vip_icon.png" alt="">{% endif %}{{dealer_info.dlr_short_name}}</a></dt>
+                <dd>地址：{{dealer_info.cont_address|safe}}<span class="ico-location-pin"></span><a href="/{{city.city_alias}}{{dealer_info.url}}#map" target="_blank">地图</a></dd>
+                <dd>电话：{{dealer_info.sale_tel|safe}}</dd>
+                <dd>品牌：{{dealer_info.cbb_car_brand_code|join("")}}</dd>
+            </dl>
+            <!--<p class="code"><span class="btn-find-code"></span>扫码关注</p> todo 没有数据 隐藏，下一行行内样式也是临时使用 sam : 小朱-->
+            <div class="chebaba-tags" style="border-top:1px dashed #ccc;">
+                {% if dealer_info.service_auth %}
+                {% for dl_au in dealer_info.service_auth %}
+                <span class="dl-service-col-{{loop.index}}">{{dl_au}}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- 广告位确定后再显示 sam -- 朱泽斌  2-20 -->
+        <!--<div class="mod-block">
+            <h3 class="title">热门活动</h3>
+            <ul class="activty">
+                <li><a href=""><img src="/static/site/images/temp/img-focus.png" width="196" height="98" alt=""></a></li>
+                <li><a href=""><img src="/static/site/images/temp/img-focus.png" width="196" height="98" alt=""></a></li>
+            </ul>
+        </div>-->
+        {% if hot_car %}
+        <div class="mod-block">
+            <h3 class="title">热门车型</h3>
+            {% for hot_car in hot_series %}
+            <dl class="list">
+                <a href="/{{city.city_alias}}{{hot_car.url}}">
+                <dd><img src="{{hot_car.pc_thumbnail}}" width="185" height="120" alt=""></dd>
+                <dt>{{hot_car.name}}</dt>
+                <dd>&yen;{{'%.2f'|format(hot_car.start_guideprice/10000)}}-{{'%.2f'|format(hot_car.end_guideprice/10000)}} 万元</dd>
+                </a>
+            </dl>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+{% endblock %}

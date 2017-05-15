@@ -1,0 +1,356 @@
+{% extends 'base/base.html' %}
+{% set rServer  = request.GET.get('server',7)|int %}
+{% set tit='获取优惠' %}
+{% if rServer==2 %}
+{% set tit='预约试驾' %}
+{% endif %}
+{% block title %}{{tit}} - {{platform}}{% endblock %}
+{% block description %}
+<meta name="Keywords" content="获取优惠，预约试驾">
+<meta name="description" content="{{platform}}获取优惠，预约试驾">
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/global.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static('site/css/page/leave-pub-part.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+     <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+   <script type="text/javascript" src="{{ static('site/js/lib/jquery.formCheck.js') }}" ></script>
+   <script type="text/javascript" src="{{ static('site/js/lib/key_name.js') }}" ></script>
+    <script type="text/javascript" src="{{ static('site/js/page/sign.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/modelPlug.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/popWin.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+<!--获取URL参数-->
+{% set series_id = request.GET.get('series_id', 0) %} <!--车系-->
+
+{% set series=run(API.CAR_SERIES_BY_ID, car_series_id=series_id) %}
+{% set dealerList=run(API.FINANCE_CITY_BRAND_DEALER, car_brand_id=series.car_brand_id,city_id=city.city_id,per_page=3,page=1) %}
+<!--获取省份数据-->
+{% set province=run(API.FINANCE_ALL_PROVINCE) %}
+{% csrf_token %}
+{# <p> {{ dumps_json(series, add_pre=True)|safe }}</p> #}
+{# <p> {{ dumps_json(dealerList, add_pre=True)|safe }}</p>#}
+
+
+<div class="g-head">
+
+  <div class="m-logo f-cb">
+    <div class="f-fl">
+      <a href="/{{city.city_alias}}/"><i class="u-icon u-icon-logo"></i></a>
+    </div>
+    <ul class="f-fr f-cb m-list-logo-right">
+        <li class="f-br padding-lr">
+          <i class="u-icon u-icon-jzbj"></i>
+          <span class="cc s-main">精准报价</span>
+        </li>
+        <li class="f-br padding-lr" >
+          <i class="u-icon u-icon-hlhd"></i>
+          <span class="cc s-main">海量活动</span>
+        </li>
+        <li class=" padding-l">
+          <i class="u-icon u-icon-qfw"></i>
+          <span class="cc s-main">全方位购车优惠</span>
+        </li>
+      </ul>
+    <div>
+      
+    </div>
+    <i></i>
+  </div>
+</div>
+{% block header_nav %}
+
+
+{% endblock %}
+
+ <div class="g-body f-pr">
+    <div class="m-information f-pr">
+      <div class="m-info-title">
+        <span class="tt s-lg">{{tit}}</span>
+        <!--<span class="s-list-info">厂家直接优惠，经销商会及时与您取得联系</span>-->
+      </div>
+      <div class="m-info-contents" id="default-data" data-defaultcity="{{city.city_id}}" data-brand="{{series.car_brand_id}}">
+        <dl class="m-sign-row">
+          <dt class="s-list-tt">姓名</dt>
+          <dd class="">
+            <div class="m-names">
+              <input type="text" class="u-input-normal xg-name" name="name" tabindex="1" placeholder="请输入姓名">
+              <div class="sex">
+                <a href="javascript:void(0);"  sex="man" class="f-ol-n z-active" data-value="1" tabindex="-1">
+                  <i class="u-icon u-icon-man img"></i><span class="s-main m">先生</span>
+<!--                  <img src="./res/img/man_xz_03.png" alt="" class="img">-->
+                </a>
+                <a href="javascript:void(0);" sex="woman"  class="f-ol-n aa" data-value="2"  tabindex="-1">
+
+                  <i class="u-icon u-icon-woman img"></i><span class="s-main w">女士</span>
+                </a>
+              </div>
+            </div>
+            <span class="f-hd f-va-m u-xg-tips ">
+              <i class="u-icon u-icon-lvdui"></i>
+              <span class="s-sm s-color-r xg-msg-name "></span>
+            </span>
+
+          </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt class="s-list-tt">手机号码</dt>
+            <dd>
+            <div class="f-ib">
+              <input type="text" class="u-input-normal xg-tel" name="phone" tabindex="2" placeholder="请输入11位手机号">
+            </div>
+              <span class="f-hd f-va-m u-xg-tips ">
+                <i class="u-icon u-icon-lvdui"></i>
+                <span class="s-sm s-color-r xg-msg-tel"></span>
+              </span>
+            </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt class="s-list-tt">意向车型</dt>
+          <dd>
+           <span class="s-main">{{series.brand.name}} {{series.name}}<input type="hidden" name="carSeriesId" id="carSeriesId" value="{{series.id}}"></span>
+            <div class="m-btn-group form-select">
+                             <div class="btn btn-default btn-form" id="model_plug" data-toggle="dropdown" data-modeUrl="{{ rest(API.FINANCE_GROUP_SERIES_CAR_TYPES)}}">
+                                <!-- <span class="val" data-areaId="">请选择区</span> -->
+                                <input class="form-select" type="text" name="product_id" id="product_id" placeholder="请选择车型" data-id=""/>
+                                <span class="cbb cbb-angle-down"></span>
+                                <div class="mask"></div>
+                               <div class="model-list-wrap clearfix">
+                                   <img src="../../static/site/images/lib/loding.gif">
+                               </div>
+                             </div>
+                             <!--<ul class="dropdown-ul">
+                                  <li ms-repeat="array">
+                                    <a href="javascript:;" ms-data-id="el.id"> [% el.name %]</a>
+                                  </li>
+                             </ul>-->
+            </div>
+          </dd>
+        </dl>
+        <dl class="m-sign-row" id="address" data-url="{{ rest(API.FINANCE_PROVINCE_CITY_COUNTY)}}">
+          <dt class="s-list-tt">所属城市</dt>
+          <dd class="f-cb f-va-m">
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-p" id="address-pv-div">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-p select-address">
+                {% for pv in province %}
+                <li class="u-box-areas-cc" data-area="li-area-pv" data-pvid="{{pv.province_id}}">
+                  <a href="javascript:void(0);" class="s-sm" >{{pv.province_name}}</a>
+                </li>
+                {% endfor %}
+
+              </ul>
+            </div>
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-c" id="address-ct-div">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-c select-address">
+              </ul>
+            </div>
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-d" id="address-ar-div">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-d select-address"></ul>
+            </div>
+
+          </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt class="s-list-tt f-va-t">经销商</dt>
+          <dd>
+            <div id="dealer-count">
+              <span class="s-bd-da">
+                <span class="s-main">已选择</span>
+                <span class="s-main s-color-p j-zyd-n">{{dealerList|length}}</span>
+                <span class="s-main">家经销商,至少选择1家</span>
+              </span>
+              <a href="javascript:void(0);" class="s-main s-a-blue j-zyd-more">[更换]</a>
+            </div>
+            <ul class="m-list-zyd" id="selected-dealer">
+                {% for dl in dealerList  %}
+                <li class="u-list-zyd" xg-zyd-index="{{dl.dlr_code}}" data-dealerid="{{dl.id}}">
+                    <span class="s-main zyd">{{dl.dlr_short_name}}</span>
+                    <span class="s-main d">{{dl.county_name}}</span>
+                    <div class="f-fr f-va-m x j-zyd-x">
+                        <i class="u-icon u-icon-x"></i>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+          </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt class="s-list-tt ">服务类型</dt>
+          <dd class="m-btn-select" id="server-type">
+            <div  class="u-btn u-btn-select z-active" data-value="7">
+              <span class="s-main">获取优惠</span>
+            </div>
+            <div  class="u-btn u-btn-select " data-value="2">
+              <span class="s-main">预约试驾</span>
+            </div>
+          </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt class="s-list-tt f-va-">购车计划</dt>
+          <dd class="f-cb f-va-m">
+            <div class="m-select-area j-select-area" id="buy-plan-time">
+              <div class="j-down u-div-select u-input-normal">
+                <span class="s-main">1个月内</span>
+                <i class="u-iconright u-icon u-icon-arrowdown"></i>
+                  <input type="hidden" id="buy-time-plan" value="PVECA0000000105">
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-s" style="width:238px">
+                <li class="u-box-list-cc">
+                  <a href="javascript:void(0);" class="s-sm" data-value="PVECA0000000105">1个月内</a>
+                </li>
+                <li class="u-box-list-cc">
+                  <a href="javascript:void(0);" class="s-sm" data-value="PVECA0000000106">3个月内</a>
+                </li>
+                <li class="u-box-list-cc">
+                  <a href="javascript:void(0);" class="s-sm" data-value="PVECA0000000107">半年内</a>
+                </li>
+                  <li class="u-box-list-cc">
+                      <a href="javascript:void(0);" class="s-sm" data-value="PVECA0000000108">一年内</a>
+                  </li>
+                  <li class="u-box-list-cc">
+                      <a href="javascript:void(0);" class="s-sm z-none" data-value="PVECA0000000109">近期没有计划</a>
+                  </li>
+              </ul>
+            </div>
+          </dd>
+        </dl>
+        <dl class="m-sign-row j-jh" id="buy-method">
+          <dt class="s-list-tt">购车方式</dt>
+          <dd class="m-btn-select">
+            <div  class="u-btn u-btn-select z-active" data-value="1">
+              <span class="s-main">全款购车</span>
+            </div>
+            <div class="u-btn u-btn-select " data-value="2">
+              <span class="s-main">金融贷款</span>
+            </div>
+            <div class="u-btn u-btn-select " data-value="3">
+              <span class="s-main">置换全款</span>
+            </div>
+            <div class="u-btn u-btn-select " data-value="4">
+              <span class="s-main">置换贷款</span>
+            </div>
+          </dd>
+        </dl>
+        <dl class="m-sign-row">
+          <dt></dt>
+          <dd>
+            <div class="m-box-btns">
+              <span class="u-btn u-btn-bg-r u-btn-lg j-submit f-disable" data-url="{{rest(API.CLUE_SAVE_API)}}" data-success="{{city_url('site.left_done')}}" id="but">提交申请</span>
+            </div>
+          </dd>
+        </dl>
+      </div>
+
+    <!-- 右下角图片-->
+   <i class="u-icon u-icon-body-bgi m-body-bgi"></i>
+    </div>
+  <!-- 右侧定位-->
+  <div class="m-info-car">
+    <i class="cbb cbb-caret-left cbb-3x"></i>
+    <div class="m-info-img-upload">
+      <img src="{{series.pc_thumbnail}}@360w" alt="{{series.name}}" title="{{series.name}}" >
+    </div>
+    <div class="tt" id="price-block-name">
+      <span class="s-sm">
+        {{series.name}}
+      </span>
+    </div>
+    <ul class="cc f-cb price-price-r">
+      <li class="f-br">
+        <dl>
+          <dt class="s-main">官方指导价</dt>
+          <dd class="s-nm"></dd>
+        </dl>
+      </li>
+      <li class="f-br">
+        <dl>
+          <dt class="s-main">限时促销价</dt>
+          <dd class="s-nm"></dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt class="s-main">优惠幅度</dt>
+          <dd class="s-nm"></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+
+ </div>
+
+<!-- 弹出层-->
+<div class="m-cover"></div>
+<!--专营店选择-->
+<!--边框  -->
+<div class="m-popupbg m-popupbg-1 j-zyd"></div>
+<!--内容-->
+<div class="m-popup m-popup-1 j-zyd">
+
+ <div class="m-popup-title">
+     <!--<div class="close"><i class="cbb cbb-close"></i></div>-->
+  <div class="tt">
+    <span s-md>选择您所在的经销商<i></i></span>
+  </div>
+  <div class="f-cb f-va-m">
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-p" id="dealer-address-pv">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-p select-address" data-popwin="1">
+                  {% for pv in province %}
+                  <li class="u-box-areas-cc" data-area="li-area-pv" data-pvid="{{pv.province_id}}">
+                      <a href="javascript:;" class="s-sm ">{{pv.province_name}}</a>
+                  </li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-c" id="dealer-address-ct">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-c select-address"  data-popwin="1">
+              </ul>
+            </div>
+            <div class="m-select-area j-select-area">
+              <div class="j-down u-div-select u-div-d" id="dealer-address-ar">
+                <span class="s-main"></span><i class="u-iconright u-icon u-icon-arrowdown"></i>
+              </div>
+              <ul class="j-areas u-box-areas u-box-areas-d select-address"  data-popwin="1"></ul>
+            </div>
+  </div>
+
+ </div>
+  <ul class="m-popup-list-zyd" id="pop-dealer-ul">
+      <img src="../../static/site/images/lib/loding.gif">
+  </ul>
+  <!--<a class="u-btn u-btn-default s-radius-s j-close" href="###">是</a>-->
+
+  <div class="m-popup-foot">
+   <div class="m-popup-tip">
+    <i class="u-icon u-icon-lantan"></i>
+    <span class="s-p-sm cc">  至少选择1家，最多3家对比更能得到最低报价！</span>
+  </div>
+   <div >
+    <a class="u-btn u-btn-bg-r j-close " href="javascript:void(0);" >确认选择</a>
+   </div>
+  </div>
+
+</div>
+{% endblock %}
+

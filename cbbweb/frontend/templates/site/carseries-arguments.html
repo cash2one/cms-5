@@ -1,0 +1,215 @@
+{% extends 'base/base.html' %}
+{% set seo = run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=id) %}
+
+{% if seo %}
+{% block seo %}
+<title>{{seo.brand.name}} {{seo.type.name}} 参数配置详情页 - {{platform}}</title>
+<meta name="description" content="{{platform}}为您提供{{seo.series.brand.name}}{{seo.series.name}}{{seo.type.name}}详细参数配置，包括{{seo.series.name}}{{seo.type.name}}的安全装备、操控配置、内饰配置、性能参数、车型特色等。">
+<meta name="Keywords" content="{{seo.series.name}}{{seo.type.name}}参数, {{seo.series.name}}{{seo.type.name}}配置">
+{% endblock %}
+{% endif %}
+
+{% block css %}
+{{ super() }}
+<link href="{{ static('site/css/page/carseries-arguments.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{#{% set car_type_all_property=run(API.CAR_TYPE_ALL_PROPERTY,car_type_id=id) %}#}
+
+{#{% set car_type_data=run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=id) %}#}
+
+{% set car_type_data=run(API.CAR_TYPE_SERIES_PRICE_PROPERTY, city_id=city.city_id, car_type_id=id) %}
+
+
+{% block main %}
+{#{{ dumps_json(seo, add_pre=True)|safe }}#}
+<div class="chebaba-container">
+    <!--<p class="page-nav">当前位置：<a href="/">首页</a><span>&gt;</span><a href="/car">惠挑车</a><span>&gt;</span><a href="">{{car_type_data.series.imgs[0].TITLE}}</a></p>-->
+     <div class="arg-list">
+
+         <table>
+             <tr>
+                 <th valign="top">
+                     <div class="settings">
+                         <dl>
+                             <dt>配置状况</dt>
+                             <dd>●&nbsp;标配&nbsp;&nbsp;&nbsp;&nbsp;○&nbsp;选配&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;无</dd>
+                             <dt>只显示设置</dt>
+                             <dd><input type="checkbox" name="" id="dis_no"><label for="dis_no">只显示不同点</label></dd>
+                             <!--<dd><input type="checkbox" name="" id="dis_best"><label for="dis_best">突出显示最优项</label></dd>-->
+                         </dl>
+                         <!--<ul>
+                             <li class="active">全部参数配置</li>
+                             <li>只看参数</li>
+                             <li>只看配置</li>
+                         </ul>-->
+                     </div>
+                 </th>
+                 {% for carPor in car_type_data.car_type_list %}
+
+                 {% if loop.index <= 4 %}
+
+                 <td>
+                     <div class="mod">
+                         <span class="btn-arg-close" data-index={{loop.index - 1}}></span>
+                         <dl>
+                            <dd>
+                                {% if carPor.imgs%}
+                                <img src="{{carPor.imgs[0].CDNPATH}}" alt="" width="180" height="120">
+                                {% endif %}
+                            </dd>
+                             <dt>{{carPor.name}}</dt>
+                             <dd>官方指导价：{{'%.2f'|format(carPor.guide_price/10000)}}万</dd>
+                             <dd>限时优惠：<span>{{carPor.offer_price.discount}}元</span></dd>
+                         </dl>
+                         <p>
+                             <select name="" class="J_carMod">
+                                 <option value="">其它车型</option>
+                                 {% for allMod in car_type_data.car_type_list %}
+                                 <!--value=车型ID-->
+                                 <option value={{loop.index - 1}}>{{allMod.name}}</option>
+                                 {% endfor %}
+                             </select>
+                             <a href="{{city_url('site.left_data')}}?series_id={{car_type_data.series.id}}&model_id={{carPor.id}}&server=2&lead_key=NV-Chebabanew-Pc-V5-Ch-Le-PoC-Msg3-04-0000" target="_blank">我要试驾</a>
+
+                         </p>
+                     </div>
+                 </td>
+
+                 {% endif %}
+
+                 {% endfor %}
+             </tr>
+         </table>
+
+         {% set carInfo = car_type_data.car_type_list[0] %}
+         {#
+         {% for carInfo in car_type_data.car_type_list %}
+         {% if loop.index <= 4 %}
+         #}
+         {% for eachInfo in carInfo.property %}
+         {% set group_index=loop.index0 %}
+         <table class="list">
+             <caption>{{eachInfo.group_name}}<span class="ico-arg-t-u"></span></caption>
+             {% for carBase in eachInfo.property_list %}
+             {% set prop_index=loop.index0 %}
+             <tr>
+
+                 <th>{{carBase.name}}</th>
+
+
+
+
+
+                 <td>
+                     {% if carBase.property_value=="有" %}
+                     ●
+                     {% elif carBase.property_value=="无" %}
+                     -
+                     {% elif carBase.property_value=="" %}
+                     -
+                     {% elif carBase.property_value==None %}
+                     -
+                     {% else %}
+                     {{carBase.property_value}}
+                     {% endif %}
+                 </td>
+
+                 <td>
+                     {% if car_type_data.car_type_list[1] %}
+                     {% if car_type_data.car_type_list[1].property[group_index] %}
+                         {% if car_type_data.car_type_list[1].property[group_index].property_list[prop_index] %}
+                            {% if car_type_data.car_type_list[1].property[group_index].property_list[prop_index].property_value=="有" %}
+                            ●
+                            {% elif car_type_data.car_type_list[1].property[group_index].property_list[prop_index].property_value=="无" %}
+                            -
+                            {% elif car_type_data.car_type_list[1].property[group_index].property_list[prop_index].property_value=="" %}
+                            -
+                            {% elif car_type_data.car_type_list[1].property[group_index].property_list[prop_index].property_value==None %}
+                            -
+                            {% else %}
+                            {{car_type_data.car_type_list[1].property[group_index].property_list[prop_index].property_value}}
+                            {% endif %}
+                         {% else %}
+                         {% endif %}
+                     {% else %}
+                     {% endif %}
+                     {% endif %}
+
+                 </td>
+
+                 <td>
+                     {% if car_type_data.car_type_list[2] %}
+                     {% if car_type_data.car_type_list[2].property[group_index] %}
+                     {% if car_type_data.car_type_list[2].property[group_index].property_list[prop_index] %}
+                     {% if car_type_data.car_type_list[2].property[group_index].property_list[prop_index].property_value=="有" %}
+                     ●
+                     {% elif car_type_data.car_type_list[2].property[group_index].property_list[prop_index].property_value=="无" %}
+                     -
+                     {% elif car_type_data.car_type_list[2].property[group_index].property_list[prop_index].property_value=="" %}
+                     -
+                     {% elif car_type_data.car_type_list[2].property[group_index].property_list[prop_index].property_value==None %}
+                     -
+                     {% else %}
+                     {{car_type_data.car_type_list[2].property[group_index].property_list[prop_index].property_value}}
+                     {% endif %}
+                     {% else %}
+                     {% endif %}
+                     {% else %}
+                     {% endif %}
+                     {% endif %}
+                 </td>
+                 <td>
+                     {% if car_type_data.car_type_list[3] %}
+                     {% if car_type_data.car_type_list[3].property[group_index] %}
+                     {% if car_type_data.car_type_list[3].property[group_index].property_list[prop_index] %}
+
+                     {% if car_type_data.car_type_list[3].property[group_index].property_list[prop_index].property_value=="有" %}
+                     ●
+                     {% elif car_type_data.car_type_list[3].property[group_index].property_list[prop_index].property_value=="无" %}
+                     -
+                     {% elif car_type_data.car_type_list[3].property[group_index].property_list[prop_index].property_value=="" %}
+                     -
+                     {% elif car_type_data.car_type_list[3].property[group_index].property_list[prop_index].property_value==None %}
+                     -
+                     {% else %}
+                     {{car_type_data.car_type_list[3].property[group_index].property_list[prop_index].property_value}}
+                     {% endif %}
+
+                     {% else %}
+                     {% endif %}
+                     {% else %}
+                     {% endif %}
+                     {% endif %}
+                 </td>
+
+
+
+
+             </tr>
+             {% endfor %}
+         </table>
+         {% endfor %}
+         {#
+         {% endif %}
+         {% endfor %}
+         #}
+     </div>
+
+
+</div>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+    $('.m-sidebar dd a').on('click',function(){
+        $('.m-sidebar dd a').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    var carTypeList = {{ dumps_json(car_type_data)|safe }};
+    var infoApplyUrl = "{{city_url('site.left_data')}}?";
+</script>
+<script type="text/javascript" src="{{ static('site/js/page/carseries-arguments.js') }}"></script>
+{% endblock %}

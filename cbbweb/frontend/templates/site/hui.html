@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+<!-- 获取品牌 -->
+{% set rBrand  = request.GET.get('brand',0)|int %} 
+
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/car.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+    {{ super() }}
+{% endblock %}
+{% block main %}
+	<div class="hui-wrap mainbody">
+       <!-- <div class="m-crumb">
+        	<span>当前位置：</span>
+            <a href="/{{city.city_alias}}">首页</a>
+            <span class="separator">></span> 
+            <a href="/{{city.city_alias}}/car">惠挑车</a>
+        </div>-->
+        <div class="filter g-box m-filter-a">
+            {% set brandList=run(API.LIST, model=MODELS.T_BASE_CAR_BRAND) %}
+            <a {% if rBrand == 0 %} class="active" {% endif%} href="?brand=0">全部 </a>
+            {% for voBrandList in brandList %}
+                <a {% if voBrandList.id|int == rBrand %}class="active" {% endif %} href="?brand={{voBrandList.id}}" data-id="{{voBrandList.id}}">{{ voBrandList.car_brand_cn }}</a> 
+            {% endfor %} 
+        </div>
+        {% set car_data=run(API.CAR_CATALOG_BRAND_DATA, city_id=city.city_id, car_brand_id=rBrand,per_page=25,page=1) %} 
+        {# <p>{{ dumps_json(car_data, add_pre=True)|safe }}</p> #}
+        {% if car_data%}
+            <div class="bd">
+                <ul id="J-car-ul" class="clearfix">
+                {% for voCarData in car_data%}
+                {% set voCarDataS = voCarData.series %}
+                    <li>
+                        <div class="pic">
+                            
+                            <a class="u-scale" href="/{{city.city_alias}}{{voCarDataS.url}}"><img src="{%if voCarDataS.pc_thumbnail %}{{voCarDataS.pc_thumbnail}}{% endif %}@480h" title="{{voCarData.brand.name}} {{voCarDataS.name}}" alt="{{voCarData.brand.name}} {{voCarDataS.name}}"/></a>
+
+                            <div class="intro f-ellipsis">{{voCarDataS.introdution}}</div>
+                        </div>
+                        <div class="info">
+                            <a  href="/{{city.city_alias}}{{voCarDataS.url}}">
+                            <div class="info-l">
+                                <span class="name">{{voCarData.brand.name}} {{voCarDataS.name}}</span>
+                                {% if voCarDataS.offer_price.guide_price %}
+                                <p class="price">官方指导价：{{'%.2f'|format(voCarDataS.offer_price.guide_price/10000)}}万起</p>
+                                {% endif %}
+                            </div>
+                            {% if voCarDataS.offer_price.price %}
+                            <dl class="info-r">
+                                <dt>优惠价：</dt>
+                                <dd><strong>{{'%.2f'|format(voCarDataS.offer_price.price/10000)}}</strong>万起</dd>
+                            </dl>
+                            {% endif %}
+                            </a>
+                        </div>
+                        {% if voCarDataS.offer_price.discount > 0 %}
+                        <div class="label">
+                            <p>优惠</p>
+                            <p>
+                              {% if voCarDataS.offer_price.discount >= 10000 %}
+                                <strong>{{ '%.2f'|format(voCarDataS.offer_price.discount/10000) }}</strong>万
+                              {% else %}
+                                  <strong>{{voCarDataS.offer_price.discount}}</strong>元
+                              {% endif %}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </li>
+                {% endfor %} 
+                </ul>
+            </div>
+        {% endif %}
+	</div>
+{% endblock %}

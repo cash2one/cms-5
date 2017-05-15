@@ -1,0 +1,141 @@
+{% extends 'base/base.html' %}
+{% block title %}404页面 - {{platfomr}}{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/global.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+     <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+{% endblock %}
+<!--
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" id="viewport" content="width=400">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <title>未知领域</title>
+  <link href="../../static/site/css/page/global.css" rel="stylesheet">
+  <script src="../../static/3rd/jquery/jquery.min.js"></script>
+-->
+  <!--[if lte IE 9]>
+  <script src="lib/respond.min.js"></script>
+  <script src="lib/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+
+<!--</head>-->
+{% block main %}
+<div class="g-head">
+
+  <div class="m-logo f-cb">
+    <div class="f-fl">
+      <i class="u-icon u-icon-logo"></i>
+    </div>
+    <ul class="f-fr f-cb m-list-logo-right">
+        <li class="f-br padding-lr">
+          <i class="u-icon u-icon-jzbj"></i>
+          <span class="cc s-main">精准报价</span>
+        </li>
+        <li class="f-br padding-lr" >
+          <i class="u-icon u-icon-hlhd"></i>
+          <span class="cc s-main">海量活动</span>
+        </li>
+        <li class=" padding-l">
+          <i class="u-icon u-icon-qfw"></i>
+          <span class="cc s-main">全方位购车优惠</span>
+        </li>
+      </ul>
+    <div>
+      
+    </div>
+    <i></i>
+  </div>
+</div>
+
+{% block header_nav %}
+
+
+{% endblock %}
+<!--<body>-->
+<!--
+<div class="g-head">
+  <div class="m-header f-cb">
+    <div class="f-fl">
+      <i></i><span class="s-sm">车巴巴服务热线：</span><span>400-830-8899</span>
+    </div>
+    <div class="f-fr">
+      <i></i><a href="javascript:void(0);">请登录</a><span>|</span><a href="javascript:void(0);">请登录</a><span>|</span><i></i><a href="javascript:void(0);">关注车巴巴</a>
+    </div>
+  </div>
+  <div class="m-logo f-cb">
+    <div class="f-fl">
+      <i class="u-icon u-icon-logo"></i>
+    </div>
+    <ul class="f-fr f-cb m-list-logo-right">
+        <li class="f-br padding-lr">
+          <i class="u-icon u-icon-jzbj"></i>
+          <span class="cc s-main">精准报价</span>
+        </li>
+        <li class="f-br padding-lr" >
+          <i class="u-icon u-icon-hlhd"></i>
+          <span class="cc s-main">海量活动</span>
+        </li>
+        <li class=" padding-l">
+          <i class="u-icon u-icon-qfw"></i>
+          <span class="cc s-main">全方位购车优惠</span>
+        </li>
+      </ul>
+    <div>
+      
+    </div>
+    <i></i>
+  </div>
+</div>
+-->
+ <div class="g-body f-pr f-ov">
+ <div class="m-notfound-tt">
+   <img src="../../../static/site/images/page/404.png" alt="404" class="f-va-b">
+   <div class="f-ib f-tl f-ml5">
+      <span class="f-db tt"> 呦呵...您探索到了一个未知的领域</span>
+      <span class="f-db cc"> 请检查您的URL地址，或者去别处看看吧。</span>
+   </div>
+  
+    
+ </div>
+ 
+ <div class="m-notfound-img">
+   <ul class="m-pai">
+     <li class="m-pai-list">
+       <i class="u-icon u-icon-htc"></i>
+       <a href="/{{city.city_alias}}/car" class="s-md s-color-b">惠挑车</a>
+       <i class="u-icon u-icon-right-b"></i>
+     </li>
+     <li class="m-pai-list">
+       <i class="u-icon u-icon-xhd"></i>
+       <a href="https://df.shopmodule.jaeapp.com/index.php/active" class="s-md s-color-b">享活动</a>
+       <i class="u-icon u-icon-right-b"></i>
+     </li>
+     <li class="m-pai-list">
+       <i class="u-icon u-icon-zhd"></i>
+       <a href="/{{city.city_alias}}/dealer" class="s-md s-color-b">找好店</a>
+       <i class="u-icon u-icon-right-b"></i>
+     </li>
+     <li class="m-pai-list">
+       <i class="u-icon u-icon-rxd"></i>
+       <a href="/{{city.city_alias}}/finance" class="s-md s-color-b">任性贷</a>
+       <i class="u-icon u-icon-right-b"></i>
+     </li>
+   </ul>
+ </div>
+ </div>
+  {% block footerinfo %}
+
+  {% endblock %}
+{% endblock %}

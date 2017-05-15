@@ -1,0 +1,170 @@
+.pagination {
+  text-align: center;
+  font-size: 14px;
+  padding: 40px 0;
+  height: 30px;
+  line-height: 30px;
+}
+.pagination dt {
+  display: inline-block;
+  margin-right: 10px;
+}
+.pagination dd {
+  display: inline;
+}
+.pagination a {
+  display: inline-block;
+  padding: 2px 10px;
+  border-top: 1px solid #e2e2e2;
+  border-left: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+}
+.pagination a:last-of-type {
+  border-right: 1px solid #e2e2e2;
+}
+.pagination a:hover {
+  background-color: #dfdddd;
+}
+.carseries-t-l {
+  float: left;
+  width: 745px;
+}
+.carseries-t-l .mod-wrap {
+  background-color: #fff;
+  padding: 30px;
+  margin-bottom: 25px;
+}
+.carseries-t-l .txt h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  font-weight: normal;
+}
+.carseries-t-l .txt h6 {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  border-bottom: 1px solid #e2e2e2;
+  height: 30px;
+  line-height: 30px;
+  font-weight: normal;
+  margin-top: 30px;
+}
+.carseries-t-l .txt .banner {
+  display: block;
+  margin: 15px 0;
+}
+.carseries-t-l .txt p {
+  color: #3c3c3c;
+  font-size: 16px;
+  line-height: 1.8;
+  text-indent: 2em;
+  margin: 10px 0;
+}
+.carseries-t-r {
+  float: right;
+  width: 225px;
+}
+.carseries-t-r .mod-block {
+  padding: 15px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  font-size: 12px;
+  color: #6c6b6b;
+}
+.carseries-t-r .dealer-info {
+  padding: 5px 0;
+}
+.carseries-t-r .dealer-info dt {
+  font-size: 16px;
+  color: #3c3c3c;
+  line-height: 3;
+}
+.carseries-t-r .dealer-info dt img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.carseries-t-r .dealer-info dd {
+  height: 28px;
+  line-height: 28px;
+}
+.carseries-t-r .dealer-info dd span {
+  float: right;
+  width: 50px;
+}
+.carseries-t-r .dealer-info dd a {
+  display: block;
+  width: 70%;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  float: left;
+}
+.carseries-t-r .dealer-info dd a.qa {
+  display: none;
+  float: right;
+  width: 45px;
+  height: 18px;
+  line-height: 18px;
+  color: #c90329;
+  border: 1px solid #c90329;
+  background-color: #ffeded;
+  text-align: center;
+}
+.carseries-t-r .dealer-info dd.more {
+  text-align: right;
+}
+.carseries-t-r .dealer-info dd.more a {
+  width: auto;
+  float: none;
+}
+.carseries-t-r .dealer-info dd:hover span {
+  display: none;
+}
+.carseries-t-r .dealer-info dd:hover a.qa {
+  display: block;
+}
+.carseries-t-r h3 {
+  position: relative;
+  color: #000;
+  font-size: 16px;
+  border-left: 5px solid #c90329;
+  left: -15px;
+  padding-left: 10px;
+  font-weight: normal;
+}
+.carseries-t-r h4 {
+  color: #6c6b6b;
+  font-size: 14px;
+  height: 35px;
+  line-height: 35px;
+  padding-top: 20px;
+  border-bottom: 1px dashed #cccccc;
+}
+.carseries-t-r .list {
+  padding-top: 20px;
+  text-align: center;
+}
+.carseries-t-r .list dd {
+  color: #808080;
+}
+.carseries-t-r .list dt {
+  font-size: 14px;
+  line-height: 2;
+}
+.carseries-t-r .article {
+  padding-top: 12px;
+}
+.carseries-t-r .article li {
+  line-height: 2;
+}
+.carseries-t-r .article a {
+  color: #808080;
+  display: block;
+  width: 95%;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}

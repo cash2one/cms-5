@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% import 'base/about_sidebar.html' as sidebar %}
+{% block title %}联系我们 - {{platform}}{% endblock %}
+<!-- 获取品牌 -->
+{% set rBrand  = request.GET.get('brand',0)|int %} 
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/about.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BMvPNolfzSZK2FTuPPk0i9Lp"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+    <script>
+        $('.m-sidebar dd a').on('click',function(){
+            $('.m-sidebar dd a').removeClass('active');
+            $(this).addClass('active');
+        });
+        //地图
+        initMap();
+        function initMap(){
+            // var latitude=$("#dshop-map").attr("data-latitude"),
+            //     longitude=$("#dshop-map").attr("data-longitude");
+            // 百度地图API功能
+            var map = new BMap.Map('J-map');
+            var poi = new BMap.Point(113.184084,23.384648);
+            map.centerAndZoom(poi, 16); 
+            map.enableScrollWheelZoom();
+
+            var content = '';   
+
+            // 创建检索信息窗口对象
+            var searchInfoWindow = null;
+            var marker = new BMap.Marker(poi); //创建marker对象
+            marker.enableDragging(); //marker可拖拽
+            marker.addEventListener("click", function(e){
+                searchInfoWindow.open(marker);
+            })
+            map.addOverlay(marker); //在地图中添加marker
+            map.addControl(new BMap.NavigationControl());
+            map.addControl(new BMap.ScaleControl());
+            map.addControl(new BMap.OverviewMapControl());
+            map.addControl(new BMap.MapTypeControl());
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+            searchInfoWindow.open(marker);
+        }
+    </script>
+{% endblock %}
+{% block main %}
+	<div class="about-wrap mainbody clearfix">
+        <!--<div class="m-crumb">
+            <span>当前位置：</span>
+            <a href="/{{city.city_alias}}">首页</a>
+            <span class="separator">></span>
+            <a href="/{{city.city_alias}}/html/site/contract">联系我们</a>
+        </div>-->
+        {{ sidebar.sidebar_macro() }}
+        <div class="content" id="contract">
+            <h1>联系我们</h1>
+            <ul>
+                <li>
+                    <h2 id="area_culture"><i></i>客户电话</h2>
+                    <div class="article">
+                        <p class="tel">400-830-8899<p>
+                        <p class="tel">400-830-8899<p>
+                        <p>周一至周日 8:00-21:00<p>
+                        <p>邮箱：chebaba@dfl.com.cn<p>
+                    </div>
+                </li>
+                <li>
+                    <h2 id="area_culture"><i></i>联系地址</h2>
+                    <div class="article">
+                        <p>广东省广州市花都区风神大道8号<p>
+                    </div>
+                </li>
+                <li>
+                    <h2 id="area_culture"><i></i>地图名片</h2>
+                    <div class="article">
+                        <div class="contract-ewm"><div class="img"></div><p>扫描关注车巴巴</p></div>
+                        <p class="ft-14">东风日产数据服务有限公司</p>
+                        <p>电话：400-830-8899<p>
+                        <p>地址：广东省广州市花都区风神大道8号<p>
+                        <div id="J-map" class="map">
+            </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="applicable-device" content="pc">
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                test car series
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+            <link href="{{ static('cms/hui/carseries/css/test.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+            <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ static('cms/hui/carseries/js/test.js') }}"></script>
+
+            <script type="text/javascript">
+                window.onload = function() {
+                    init_page();
+                };
+            </script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body>
+            <div>section name:{{section.name}}</div>
+            <div>article title:{{article.title}}</div>
+            <div>article content:{{article.trans_content}}</div>
+            <div>page:{{paginator}}</div>
+        </body>
+    {% endblock %}
+</html>

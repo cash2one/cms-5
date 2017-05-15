@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    {% block meta %}
+    <meta charset="utf-8"/>
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="shortcut icon" href="{{static('site/images/lib/favicon.ico')}}" type="image/x-icon"/>
+    {% endblock %}
+    {% set platform = "东风日产汽车电商车巴巴" %}
+    {% block seo %}
+    {% if catalogs %}
+    <title>【{{city.city_name}}】{{catalogs.title}} - {{platform}}</title>
+    <meta name="Keywords" content="{{city.city_name}}东风日产, {{city.city_name}}启辰, {{catalogs.keywords}}">
+    <meta name="description" content="{{city.city_name}}{{platform}},{{catalogs.description}}">
+    {% else %}
+    <title>{% block title %}车巴巴{% endblock %}</title>
+    {% block description %}
+    <meta name="description" content="东风日产电商平台 - {{platform}}">
+    <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+    {% endblock %}
+    {% endif %}
+    {% endblock %}
+
+    {% block css %}
+    <link href="{{ static('3rd/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ static('site/css/lib/cbb-font.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ static('site/css/lib/common.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ static('site/css/lib/city_select.css') }}" rel="stylesheet" type="text/css"/>
+    {% endblock %}
+</head>
+{% block body %}
+<body>
+{% block header %}
+<div class="chebaba-header">
+    <div class="chebaba-topside">
+        <div class="chebaba-container">
+            <p><span class="ico-phone"></span>车巴巴服务热线：400-830-8899</p>
+            <ul class="clearfix">
+                <!--
+                <li><a href=""><span class="ico-login"></span>请登录</a><i></i></li>
+                <li><a href="">免费注册</a><i></i></li>
+                -->
+                <li>
+                    <a href=""><span class="ico-follow"></span>关注车巴巴</a>
+                    <div class="wei-dropdown">
+                        <dl class="clearfix">
+                            <dd>
+                                <img src="{{static('site/images/lib/ewm-weixin.jpg')}}" width="115" height="115">
+                                关注车巴巴微信平台
+                            </dd>
+                            <dd>
+                                <img src="{{static('site/images/lib/weibo.jpg')}}">
+                                <div style="margin:8px; margin-left: 20px">
+                                    <wb:follow-button uid="5564316869" type="red_1" width="67"
+                                                      height="24"></wb:follow-button>
+                                </div>
+                                加微博关注
+                            </dd>
+                        </dl>
+                    </div>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {% block header_nav %}
+
+    {% set car_threegray=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=1,per_page=50)%}
+    {% set car_twogray=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=2,per_page=50)%}
+    {% set car_suv=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=3,per_page=50)%}
+    {% set car_outgray=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=4,per_page=50)%}
+    {% set search_list=run(API.CAR_SERIES_SEARCH) %}
+    <div class="chebaba-container">
+        <div class="chebaba-logo">
+            <a href="/{{city.city_alias}}" class="btn-logo"></a>
+
+            <div class="loaction">
+                {{city.city_name}}<span class="ico-arrow-place-d"></span>
+
+                <div class="m-city_switch">
+                    <span></span>
+                    <div id="citiesTemplate" class="city_switching clearfix"></div>
+                </div>
+
+            </div>
+            <div class="header-search">
+                <input type="text" class="txt txt-search" readonly placeholder="请输入您关注的车型">
+                <input type="submit" value="" class="ico-search">
+                <div class="search-option">
+                    <dl>
+                        <dt><i class="cbb cbb-arrow-down"></i>点击直达</dt>
+                        {% for sc in search_list%}
+                        <dd><a href="{{sc.url}}">{{sc.name}}<span>厂商指导价：{{'%.2f'|format(sc.start_guideprice/10000)}}万 - {{'%.2f'|format(sc.end_guideprice/10000)}}万</span></a>
+                        </dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="header-menu">
+            <div class="sub">
+                <p class="clearfix"><strong>所有在售车型</strong><span class="ico-arrow-mod-d"></span></p>
+
+                <div class="carmod">
+
+                    <div class="carmod-c carmod-c-1" style="background-color: #fff;">
+                        <cite><span class="threegray"></span>三厢车</cite>
+
+                        <div class="mod-car mod-car-1">
+                            {% for thr in car_threegray %}
+                            <dl>
+                                <a href="/{{city.city_alias}}{{thr.series.url}}">
+                                    <dd><img src="{{thr.series.pc_thumbnail}}@240h" alt=""></dd>
+                                    <dt>{{thr.series.name}}</dt>
+                                    {%if thr.series.offer_price.guide_price%}
+                                    <dd>指导价：<strong>{{'%.2f'|format(thr.series.offer_price.guide_price/10000)}}</strong>万起
+                                        {% endif %}
+                                    </dd>
+                                </a>
+                            </dl>
+                            {% endfor %}
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="carmod-c carmod-c-2">
+                        <cite><span class="twogray"></span>两厢车</cite>
+
+                        <div class="mod-car mod-car-2">
+                            {% for two in car_twogray %}
+                            <dl>
+                                <a href="/{{city.city_alias}}{{two.series.url}}">
+                                    <dd><img src="{{two.series.pc_thumbnail}}@240h" alt=""></dd>
+                                    <dt>{{two.series.name}}</dt>
+                                    <dd>指导价：<strong>{{'%.2f'|format(two.series.offer_price.guide_price/10000)}}</strong>万起
+                                    </dd>
+                                </a>
+                            </dl>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="carmod-c carmod-c-3">
+                        <cite><span class="suvgray"></span>SUV</cite>
+
+                        <div class="mod-car mod-car-3">
+                            {% for suv in car_suv %}
+                            <dl>
+                                <a href="/{{city.city_alias}}{{suv.series.url}}">
+                                    <dd><img src="{{suv.series.pc_thumbnail}}@240h" alt=""></dd>
+                                    <dt>{{suv.series.name}}</dt>
+                                    <dd>指导价：<strong>{{'%.2f'|format(suv.series.offer_price.guide_price/10000)}}</strong>万起
+                                    </dd>
+                                </a>
+                            </dl>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="carmod-c carmod-c-4">
+                        <cite><span class="outgray"></span>原装进口</cite>
+
+                        <div class="mod-car mod-car-4">
+
+                            {% for out in car_outgray %}
+                            <dl>
+                                <a href="/{{city.city_alias}}{{out.series.url}}">
+                                    <dd><img src="{{out.series.pc_thumbnail}}@240h" alt=""></dd>
+                                    <dt>{{out.series.name}}</dt>
+                                    <dd>指导价：<strong>{{'%.2f'|format(out.series.offer_price.guide_price/10000)}}</strong>万起
+                                    </dd>
+                                </a>
+                            </dl>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <p class="bar">
+                <a href="/{{city.city_alias}}" class={{ 'active' if '/'~city.city_alias~'/' == request.path else
+                ''}}>首页</a>
+                <a href="/{{city.city_alias}}/car" class={{ 'active' if '/car' in request.path else ''}}>惠挑车</a>
+                <a href="https://df.shopmodule.jaeapp.com/index.php/active?spm=a1z10.1-b.w9501172-11814161513.3.IheURU&SMARTCODE=A2014-45-55-7-248" target="_blank">享活动</a>
+                <a href="/{{city.city_alias}}/dealer" class={{ 'active' if '/dealer' in request.path else ''}}>找好店</a>
+                <a href="https://df.shopmodule.jaeapp.com/index.php/coupon?spm=a1z10.1-b.w9501180-10053075609.4.IheURU&scene=taobao_shop&SMARTCODE=A2014-45-55-7-247" target="_blank">限时购</a>
+                <a href="/{{city.city_alias}}/finance" class={{ 'active' if '/finance' in request.path else ''}}>任性贷</a>
+                <!--<span class="ad"></span>-->
+            </p>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+{% endblock %}
+{% block main %}
+<div class="jumbotron">
+    {% block testsuper %}<h1>车巴巴首页</h1>{% endblock %}
+    <p>You are in {{ request.GET.citycode}} now!</p>
+    <p>{{ city_url('main_hui')}}</p>
+    <p>{{ city_url('main_hui_detail', seq='1')}}</p>
+    <p>{{ url('main_hui', citycode='guangzhou') }}</p>
+    <p>{{ static('') }}</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">查看更多</a></p>
+</div>
+{% endblock %}
+{% block footer %}
+<div class="chebaba-footer">
+    {% block footerinfo %}
+    <div class="chebaba-container chebaba-footer-list">
+        <dl>
+            <dt>关于车巴巴</dt>
+            <dd><a href="/{{city.city_alias}}/html/site/about">关于我们</a></dd>
+            <dd><a href="/{{city.city_alias}}/html/site/about#service">服务条款</a></dd>
+            <dd><a href="/{{city.city_alias}}/html/site/about#protect">隐私保护</a></dd>
+            <dd><a href="/{{city.city_alias}}/html/site/about#law">法律声明</a></dd>
+        </dl>
+        <dl>
+            <dt>招纳贤士</dt>
+            <dd><a href="/{{city.city_alias}}/html/site/join#area_society">社会招聘</a></dd>
+            <!--<dd><a href="/{{city.city_alias}}/html/site/join#area_culture">校园招聘</a></dd>-->
+            <dd><a href="/{{city.city_alias}}/html/site/join#area_help">应聘帮助</a></dd>
+        </dl>
+        <dl>
+            <dt>常用中心</dt>
+            <dd><a href="/{{city.city_alias}}/car">选车中心</a></dd>
+            <!--<dd><a href="">购车计算</a></dd>-->
+            <dd><a href="/{{city.city_alias}}/dealer">经销商</a></dd>
+            <dd><a href="/{{city.city_alias}}/finance">金融贷款</a></dd>
+        </dl>
+        <dl>
+            <dt class="follow">关注车巴巴</dt>
+            <dd class="ico-weixin"></dd>
+            <dd class="ico-weibo"></dd>
+        </dl>
+        <dl class="last">
+            <dt>联系车巴巴</dt>
+            <dd><strong>400-830-8899</strong></dd>
+            <dd><strong>800-830-8899</strong></dd>
+            <dd>周一至周日 8:30-21:00</dd>
+            <dd>(邮箱：chebaba@dfl.com.cn)</dd>
+        </dl>
+        <div class="clearfix"></div>
+    </div>
+    {% endblock %}
+    {% block copyright %}
+    <div class="chebaba-footer-bottom">
+        <div class="chebaba-container">
+            <a href="/{{city.city_alias}}" class="btn-logo-footer"></a>
+            <p>Copyright<sup>&copy;</sup>2008-2015 chebaba.com，All Rights Reserved
+                粤ICP备1505<br>版权所有<span>东风日产乘用车公司</span></p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+{% endblock %}
+{% block right%}
+<!--右侧导航-->
+
+<div class="m-nav-right j-nav-right">
+    <ul class="">
+        <li class="m-nav-l1 j-l1 f-pr">
+            <i class="u-icon u-l1 u-icon-lw j-i1"></i>
+            <div class="s-p-sm u-s1 j-u1">优惠活动</div>
+            <div class="u-bri">
+                <div class="j-l2 u-l2 u-popover left">
+                    <i class="arrow"></i>
+                    <img src="{{static('site/images/lib/ewm-weixin.jpg')}}" alt="此处为二维码">
+                    <!--<span class="f-db s-sm f-ta-c tt">获取更多优惠</span>-->
+                    <span class="f-db s-sm f-ta-c tt"><i class="u-icon u-icon-sys"></i> 扫描进入移动端</span>
+                    <!--<span class="f-db s-ss f-ta-c s-color-p tt">ID:CHEBABA</span>-->
+                </div>
+            </div>
+        </li>
+        <!--<li class="m-nav-l1  j-l1 f-pr">
+            <i class="u-icon u-l1 u-icon-gj j-i1"></i>
+            <div class="s-p-sm u-s1 j-u1">购车工具</div>
+            {# <div class="u-bri">
+                <div class="j-l2 u-ls2 u-popover left">
+                    <i class="arrow"></i>
+                    <ul>
+                        &lt;!&ndash;<li class="m-nav-l2"><a href="/{{city.city_alias}}/checkloan" target="_blank"><div class="s-p-sm u-s1 j-u1 s-color-w">征信查询</div></a></li>&ndash;&gt;
+                        &lt;!&ndash;<li class="m-nav-l2"><div class="s-p-sm u-s1 j-u1 s-color-w">贷款计算</div></li>
+                        <li class="m-nav-l2"><div class="s-p-sm u-s1 j-u1 s-color-w">购车计算</div></li>
+                        <li class="m-nav-l2"><div class="s-p-sm u-s1 j-u1 s-color-w">税费计算</div></li>&ndash;&gt;
+                    </ul>
+                </div>
+            </div> #}
+        </li>-->
+        <!--<li class="m-nav-l1  j-l1"><i class="u-icon u-l1 u-icon-yj j-i1"></i><div class="s-p-sm u-s1 j-u1">意见反馈</div></li>-->
+        <li class="m-nav-l1  j-l1 f-pr">
+            <i class="u-icon u-l1 u-icon-fx j-i1"></i>
+            <div class="s-p-sm u-s1 j-u1">分享优惠</div>
+            <div class="u-bri">
+                <div class="j-l2 u-lyj2 u-popover left">
+                    <i class="arrow"></i>
+                    <ul class=" f-pr">
+                        <li class="j-ls2 m-nav-lyj2 ">
+                            <i class="u-icon u-icon-weixin u-l1"></i>
+                            <div class="u-bri">
+                                <div class="j-l3 u-l2 u-l3ws u-popover left">
+                                    <i class="arrow"></i>
+                                    <img src="{{static('site/images/lib/ewm-weixin.jpg')}}" width="130" height="130"
+                                         alt="此处为二维码">
+                                    <span class="f-db s-sm f-ta-c tt"><i class="u-icon u-icon-sys"></i> 扫码进入移动端</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="j-ls2  m-nav-lyj2" id="weibo-sh">
+                            <!--<i class="u-icon u-icon-weibo u-l1"></i>-->
+                            <div class="bshare-custom icon-medium-plus"><a title="分享到新浪微博"
+                                                                           class="bshare-sinaminiblog"></a></div>
+                            <!-- <div class="u-bri">
+                                 <div class="j-l3 u-l2 u-l3wb u-popover left">
+                                     <i class="arrow"></i>
+                                     <img src="../../static/site/images/test/wxewm.png" alt="此处为二维码" >
+                                     <span class="f-db s-sm f-ta-c tt"><i class="u-icon u-icon-sys"></i> 扫码进入移动端</span>
+                                 </div>
+                             </div>-->
+                        </li>
+                        <li class="j-ls2  m-nav-lyj2" id="qq-zone">
+                            <a href="" target="_blank"><i class="u-icon u-icon-zone u-l1"></i></a>
+                            <!--<div class="u-bri">
+                                <div class="j-l3 u-l2 u-l3qz u-popover left">
+                                    <i class="arrow"></i>
+                                    <img src="../../static/site/images/test/wxewm.png" alt="此处为二维码" >
+                                    <span class="f-db s-sm f-ta-c tt"><i class="u-icon u-icon-sys"></i> 扫码进入移动端</span>
+                                </div>
+                            </div>-->
+                        </li>
+                        <li class="j-ls2 m-nav-lyj2">
+                            <a style="display: block;"
+                               href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()">
+                                <i class="u-icon u-icon-douban u-l1"></i>
+                            </a>
+                            <!--<div class="u-bri">
+                                <div class="j-l3 u-l2 u-l3db u-popover left">
+                                    <i class="arrow"></i>
+                                    <img src="../../static/site/images/test/wxewm.png" alt="此处为二维码" >
+                                    <span class="f-db s-sm f-ta-c tt"><i class="u-icon u-icon-sys"></i> 扫码进入移动端</span>
+                                </div>
+                            </div>-->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="m-nav-l1 j-l1"><a href="javascript:;" id="back-top"><i class="u-icon u-l1 u-icon-top j-i1"></i>
+            <div class="s-p-sm u-s1 j-u1">返回顶部</div>
+        </a></li>
+    </ul>
+</div>
+{% endblock %}
+</body>
+{% block js %}
+<script type="text/javascript" src="{{ static('site/js/lib/statistics.js') }}"></script>
+<script type="text/javascript" src="{{ static('3rd/pace/pace.min.js') }}"></script>
+<script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/lib/common.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/lib/jq.citySelect.js') }}"></script>
+<!--关注微博-->
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<!--分享JS-->
+<script type="text/javascript" src="{{ static('site/js/lib/base.js') }}"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8"
+        src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+{% endblock %}
+{% endblock %}
+</html>

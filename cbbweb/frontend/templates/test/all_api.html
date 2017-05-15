@@ -1,0 +1,120 @@
+{% import 'test/activity_api.html' as activity_api with context %}
+{% import 'test/car_api.html' as car_api with context %}
+{% import 'test/car_series_api.html' as car_series_api with context %}
+{% import 'test/car_type_api.html' as car_type_api with context %}
+{% import 'test/dealer_api.html' as dealer_api with context %}
+{% import 'test/finance_api.html' as finance_api with context %}
+{% import 'test/common_api.html' as common_api with context %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="applicable-device" content="pc">
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                test
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ static('3rd/jsonview/jquery.jsonview.min.css') }}" rel="stylesheet" type="text/css" />
+
+            <link href="{{ static('test/css/test.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ static('test/css/basic.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ static('test/css/classic.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ static('test/css/pygments.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+            <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/jsonview/jquery.jsonview.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ static('test/js/test.js') }}"></script>
+
+            <script type="text/javascript">
+                var json_dict = {};
+                window.onload = function() {
+                    init_page();
+                };
+            </script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body>
+            <div id="navbar" class="navbar navbar-default">
+                <div id="navbar-container" class="navbar-container">
+                    <a href="#" class="pull-left">
+                        <img class="df_logo" src="{{ static('test/images/logo.png') }}" alt="logo" />
+                    </a>
+                    <div class="navbar-header pull-left">
+                        <a href="#" class="navbar-brand">
+                            <small>
+                                车巴巴
+                            </small>
+                        </a>
+                    </div>
+                    <div class="navbar-buttons navbar-header pull-right ">
+                        <ul class="nav">
+                        </ul>
+                    </div>
+                    <nav class="navbar-menu pull-left">
+                    </nav>
+                    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                        <button id="show_detail_btn">显示所有API详细说明</button>
+                        <button id="hide_detail_btn">隐藏所有API详细说明</button>
+                        <button id="toggle_detail_btn">切换所有API详细说明</button>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="main-container" id="main-container">
+                <div class="main-content">
+                    <div class="breadcrumbs">
+                    </div>
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel-group" id="accordion">
+                                    {{ activity_api.test() }}
+                                    {{ car_api.test() }}
+                                    {{ car_series_api.test() }}
+                                    {{ car_type_api.test() }}
+                                    {{ dealer_api.test() }}
+                                    {{ finance_api.test() }}
+                                    {{ common_api.test() }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="footer col-xs-12">
+                    <div class="footer-inner">
+                        <div class="footer-content text-center">
+                            <span>
+                                Copyright © 2008-2015 chebaba.com，All Rights Reserved 粤ICP备1505
+                            </span>
+                            <br />
+                            <span>
+                                版权所有 东风日产乘用车公司
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    {% endblock %}
+</html>

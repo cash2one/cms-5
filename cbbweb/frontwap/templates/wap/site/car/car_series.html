@@ -1,0 +1,198 @@
+{% extends 'wap/base/base.html'  %}
+
+{% set car_series_id = catalogs.model_instanceid %}
+{% set car_series_data=run(API.CAR_SERIES_DATA, city_id=city.city_id, car_series_id=car_series_id) %}
+{# 品牌名 #}
+{% set brandName = car_series_data.brand.name%}   
+{# 车系名 #} 
+{% set seriesName = car_series_data.series.name%}
+
+{% block catalogsTitle %}
+    {{brandName}}{{seriesName}}报价_优惠_图片_配置|{{city.city_name}}{{seriesName}}多少钱_怎么样
+{% endblock %}
+{% block catalogsDesc%}
+  <meta name="Keywords" content="{{city.city_name}}{{brandName}}{{seriesName}},{{city.city_name}}{{seriesName}},{{brandName}}{{seriesName}}">
+  <meta name="description" content="{{seriesName}}{% if car_series_data.series.introdution %}特点：{{car_series_data.series.introdution}}{% endif %},{{city.city_name}}{{brandName}}{{seriesName}}多少钱,配置怎么样,相关图片、配置、报价、评测等信息请关注{{sign}}！">
+{% endblock %}
+
+{% block css %}
+<link href="//cdn.bootcss.com/Swiper/3.3.0/css/swiper.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+<script src="//cdn.bootcss.com/Swiper/3.3.0/js/swiper.jquery.min.js"></script>
+<script>
+  $(function(){
+    /*f轮播图*/
+    $('.j-slide .nums .all').text($('.swiper-slide').length);
+    var slider = new Swiper('.j-slide', {
+      speed: 800,
+      autoplay: 4000,
+      autoplayDisableOnInteraction : false,
+      onSlideChangeStart:function(sld){
+        $('.j-slide .nums .cur').text(sld.activeIndex + 1);
+      }
+    });
+  })
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="g-wrap">
+  <div class="m-detail f-pd-m">
+    {% if car_series_data %}
+    <div class="u-title">
+      <h3 class="text">{{ seriesName }}</h3>
+    </div>
+    <div class="m-slide j-slide f-mt-m">
+      <div class="swiper-wrapper">
+        {% for imgsrc in car_series_data.series.imgs %}
+        <div class="swiper-slide"><img src="{{ imgsrc.CDNPATH }}" alt=""></div>
+        {% endfor %}
+      </div>
+      <div class="nums"><span class="cur">1</span>/<span class="all">5</span></div>
+    </div>
+    <div class="prices f-mt-m">
+      <div class="item-lr">
+        <div class="l">本地参考报价: <span class="s-color-main">{{ '%.2f'|format(car_series_data.series.offer_price.guide_price/10000) }}万元</span></div>
+        <div class="r"> </div>
+      </div>
+      <div class="item-lr">
+        <div class="l"> <span class="s-color-font-light">
+          官方指导价: {{ '%.2f'|format(car_series_data.series.start_guideprice/10000) }}万元~{{ '%.2f'|format(car_series_data.series.end_guideprice/10000) }}万元
+        </span></div>
+        {% if car_series_data.series.offer_price.discount %}
+          {% if car_series_data.series.offer_price.discount >= 10000  %}
+            <div class="r"><i class="u-icon u-icon-down"></i>{{ '%.2f'|format(car_series_data.series.offer_price.discount/10000) }}万元</div>
+          {% else %}
+            <div class="r"><i class="u-icon u-icon-down"></i>{{ car_series_data.series.offer_price.discount }}元</div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% set prop_keys=['jibie','fadongjixinghao','fadongjixingshi','qudongfangshi','biansuxiangxingshi','zuoweishu'] %}
+    {% set car_series_property = run(API.CAR_SERIES_PROPERTY,car_series_id=catalogs.model_instanceid,prop_keys=prop_keys) %}
+    <ul class="list">
+      {% set levels = car_series_property['jibie'] %}
+      <li>车型级别：{% for lev in levels %}
+                  {{ lev.property_value }}
+                  {% endfor%}
+      </li>
+      {% set engines = car_series_property['fadongjixinghao'] %}
+      {% set eng_type = car_series_property['fadongjixingshi'] %}
+      <li>发动机：
+      {% for eng in engines %}
+        {% if loop.first %}
+          {{ eng.property_value }}
+        {% else %}
+          \{{ eng.property_value }}
+        {% endif %}
+      {% endfor %}
+      </li>
+
+      {% set drives = car_series_property['qudongfangshi'] %}
+      <li>驱动：
+        {% for drive in drives %}
+          {{ drive.property_value }}
+        {% endfor %}
+      </li>
+
+      {% set gearboxs = car_series_property['biansuxiangxingshi'] %}
+      <li>变速箱：
+        {% for gearbox in gearboxs %}
+          {% if loop.first %}
+            {{ gearbox.property_value }}
+          {% else%}
+            /{{ gearbox.property_value }}
+          {% endif %}
+        {% endfor %}
+      </li>
+      {% set seats = car_series_property['zuoweishu'] %}
+      <li>座位：
+        {% for seat in seats %}
+          {{ seat.property_value }}座
+        {% endfor %}
+      </li>
+    </ul>
+ 
+    <div class="m-btns2">
+      <a class="u-btn u-btn-default" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V5-Ch-Le-PoC-Msg3-01-0000&car_series={{car_series_id}}&clueType=2">预约试驾</a>
+      <a class="u-btn u-btn-app f-fr" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-01-0000&car_series={{car_series_id}}&clueType=7">获取优惠</a>
+    </div>
+  </div>
+
+  {# 金融产品 #}
+  {% set financial_products = run(API.LOWEST_MONTHLY_PAYMENT,city_id=city.city_id,car_series_id=car_series_id) %}
+  {# <p>{{dumps_json(financial_products, add_pre=true)}}</p> #}
+  {% if (financial_products and financial_products.first_pay_amount and financial_products.monthly_pay_amount)  %}
+    <a class="u-hotLink f-nbb" href="{{ city_url('site.finance_detail',series_id=financial_products.car_series_id) }}">
+      <h3 class="text"><i class="label labelx">贷</i>首付仅需
+        <span class="s-color-main">
+        {% if financial_products.first_pay_amount >=10000 %}
+          {{ '%.2f'|format(financial_products.first_pay_amount/10000) }}万元
+        {% else %}
+          {{ financial_products.first_pay_amount }}元
+        {% endif %}
+        </span>，月供<span class="s-color-main">{{ financial_products.monthly_pay_amount }}元</span>，免担保</h3>
+      <i class="u-icon u-icon-right"></i>
+    </a>
+  {% endif %}
+  {% if car_series_data.activity_list %}
+    {% set seriesActivity = car_series_data.activity_list%}
+    <a class="u-hotLink f-nbb" href="/{{city.city_alias}}{{ seriesActivity[0].url }}">
+      <h3 class="text">
+      <i class="label labelx">热</i>{{ seriesActivity[0].activity_title }}
+      </h3>
+      <i class="u-icon u-icon-right"></i>
+    </a>
+  {% endif %}
+
+  <div class="m-pannel">
+    {% set on_sale_car_types=run(API.ON_SALE_CAR_TYPES, city_id=city.city_id, car_series_id=car_series_id, per_page=0, page=1, orderby='discount') %}
+    {% if on_sale_car_types %}
+    <div class="head">
+      <div class="tit">在售车型</div>
+    </div>
+    <div class="body">
+      <!-- <p>{{ dumps_json(on_sale_car_types, add_pre=True)|safe }}</p> -->
+      <ul class="m-carList">
+        {% for carlist in on_sale_car_types.car_type_list %}
+          <li class="f-ge">
+            <a href="{{ carlist.url}}">
+              <div class="u-title">
+                <h3 class="text">{{carlist.name}}</h3>
+              </div>
+            </a>  
+            <div class="price">
+              <div class="l">本地参考报价: <span class="s-color-main">{{ '%.2f'|format(carlist.offer_price.guide_price/10000) }}万起</span></div>
+              <div class="r">
+                {% if carlist.offer_price.price >= 10000  %}
+                <span class="s-color-font-light"> 限时优惠：{{ '%.2f'|format(carlist.offer_price.price/10000) }}万元起</span>
+                {% else %}
+                <span class="s-color-font-light"> 限时优惠：{{carlist.offer_price.price }}元起</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="m-btns2">
+              <a class="u-btn u-btn-default" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V5-Ch-Le-PoC-Msg3-02-0000&car_series={{car_series_id}}&car_type={{carlist.id}}&clueType=2">预约试驾</a>
+
+              <a class="u-btn u-btn-default f-fr" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-02-0000&car_series={{car_series_id}}&car_type={{carlist.id}}&clueType=7">获取优惠</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+  {# 经销商-试驾key #} 
+  {% set dealerDriveKey = 'NV-Chebabanew-Wap-V5-Ch-Le-PoC-Msg3-03-0000'%}
+  {# 经销商-获取优惠key #}
+  {% set dealerDiscountKey = 'NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-03-0000'%}
+
+  {% include 'wap/site/car/news_evaluation.html' %}
+  {% include 'wap/site/car/store_recommend.html' %}
+</div>
+
+{% endblock %}

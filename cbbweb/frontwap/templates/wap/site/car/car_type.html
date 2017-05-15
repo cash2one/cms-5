@@ -1,0 +1,195 @@
+{% extends 'wap/base/base.html' %}
+
+{% set car_type_data=run(API.CAR_TYPE_DATA,city_id=city.city_id,car_type_id=sub_id) %}
+{# 品牌名 #}
+{% set brandName = car_type_data.brand.name%}   
+{# 车系名 #}
+{% set seriesName = car_type_data.series.name%}
+{# 车型#}
+{% set typeName = car_type_data.type.name%}
+
+{% block catalogsTitle %}
+    【{{city.city_name}}】{{brandName}}{{seriesName}}{{typeName}}报价_参数_油耗_图片_多少钱
+{% endblock %}
+{% block catalogsDesc%}
+  <meta name="Keywords" content="{{city.city_name}}{{seriesName}}{{typeName}},{{seriesName}}{{typeName}},{{seriesName}}{{typeName}}多少钱,{{seriesName}}{{typeName}}怎么样">
+  <meta name="description" content="{{brandName}}{{seriesName}}{{typeName}}{% if car_type_data.series.introdution %}特点：{{car_type_data.series.introdution}}{% endif %},{{seriesName}}{{typeName}}多少钱,配置怎么样,相关图片、配置、报价、评测等信息请关注{{sign}}！">
+{% endblock %}
+
+{% block css %}
+<link href="//cdn.bootcss.com/Swiper/3.3.0/css/swiper.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  
+  {% set car_series_id = catalogs.model_instanceid %}
+  <div class="g-wrap">
+      {% if car_type_data %}
+      <div class="m-detail f-pd-m">
+        <div class="u-title">
+          <h3 class="text">{{ typeName }}</h3>
+          <span class="more"><a class="j-changeCar" href="javascript:;">更换车型</a></span>
+        </div>
+        {% if car_type_data.type.product_spot %}
+          {% set tags = car_type_data.type.product_spot%}
+          <ul class="m-labels f-cb f-mt-m">
+            {% for tag in tags %}
+            <li>{{ tag }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="m-slide j-slide f-mt-m">
+          <div class="swiper-wrapper">
+              {% for imgsrc in car_type_data.type.imgs %}
+              <div class="swiper-slide"><img src="{{ imgsrc.CDNPATH }}" alt="{{brandName}}{{seriesName}}"></div>
+              {% endfor %}
+          </div>
+          <div class="nums"><span class="cur">1</span>/<span class="all">{{ car_type_data.type.imgs.length }}</span></div>
+        </div>
+
+        <div class="prices f-mt-m">
+          <div class="item-lr">
+            {% set price = car_type_data.type.offer_price.price %}
+            <div class="l">本地参考报价: <span class="s-color-main">{{ '%.2f'|format(price/10000) }}万元</span></div>
+            <div class="r"><i class="u-icon u-icon-laba"></i> <a  href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-05-0000&car_series={{car_series_id}}&car_type={{sub_id}}" class="s-color-main">优惠提醒</a></div>
+          </div>
+          <div class="item-lr">
+            {% set guide_price = car_type_data.type.offer_price.guide_price  %}
+            <div class="l"> <span class="s-color-font-light">官方指导价: {{ '%.2f'|format(guide_price/10000) }}万元</span> </div>
+            {% set discount = car_type_data.type.offer_price.discount %}
+            <div class="r">
+              {% if discount >= 10000 %}
+                <i class="u-icon u-icon-down"></i>
+                {{ '%.2f'|format(discount/10000) }}万元
+              {% else %}
+                {% if discount > 0 %}
+                  <i class="u-icon u-icon-down"></i>
+                  {{ discount }}元
+                {%endif%}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="m-btns2">
+          <a class="u-btn u-btn-default" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V5-Ch-Le-PoC-Msg3-04-0000&car_series={{car_series_id}}&car_type={{sub_id}}&clueType=2">预约试驾</a>
+
+          <a class="u-btn u-btn-app f-fr" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-04-0000&car_series={{car_series_id}}&car_type={{sub_id}}&clueType=7">获取优惠</a>
+        </div>
+      </div>
+      {% endif %}
+      
+      {# 金融产品 #}
+      {% set financial_products = run(API.LOWEST_MONTHLY_PAYMENT,city_id=city.city_id,car_series_id=car_series_id,car_type_id=sub_id) %}
+      {% if (financial_products and financial_products.first_pay_amount and financial_products.monthly_pay_amount)  %}
+        <a class="u-hotLink f-nbb" href="{{ city_url('site.finance_detail_model',series_id=financial_products.car_series_id,model_id=sub_id) }}">
+          <h3 class="text"><i class="label labelx">贷</i>首付仅需
+            <span class="s-color-main">
+            {% if financial_products.first_pay_amount >=10000 %}
+              {{ '%.2f'|format(financial_products.first_pay_amount/10000) }}万元
+            {% else %}
+              {{ financial_products.first_pay_amount }}元
+            {% endif %}
+            </span>，月供<span class="s-color-main">{{ financial_products.monthly_pay_amount }}元</span>，免担保</h3>
+          <i class="u-icon u-icon-right"></i>
+        </a>
+      {% endif %}
+
+      
+      {% set activitys = list_objs(model=MODELS.T_BASE_MEDIA_ACTIVITY,orderby=['-id'],count=1,car_type_id=sub_id) %}
+      
+      {% for act in activitys %}
+      {% set url = catalog_url(model_table=MODELS.T_BASE_MEDIA_ACTIVITY_TYPE.name, model_instanceid=act.activity_type) %}
+      <a class="u-hotLink f-nbb" href="{{ url }}/{{ act.id }}">
+        <h3 class="text">
+        <i class="label labelx">热</i>{{ act.activity_title }}
+        </h3>
+        <i class="u-icon u-icon-right"></i>
+      </a>
+      {% endfor %}
+      <div class="m-pannel">
+        {% set prop_keys = ['jibie','fadongjixinghao','qudongfangshi','biansuxiangxingshi','zuoweishu'] %}
+        {% set car_props = run(API.CAR_TYPE_PROPERTY,car_type_id=sub_id,prop_keys=prop_keys) %}
+        {% if car_props %}
+        <div class="head">
+          <div class="tit">参数配置</div>
+        </div>
+        <div class="body">
+          <ul class="m-lists">
+            <li>车型级别: {{ car_props['jibie'].property_value }}</li>
+            <li>发动机: {{ car_props['fadongjixinghao'].property_value }}</li>
+            <li>驱动: {{ car_props['qudongfangshi'].property_value }}</li>
+            <li>变速箱: {{ car_props['biansuxiangxingshi'].property_value }}</li>
+            <li>座位: {{ car_props['zuoweishu'].property_value }}座</li>
+          </ul>
+        </div>
+        {% endif %}
+        <div class="foot">
+          <div class="more"><a href="{{ city_url('site.car_type_param', id=sub_id) }}">更多详情</a></div>
+        </div>
+      </div>
+      {# 经销商-试驾key #} 
+      {% set dealerDriveKey = 'NV-Chebabanew-Wap-V5-Ch-Le-PoC-Msg3-05-0000'%}
+      {# 经销商-获取优惠key #}
+      {% set dealerDiscountKey = 'NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-06-0000'%}
+      {% include 'wap/site/car/news_evaluation.html' %}
+      {% include 'wap/site/car/store_recommend.html' %}
+    </div>
+  </div>
+  <div class="g-slider-fix">
+    <div class="m-changeCar">
+      <div class="u-title-ver title">
+        <div class="tit">选择车型</div>
+      </div>
+      {% set car_series_id = run(API.GET, model=MODELS.T_BASE_CAR_TYPE, id=sub_id)  %}
+      {% if car_series_id %}
+      {% set other_cars = list_objs(model=MODELS.T_BASE_CAR_TYPE,orderby=['id'],car_series_id = car_series_id.car_series_id) %}
+      {# todo model_instanceid参数写死，替换成car_series_id.car_series_id #}
+      {% set url = catalog_url(model_table=MODELS.T_BASE_CAR_SERIES.name, model_instanceid=50001) %}
+      <ul class="cars">
+        {% for other_car in other_cars %}
+        <li>
+          <a href="{{ url }}/{{ other_car.id }}">
+            {{ other_car.car_type_name }}
+            <div class="p">￥{{ '%.2f'|format(other_car.guide_price/10000) }}万元</div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="//cdn.bootcss.com/Swiper/3.3.0/js/swiper.jquery.min.js"></script>
+  <script>
+    $(function(){
+      /*轮播图*/
+      $('.j-slide .nums .all').text($('.swiper-slide').length);
+      var slider = new Swiper('.j-slide', {
+        speed: 800,
+        autoplay: 4000,
+        autoplayDisableOnInteraction : false,
+        onSlideChangeStart:function(sld){
+          $('.j-slide .nums .cur').text(sld.activeIndex + 1);
+        }
+      });
+      /*更换车型*/
+      $('.j-changeCar').click(function(){
+        $('html').addClass('f-lock');
+        $('.g-slider-fix').addClass('g-slider-fix-active');
+      })
+      $('.j-back').click(function(){
+        $('html').removeClass('f-lock');
+        $('.g-slider-fix').removeClass('g-slider-fix-active');
+      })
+      $(".j-remind").click(function(){
+        $(".m-popup-cover").show();
+      })
+      $(".j-close").click(function(){
+        $(".m-popup-cover").hide();
+      })
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,236 @@
+#loan-index-head {
+  min-width: 990px;
+}
+#loan-index-head #loan-plan-form {
+  position: relative;
+}
+#loan-index-head .loan-ad-content {
+  position: absolute;
+  width: 990px;
+  left: 50%;
+  margin-left: -495px;
+}
+#loan-index-head .g-ad-lg {
+  height: 350px;
+  background-color: #7C0A00;
+}
+#loan-index-head .loan-plan-wrap {
+  width: 250px;
+  height: 350px;
+  position: absolute;
+  right: 0;
+  border: 0px solid #000;
+  z-index: 100;
+  background: url(../../images/page/loan/loan-form-bg.png);
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top {
+  padding: 1px 15px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top div.cur {
+  outline: 2px solid #fe6600;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top .loan-plan-form-tit {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 20px 0;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top .u-btn-magenta {
+  margin-top: 55px;
+  padding: 7px 0;
+  display: block;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 15px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top .input-group {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top .input-group input {
+  width: 163px;
+  cursor: pointer;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-top .input-group .input-group-addon {
+  height: 35px;
+  line-height: 35px;
+  padding: 0;
+  width: 35px;
+  border-top: none;
+  border-bottom: none;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 55px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot a {
+  color: #999999;
+  font-size: 16px;
+  text-align: center;
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 55px;
+  font-size: 13px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot a em {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot i {
+  background: url(../../images/page/bg-detail.png) -490px -48px;
+  width: 9px;
+  height: 15px;
+  position: absolute;
+  top: 23px;
+  right: 10px;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot:hover a {
+  color: #ffffff;
+}
+#loan-index-head .loan-plan-wrap .loan-plan-form-bot:hover i {
+  background-position: -477px -48px;
+}
+.loan-index-wrap .u-loan-plan {
+  width: 485px;
+  height: 180px;
+  border-top: 2px solid #999999;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-wr {
+  margin-left: 15px;
+  width: 465px;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt {
+  width: 210px;
+  position: relative;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt p.title {
+  float: left;
+  font-size: 20px;
+  border-top: 2px solid #fe6600;
+  margin: -2px 0 10px -15px;
+  padding: 15px 5px 8px 15px;
+  color: #000000;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt span {
+  float: left;
+  font-size: 14px;
+  color: #999999;
+  height: 1.5em;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt .loan-pirct {
+  border-top: 1px solid #999999;
+  padding-top: 15px;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt .loan-pirct p {
+  font-size: 16px;
+  color: #000000;
+  line-height: 1.5em;
+  margin: 10px 0;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt .loan-pirct p span {
+  float: right;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-txt .loan-pirct p span label {
+  color: #c90329;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-img {
+  height: 100%;
+  width: 215px;
+  overflow: hidden;
+}
+.loan-index-wrap .u-loan-plan .u-loan-plan-img img {
+  margin: 20px auto;
+  display: block;
+  width: 210px;
+  height: 140px;
+  vertical-align: middle;
+}
+#loan-index-financial {
+  padding-left: 1px;
+}
+#loan-index-financial .loan-fnc-1 {
+  background: url(../../images/page/loan/loan-financal-1.jpg) no-repeat;
+}
+#loan-index-financial .loan-fnc-1 p {
+  color: #fc9463;
+}
+#loan-index-financial .loan-fnc-2 {
+  background: url(../../images/page/loan/loan-financal-2.jpg) no-repeat;
+}
+#loan-index-financial .loan-fnc-2 p {
+  color: #fc7676;
+}
+#loan-index-financial .loan-fnc-3 {
+  background: url(../../images/page/loan/loan-financal-3.jpg) no-repeat;
+}
+#loan-index-financial .loan-fnc-3 p {
+  color: #3f98fc;
+}
+#loan-index-financial .u-loan-index-fnc {
+  border: 1px solid #e2e2e2;
+  float: left;
+  margin-left: -1px;
+  position: relative;
+  height: 350px;
+  width: 328px;
+  background-color: #fff;
+}
+#loan-index-financial .u-loan-index-fnc:hover {
+  border: 1px solid #ed1f1f;
+  z-index: 1000;
+}
+#loan-index-financial .u-loan-index-fnc h2 {
+  margin: 15px 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #656565;
+}
+#loan-index-financial .u-loan-index-fnc p {
+  margin: 0 15px;
+  font-size: 14px;
+  line-height: 1em;
+}
+#loan-index-financial .u-loan-index-fnc .u-loan-img {
+  position: relative;
+}
+#loan-index-financial .u-loan-index-fnc .u-loan-img img {
+  float: right;
+}
+#loan-index-financial .u-loan-index-fnc .u-series-wrap {
+  margin: 180px 0 10px 15px;
+}
+#loan-index-financial .u-loan-index-fnc .u-series-wrap a {
+  padding: 5px 13px;
+  font-size: 14px;
+  border: 1px solid #e2e2e2;
+  margin-right: 15px;
+  color: #999999;
+}
+#loan-index-financial .u-loan-index-fnc .u-series-wrap a:hover {
+  border-color: #fe6600;
+  color: #fe6600;
+}
+#loan-index-financial .u-loan-index-fnc .u-series-wrap a.cur {
+  border-color: #fe6600;
+  color: #fe6600;
+}
+#loan-index-financial .u-loan-index-fnc .u-btn-lightRed {
+  height: 35px;
+  line-height: 35px;
+  width: 285px;
+  display: inline-block;
+  text-align: center;
+  margin: 15px 0;
+  margin-left: 15px;
+}
+#loan-index-financial .u-loan-index-fnc .u-btn-lightRed:hover {
+  background-color: #c90329;
+  color: #ffffff;
+}

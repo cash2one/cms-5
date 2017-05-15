@@ -1,0 +1,2058 @@
+@import 'var';
+@import 'reset';
+@import 'f';
+@import 'button';
+@import 'icon';
+@import 'g';
+@import 'u';
+
+*{ 
+  font-family: "Microsoft Yahei"!important;
+}
+/*顶部导航栏*/
+.m-topNav{
+  height: 100px;
+  line-height: 100px;
+  background-color: @color-main;
+  text-align: center;
+  color:#fff;
+  .title{
+    font-size: 3.6rem;
+  }
+  .left,.right{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: left;
+    padding: 0 30px;
+  }
+  .right{
+    left: auto;
+    right: 0;
+    text-align: right;
+  }
+}
+/*顶部导航栏结束*/
+/*标签组*/
+.m-labels{
+  li{
+    float: left;
+    margin-right: 10px;
+    .u-label();
+  }
+}
+/*标签组结束*/
+/*幻灯片*/
+.m-slide{
+  overflow: hidden;
+  position: relative;
+  .nums{
+      position: absolute;
+      right:0;
+      bottom:40px;
+      font-size: 2.2rem;
+      color:@color-font-lighter;
+      z-index: 2;
+  }
+  .swiper-slide{
+    min-height:290px;
+    overflow: hidden;
+    text-align: center;
+    img{
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+/*幻灯片结束*/
+/*车型 商品详情*/
+.m-detail{
+  padding-bottom: 38px;
+  .prices{
+    .item-lr{
+      .u-item-lr();
+      overflow: hidden;
+      margin-bottom: 26px;
+      .r{
+        .s-color-main{
+          font-size: 2.4rem;
+        }
+      }
+    }
+  }
+  .list{
+    padding-top: 12px;
+    font-size: 2.6rem;
+    color:@color-font-lighter;
+    li{
+      margin-bottom: 22px;
+    }
+  }
+}
+/*车型 商品详情结束*/
+/* pannel 板块*/
+.m-pannel{
+  .head{
+    .u-title-ver;
+    padding: 24px 30px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .body{
+    .m-item-lr{
+      border-top: none;
+      box-shadow: none;
+    }
+  }
+  .foot{
+    .more{
+      a{color:@color-font-lighter;
+        font-size: 2.4rem;}
+      padding: 32px 0;
+      text-align: center;
+    }
+  }
+}
+/* pannel 板块结束*/
+/*pannel 里面的普通文字列表*/
+.m-lists{
+  padding: 0 30px;
+  li{
+    .u-list();
+  }
+}
+.m-lists-lg{
+  li{
+    .u-list(@h:100px);
+    padding: 0 30px 0 58px;
+    position: relative;
+    .u-icon-right{
+      position: absolute;
+      top: 40px;
+      right: 30px;
+    }
+  }
+}
+/*pannel 里面的普通文字列表结束*/
+/* pannel 里面的媒体测评*/
+.m-news{
+  display: block;
+  padding: 10px 30px;
+  overflow: hidden;
+  .u-item-lr();
+  .l{
+    width: 240px;
+    height: 160px;
+    margin-right: 20px;
+    overflow: hidden;
+    img{
+      max-width: 100%;
+    }
+  }
+}
+/* pannel 里面的媒体测评结束*/
+/* pannel 里面的经销商*/
+.m-shops{
+  .more{
+    color:@color-font-lighter;
+    padding: 32px 0;
+    text-align: center;
+    background: #f9f9f9;
+    font-size: 2.6rem;
+  }
+  .shop{
+    padding: 45px 30px 35px;
+    .title{
+      .g-lr(@rw:162px;@space:10px);
+      .al{
+        font-size: 3.2rem;
+      }
+      .score{
+        font-size: 2.8rem;
+        padding-left: 10px;
+      }
+      .vip{
+        padding-left: 50px;
+        &:before{
+          position: absolute;
+          left:0;
+          content: 'vip';
+          color:@color-main;
+        }
+      }
+    }
+    .info{
+      color: #616161;
+      margin-bottom: 20px;
+      font-size: 2.4rem;
+      .special{
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+    .activity{
+      height: 60px;
+      padding: 0 20px;
+      background: rgb(232,232,232);
+      line-height: 60px;
+      position: relative;
+      .f-slh(100%);
+      .u-icon-right{
+        position: absolute;
+        top: 20px;
+        right: 10px;
+      }
+    }
+    .price{
+      margin-top: 36px;
+      .u-item-lr();
+    }
+    .pos{
+      margin-top: 42px;
+      .f-slh(100%);
+      a{
+        color:@color-font-lighter;
+      }
+    }
+    .m-btns2{
+      margin-top: 34px;
+    }
+    .name{
+      font-size: 3.2rem;
+      .u-item-lr();
+    }
+  }
+  .shop2{
+    position: relative;
+    .shop;
+    .title{
+      .g-lr(@rw:110px;@space:10px);
+    }
+    .more-info{
+      position: absolute;
+      right: 30px;
+      top:110px;
+      text-align: center;
+      .distance{
+        color:#a2a2a2;
+        height:24px;
+        font-size: 2.4rem;
+      }
+      .go{
+        border:2px solid #7abcd4;
+        border-radius:5px;
+        padding:5px 10px;
+        color: #7abcd4;
+        margin-top:8px; 
+        display: inline-block;
+        font-size: 2.6rem;
+        &:focus,
+        &:active{
+          color:#fff;
+          background: #7abcd4;
+        }
+
+      }
+    }
+  }
+}
+
+/* pannel 里面的经销商结束*/
+/* 双按钮组 */
+.m-btns2{
+  .u-btn{width: 48%;}
+  .u-full-btn{width: 100%;}
+}
+/* 双按钮组结束 */
+/* pannel 里面的在售车型列表*/
+.m-carList{
+  li{
+    padding: 40px 30px;
+    .price{
+      margin-top: 45px;
+      .u-item-lr;
+      .r{
+        font-size: 2.6rem;
+      }
+    }
+    .m-btns2{
+      margin-top: 50px;
+    }
+  }
+}
+/* pannel 里面的在售车型列表结束*/
+/*tab导航条*/
+.m-tabNav{
+  font-size: 2.6rem;
+  padding-bottom: 26px;
+  li{
+    width: 20%;
+    float: left;
+    text-align: center;
+    background: @color-bg-darker;
+    // padding-bottom: 8px;
+    border: 1px solid @color-bg-darker;
+    a{
+      display: block;
+      height: 80px;
+      line-height: 80px;
+      color:#fff;
+      border-right: 1px solid @color-border-darker;
+    }
+    &.active{
+      border-color: @color-border-lighter;
+      box-shadow: 0 2px 3px @color-border;
+      background-color: #fff;
+      position: relative;
+      a{
+        color:@color-font;
+        border-right: none;
+      }
+      :after{
+        position: absolute;
+        content: '';
+        width: 16px;
+        height: 16px;
+        border-right: 1px solid @color-border-lighter;
+        border-bottom: 1px solid @color-border-lighter;
+        box-shadow: 2px 2px 3px @color-border;
+        display: block;
+        background-color: #fff;
+        bottom: -9px;
+        left: 50%;
+        margin-left: -8px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+  &.count4{
+    li{
+      width: 25%;
+    }
+  } 
+  &.count3{
+    li{
+      width: 33.3%;
+    }
+  }
+  &.count2{
+    li{
+      width: 50%;
+    }
+  }
+}
+/*tab导航条结束*/
+/*tab导航内容*/ 
+.m-tabContent-wrap{
+  .u-loading{
+    background-color: #FFF;
+  }
+}
+.m-tabContent{ 
+  background: #f5f5f5;
+  // min-height: 360px;
+  li{
+    background-color: #fff;
+    border-bottom:1px solid #cdcdcd;
+    margin-bottom: 26px;
+    position: relative;
+    overflow: hidden;
+    &:last-child{
+      margin-bottom: 0;
+    }
+    .tit{
+      display: inline-block;
+      font-size: 3.6rem;
+      font-weight: bold;
+      text-indent: 30px;
+      margin-top: 26px;
+      .f-slh(100%);
+      .car-type{
+        display: block;
+        color: rgb(4, 126, 255);
+        border-top: 1px solid #ddd;
+        margin-top: 17px;
+        padding-top: 17px;
+        text-indent: 0;
+        margin-left: 30px;
+        font-size: 3.2rem;
+        font-family: normal;
+        .select-icon{
+          display: inline-block;
+          width: 30px;
+          height: 20px;
+          background: url(../../images/lib/icons.png) no-repeat;
+          background-position: 0 -215px;
+          transform:rotate(-90deg);
+          vertical-align: 2px;
+        }
+      }
+    }
+    .u-tag{
+      position: absolute;
+      right: 0;
+      top: 92px;
+      background-color: #c90028;
+      font-size: 2.4rem;
+      color: #fff;
+      width: 195px;
+      height: 47px;
+      padding: 8px;
+      text-align: center;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+    .img{
+      background: #FFF;
+      text-align: center;
+      img{
+        max-width: 100%;
+      }
+    }
+    .price{
+      padding: 0 30px;
+      .u-item-lr;
+      .r{
+        display: inline-block;
+        font-size: 2.6rem;
+      }
+    }
+  }
+}
+/*tab导航内容结束*/
+/*btn容器*/
+.m-btn-wrap{
+  padding: 33px 30px;
+}
+/*btn容器结束*/
+/*底部*/
+.m-bottom{
+  padding: 40px 0 60px;
+  text-align: center;
+  font-size: 2.2rem;
+  color: @color-font-light;
+  .b{
+    margin: 0 26px;
+  }
+}
+/*底部结束*/
+/*基本参数*/
+.m-para-wrap{
+  padding-top: 132px;
+  padding-bottom: 242px;
+  .u-title{
+    padding-left: 30px;
+    background-color: @color-bg-dark;
+    height: 80px;
+    line-height: 80px;
+    .text{
+      .f-slh(100%);
+    }
+  }
+  .para{
+    width: 100%;
+    border: 1px solid @color-border-lighter;
+    border-bottom: none;
+    color: @color-font-light;
+    font-size: 0;
+    dt,dd{
+      display: inline-block;
+      padding: 26px 0;
+      text-align: center;
+    }
+    dt{
+      width: 40%;
+      border-right: 1px solid @color-border-lighter;
+      vertical-align: top;
+      font-size: 2.8rem;
+    }
+    dd{
+      width: 60%;
+      font-size: 2.8rem;
+    }
+    &:last-child{
+      border-bottom: 1px solid @color-border-lighter;
+    }
+  }
+}
+.m-item-lr{
+  border-top: 1px solid @color-main;
+  box-shadow: 0 -1px 4px @color-main;
+  background-color: #fff;
+  padding: 22px 0;
+  .u-item-lr();
+  .l{
+    width: 40%;
+    margin: 0 40px;
+    img{
+      max-width: 100%;
+    }
+  }
+  .r{
+    float: left;
+    text-align: left;
+    width: 45%;
+    .tit{
+      margin-bottom: 10px;
+      .f-slh(100%);
+    }
+    .price{
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+    .guide-price{
+      font-size: 2.4rem;
+      color: @color-font-light;
+      margin-bottom: 15px;
+    }
+  }
+}
+.z-title-fixed{
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.z-title-fixed-l{
+  .z-title-fixed;
+  top: 232px;
+}
+/*基本参数结束*/
+/*图片展示*/
+.m-imgDisplay{
+  padding: 10px;
+  li{
+    float: left;
+    width: 50%;
+    padding: 10px;
+    img{
+      width:100%;
+    }
+  }
+}
+/*图片展示结束*/
+
+/*更多车型滑出*/
+.m-changeCar{
+  background-color: #fff;
+  height: 100%;
+  overflow: scroll;
+  .title{
+    border-bottom: 1px solid @color-border-lighter;
+  }
+  .title1{
+    padding: 30px;
+    font-size: 3rem;
+    font-weight: bold;
+    .title;
+  }
+  .cars{
+    height: 100%;
+    overflow: auto;
+    padding: 0 30px;
+    li{
+      display: inline-block;
+      width: 100%;
+      padding: 32px 0;
+      border-bottom: 1px solid @color-border-lighter;
+      position: relative;
+      .p{
+        // color:@color-main;
+        margin-top: 22px;
+        display: inline-block;
+      }
+      .r{
+        position: absolute;
+        top: 32px;
+        right: 0;
+        color: @color-secondary;
+      }
+      .c{
+        .f-slh(75%);
+      }
+    }
+    dt,dd{
+      padding: 32px 0;
+      border-bottom: 1px solid @color-border-lighter;
+      position: relative;
+    }
+    .sub-tit{
+      font-size: 3.2rem;
+      color: @color-main;
+    }
+    .blue-tit{
+      font-size: 3.2rem;
+      color:@color-blue;
+    }
+  }
+  .back{
+    width: 52px;
+    text-align: center;
+    position: fixed;
+    right:24px;
+    top:50%;
+    margin-top: -277px;
+    padding: 140px 0;
+    color:#fff;
+    font-size: 3rem;
+    line-height: 1.2;
+    z-index: 14;
+    .icon{
+      display: block;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      line-height: 46px;
+      border: 1px solid #fff;
+      font-size: 0;
+      margin-top: 10px;
+      margin-left: 2px;
+      i{
+        margin-left: -3px;
+      }
+    }
+  }
+}
+/*更多车型滑出结束*/
+/*新闻页*/
+.m-news-wrap{
+  padding: 50px 30px 120px;
+  .h3{
+    line-height: 3.4rem;
+    font-size: 3.4rem;
+    margin-bottom: 27px;
+  }
+  .small{
+    font-size: 2.4rem;
+    color: @color-font-lighter;
+    margin-bottom: 27px;
+    label{
+      margin-right: 20px;
+    }
+  }
+  .img{
+    text-align: center;
+    img{
+      max-width: 100%;
+    }
+  }
+  .content{
+    text-align: justify;
+    line-height: 3rem;
+    font-size: 3rem;
+    // line-height: 4.4rem;
+    color: @color-font-light;
+    height: 250px;
+    overflow: hidden;
+    p{
+      text-indent: 6rem;
+      // font-size: 1.4rem;
+      // line-height: 2.5rem;
+    }
+  }
+  .content1{
+    height: auto !important;
+  }
+  .more{
+    display: block;
+    text-align: center;
+    height: 132px;
+    line-height: 132px;
+    font-size: 2.4rem;
+    color: @color-font-light;
+  }
+}
+.m-news-list{
+  padding-bottom: 20px;
+  li{
+    border-bottom: 1px solid @color-border-lighter;
+    .m-news;
+    .u-news{
+      .text{
+        font-size: 2.6rem;
+      }
+      .date{
+        font-size: 2.4rem;
+      }
+    }
+  }
+}
+/*新闻页结束*/
+/*找好店促销详情*/
+.m-lr-list{
+  border-top: 1px solid @color-border-lighter;
+  li{
+    .g-lr(@rw:155px;@pt:20px;);
+    padding: 20px 30px;
+    border-bottom: 1px solid @color-border-lighter;
+    .al{
+      .f-slh(100%);
+      .u-icon-down{
+        margin-right: 5px;
+      }
+      .price{
+        margin-right: 20px;
+        i{
+          font-style: normal;
+        }
+      }
+      .h3{
+        margin-bottom: 20px;
+      }
+    }
+    .r{
+      width: 30%;
+      float: right;
+      text-align: center;
+    }
+  }
+}
+.m-lr-list-s{
+  padding-bottom: 20px;
+  .m-lr-list;
+  list-style: disc inside;
+  li{
+    list-style: disc inside;
+    margin-left: 30px;
+    padding-left: 0;
+    .r{
+      text-align: right;
+    }
+  }
+}
+.arrow-active{
+  transform:rotate(270deg);
+}
+/*找好店促销详情结束*/
+/* 找好店首页 */
+.m-ad{
+  display: block;
+  height: 100px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+.dropdown-show{
+  width: 100%;
+  position:absolute;
+  top:82px;
+  left: 0;
+  z-index: 9999;
+}
+.brand-select{
+  display: none;
+  li{
+    position: relative;
+    display: block;
+    text-align: center;
+    background-color: #FFF;
+  }
+}
+.rotate{
+  transform:rotate(180deg);
+  transform-origin:50% 30%;
+}
+.active-sort{
+  border-bottom: 2px solid @color-main;
+  color: @color-main !important;
+}
+.m-more{
+  padding: 70px 0;
+  text-align: center;
+  color:@color-font-lighter;
+  font-size: 2.6rem;
+  background-color: @color-bg;
+  a{
+    display:block;
+  }
+}
+.m-more-1{
+  margin-bottom: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  color:@color-font-lighter;
+  font-size: 2.6rem;
+  background: #fff;
+  border-top: 1px solid @color-border-lighter;
+  border-bottom: 1px solid @color-border-lighter;
+}
+/* 找好店首页结束 */
+/*金融贷款申请进度条*/
+.m-process{
+  border-radius: 50px;
+  padding: 4px;
+  border: 1px solid @color-border;
+  background:#fff;
+  overflow: hidden;
+  font-size: 0;
+  li{
+    width: 25%;
+    display: inline-block;
+    font-size: 2.8rem;
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+  }
+  li.first{
+    border-radius:50px 0 0 50px;
+  }
+  li.last{
+    border-radius:0 50px 50px 0;
+  }
+  li.fine{
+    background-color: @color-secondary;
+    color:#fff;
+  }
+  li.active{
+    color: @color-secondary;
+  }
+}
+/*金融贷款申请进度条 结束*/
+/*表单*/
+.m-form{
+  border-top:1px solid @color-border-lighter;
+  .item{
+    border-bottom:1px solid @color-border-lighter;
+    position: relative;
+    line-height: 100px;
+    background-color: #fff;
+    .tips{
+      position: absolute;
+      top: 0;
+      left: 4%;
+      width: 92%;
+      height: 100px;
+      border-radius: 10px;
+      line-height: 100px;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .u-input{
+      padding-left: 93px;
+    }
+    .u-input-user{
+      background-position: -440px 0;
+    }
+    .u-input-tel{
+      background-position: -440px -103px;
+    }
+    .ipt{
+      padding-left: 0;
+      width: 100%;
+      height: 100px;
+      font-size: 2.8rem;
+      border: none;
+      background: none;
+    }
+    .select{
+      color: #000;
+      padding-left: 30px;
+      width: 100%;
+      position: relative;
+      span.u-icon{
+        margin-right: 23px;
+      }
+      .m{
+        margin-right: 70px;
+      }
+    }
+    i.u-icon-right{
+        position: absolute;
+        right:30px;
+        top:38px;
+      }
+    .vcode-btn{
+      padding: 28px 70px;
+      border: 1px solid #fff;
+      border-left: 1px solid @color-border-lighter;
+      font-size: 2.8rem;
+      background: #fff;
+      color:@color-font-lighter;
+      position: absolute;
+      right:0;
+      top:8px;
+    }
+    .right-btn{
+      .vcode-btn;
+      padding: 6px 50px;
+      font-size: 2.6rem;
+      .u-icon{
+        margin-bottom: 3px;
+      }
+    }
+  }
+  .item-lr{
+    .item;
+    .g-lr(@lw:250px;@space:10px);
+    .fl{
+      padding-left: 30px;
+    }
+    .ar{
+      .u-icon{
+        margin-right: 10px;
+      }
+      a{
+        display: inline-block;
+        color: @color-font-lighter;
+        &.active{
+          color:#4f94fb;
+          .u-icon-male{
+            background-position:-104px -125px;
+          }
+          .u-icon-female{
+            background-position:-193px -123px;
+          }
+        }
+      }
+      .m{
+        margin-right: 100px;
+      }
+      .ipt{
+        padding-left: 0;
+      }
+      .c{
+        line-height: 30px;
+        padding: 37px 10px 37px 0;
+      }
+    }
+    .select{
+      padding-left: 0;
+    }
+  }
+
+  .tt{
+    text-align: center;
+    padding: 45px 0;
+    font-size: 3rem;
+    font-weight: bold;
+    background: #fff;
+    border-bottom: 1px solid @color-border-lighter;
+  }
+}
+.m-next-btn{
+  padding: 50px 30px;
+  font-size: 0;
+  button{
+    width: 100%;
+    padding: 31px 30px;
+    color:#fff;
+    background-color: #d1d1d1;
+  }
+}
+.m-next-btn-two{
+  .m-next-btn;
+  button{
+    width: 48%;
+    margin-right: 4%;
+  }
+  button:last-child{
+    margin-right: 0;
+  }
+  .u-btn-app{
+    background-color: @color-main;
+  }
+}  
+.m-next-btn-two-special{
+  button{
+    width: 100%;
+    margin-right: 0;
+  }
+}
+/*表单结束*/
+/* 任性贷车型金融产品 */
+.m-loan-products{
+  border-bottom: 1px solid @color-border-lighter;
+  .car{
+    text-align: center;
+    img{
+      max-width: 100%;
+    }
+  }
+}
+.m-info-list{
+  border:1px solid @color-border-lighter;
+  li{
+    border-bottom: 1px solid @color-border-lighter;
+    padding: 27px 30px;
+    position: relative;
+    .more{
+      position: absolute;
+      top: 30px;
+      right: 20px;
+    }
+    .first{
+      background-color: @color-bg;
+    }
+    .data{
+      margin-left: 30px;
+    }
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+}
+.m-loan-detail{
+  background-color: @color-bg;
+  padding-top: 30px;
+  .u-filter{
+    border-top: 1px solid @color-border-lighter;
+    margin-bottom: 30px;
+    background-color: #fff;
+  }
+}
+.m-finance-list{
+  background-color: @color-bg;
+  li{
+    border-top: 1px solid @color-border-lighter;
+    border-bottom: 1px solid @color-border-lighter;
+    padding: 30px;
+    margin-bottom: 18px;
+    background-color: #fff;
+    .u-title{
+      .text{
+        .u-icon{
+          margin-right: 20px;
+        }
+      }
+      .more{
+        .badge{
+          .u-label(@c:@color-font-light);
+        }
+      }
+    }
+    .p{
+      margin-top: 15px;
+      margin-bottom: 40px;
+      text-indent: 1rem;
+      font-size: 2.6rem;
+      .mr{
+        margin-right: 30px;
+      }
+    }
+    .ls{
+      font-size: 0;
+      span{
+        font-size: 2.8rem;
+        display: inline-block;
+        width: 33.33%;
+        text-align: center;
+        margin-bottom: 26px;
+        i.u-icon{
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+/* 任性贷车型金融产品结束 */
+.m-finance-list-select{
+  .m-finance-list;
+  li{
+    position: relative;
+    .p{
+      text-indent: 0;
+      padding: 0 60px 0 10px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .check{
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      line-height: 40px;
+      text-align: center;
+      border-radius:50%;
+      border:1px solid @color-border;
+      right:30px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+  }
+  .checked{
+    border-top:1px solid @color-main;
+    border-bottom:1px solid @color-main;
+    .check{
+      border:1px solid @color-main;
+      background-color: @color-main;
+    }
+  }
+}
+/* 任性贷首页 */
+.m-ad-wrap{
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  img{
+    // width: 47%;
+    width: 100%;
+  }
+  img:first-child{
+    margin-right: 20px;
+  }
+}
+.m-financial-car{
+  font-size: 3.2rem;
+  position: relative;
+  .g-lr(@lw:200px;@pt:40px;@pl:30px;@space:30px;);
+  .car-tit{
+    margin-bottom: 20px;
+  }
+  @media screen and (min-device-width: 350px) {
+    .financial-type{
+      position: absolute;
+      top:50px;
+      right: 30px;
+      font-size:2.4rem;
+      color:@color-font-lighter;
+    }
+  }
+  @media screen and (max-device-width: 350px){
+    .financial-type{
+      font-size:2.4rem;
+      margin-bottom: 20px;
+      color: @color-font-light;
+    }
+  }
+  .car-sub-tit{
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    span{
+      color:@color-main;
+    }
+  }
+}
+.m-hotpro{
+  .g-lr(@rw:110px;@pt:40px;@pr:30px;@space:30px;);
+  .fr{
+    margin-top:13px;
+    text-align: center;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 2.4rem;
+    line-height: 2.8rem;
+    color:#FFF;
+    background-color: rgb(250,138,62);
+  }
+  .al{
+    font-size: 3.2rem;
+    span{
+      display: inline-block;
+      margin-left: 30px;
+      color:@color-main;
+    }
+  }
+  .content{
+    padding:30px 0;
+    font-size: 2.6rem;
+    color: @color-font-light;
+  }
+  .financial-form{
+    margin-bottom: 50px;
+    padding-left: 25px;
+    font-size: 2.8rem;
+    color:@color-font-lighter;
+    div{
+      width: 32%;
+      display: inline-block;
+    }
+    input{
+      width: 28px;
+      height: 28px;
+      // border:1px solid @color-border;
+      margin-right: 10px;
+      vertical-align: middle;
+      background: url("../../images/lib/radio_1.png") no-repeat;
+      background-size: 28px 28px;
+      border:none;  
+    }
+    input:checked{
+      background: url("../../images/lib/radio_2.png") no-repeat;
+      background-size: 28px 28px;
+      border: none;
+      vertical-align: middle;
+    }
+    .checked{
+      color: @color-main;
+    }
+  }
+}
+.m-loan-bottom{
+  .m-bottom;
+  background-color:rgb(249,249,249);
+  border-top: 1px solid @color-border-lighter;
+}
+/* 任性贷首页结束 */
+
+/* 留资成功页 */
+.ok{
+  display: block;
+  margin: 0 auto;
+  padding: 60px 0 60px 0;
+
+}
+.m-clue-tit{
+  text-align: center;
+  font-size: 3.2rem;
+  padding: 30px 0;
+}
+.m-clue-content{
+  width: 70%;
+  margin: 0 auto;
+  padding: 30px 0;
+  font-size: 2.8rem;
+  line-height: 3rem;
+  color: @color-font-light;
+}
+.m-hot-link{
+  display: block;
+  // padding: 30px;
+  width: 100%;
+  margin-top: 70px;
+}
+/* 留资成功页结束 */
+/* 底部悬浮 */
+.m-bottom-suspend{
+  min-height: 120px;
+  background-color: #fff;
+  border-top: 1px solid @color-main;
+  box-shadow: 0 -1px 3px @color-main;
+  .g-lr(@lw:192px;@rw:160px;@pt:5px;@pr:20px;@pl:20px;@space:10px);
+  .fl{
+    img{
+      width: 100%;
+    }
+  }
+  .am{
+    .tit{
+      margin: 15px 0;
+      line-height: 2.4rem;
+    }
+    .price{
+      font-size: 2.6rem;
+      color: @color-main;
+    }
+  }
+  .fr{
+    top: 20px;
+  }
+}
+/* 底部悬浮结束 */
+/* 城市切换 */
+.m-change-city{
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  .city-wrap{
+    height: 100%;
+    overflow:auto;
+    dd{
+      padding: 35px 30px;
+      font-size: 3rem;
+      border-bottom: 1px solid @color-border-lighter;
+      span{
+        margin-right: 40px;
+        margin-bottom: 10px;
+      }
+    }
+    dt{
+      padding: 25px 30px;
+      color: @color-font-lighter;
+      background-color: @color-bg;
+      font-size: 2.8rem;
+      border-bottom: 1px solid @color-border-lighter;
+    }
+  }
+  .nav{
+    position: absolute;
+    top: 98px;
+    right: 0;
+    width: 80px;
+    height: 100%;
+    overflow: auto;
+    padding-top: 50px;
+    text-align: center;
+    background-color: rgba(0,0,0,.1);
+    a{
+      display: block;
+      padding: 30px 0;
+      color: @color-main;
+    }
+  }
+}
+/* 城市切换结束 */
+.m-result{
+  margin-bottom: 30px;
+  .res-tit{
+    font-size: 3.2rem;
+    padding: 40px;
+    text-align: center;
+  }
+  .res-itm{
+    font-size: 3rem;
+    padding:0 0 0 30px;
+    .info-lab{
+      display: inline-block;
+      width: 100px;
+      text-align: left;
+      color: @color-font-light;
+    }
+    .info-content{
+      display: inline-block;
+      text-align: left;
+      text-indent: 30px;
+    }
+  }
+  .res-lab{
+    display: inline-block;
+    text-align: left;
+    width: 200px;
+    color: @color-font-light;
+  }
+  .res-content{
+    display: inline-block;
+    text-align: left;
+    i{
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      background: url('../../images/lib/icons.png') no-repeat;
+      background-position: -10px -276px;
+      margin-right: 10px;
+    }
+  }
+}
+/* 预审批单页 */
+/* 预审批单页结束 */
+/*城市选择*/
+.m-citySelect{
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  overflow: scroll;
+  dl{
+    .u-item-dl();
+  }
+  .nav{
+    position: fixed;
+    right: 0;
+    top:0;
+    overflow: scroll;
+    width: 80px;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(0,0,0,.1);
+    padding: 50px 0;
+    a{
+      display: block;
+      width: 80px;
+      padding: 30px 0;
+      color:@color-main;
+    }
+  }
+}
+/*城市选择结束*/
+/*经销商选择*/
+.m-lists-check{
+  li{
+    border-bottom: 1px solid @color-border-lighter;
+    .g-lr(@lw:120px;@rw:150px;@pt: 20px;);
+    .fl,.fr{
+      text-align: center;
+      height: 110px;
+    }
+    .fl{
+      line-height: 130px;
+    }
+    .am{
+      min-height: 145px;
+      h3{
+        font-size: 3.2rem;
+        margin:13px 0 24px;
+        margin-bottom: 24px;
+        .f-slh(100%)
+      }
+      .d{
+        font-size: 2.6rem;
+        color: @color-font-light;
+        padding-right: 10px;
+        .f-slh(100%)
+      }
+    }
+    .fr{
+      border-left: 1px solid @color-border-lighter;
+      .map{
+        margin: 20px 0;
+      }
+      p{
+        font-size: 2.4rem;
+        color: #828282;
+      }
+    }
+  }
+}
+/*经销商选择结束*/
+
+/* 公共留资 完善资料 */
+.m-clue-info{
+  .m-info-tit{
+    background-color: @color-bg;
+    padding: 20px 30px;
+    border-top: 2px solid @color-border-lighter;
+    border-bottom: 2px solid @color-border-lighter;
+  }
+  .m-info-choice{
+    padding: 20px 30px;
+    position: relative;
+    .u-icon{
+      margin-top: 15px;
+    }
+  }
+  .rad{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+    background: url('../../images/lib/icons.png') no-repeat;
+    background-position: -127px -174px;
+    padding-right: 10px;
+  }
+  .active{
+    background: url('../../images/lib/icons.png') no-repeat;
+    background-position: -163px -174px;
+  }
+  span{
+    display: inline-block;
+    padding: 0 10px;
+  }
+  .tit-link{
+    float: right;
+    margin-top: 5px;
+    color: rgb(1, 113, 188);
+    font-size: 2.6rem;
+  }
+  .choice-icon{
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+    background: url('../../images/lib/icons.png') no-repeat;
+  }
+  .substitution{
+    .choice-icon;
+    background-position: -10px -322px;
+  }
+  .price{
+    .choice-icon;
+    background-position: -51px -370px;
+  }
+  .interior{
+    .choice-icon;
+    background-position:-10px -413px;
+  }
+  .appearance{
+    .choice-icon;
+    background-position: -51px -322px;
+  }
+  .pen{
+    .choice-icon;
+    background-position: -8px -365px;
+  }
+  input{
+    padding-left: 20px;
+    display: inline-block;
+    width: 80%;
+    border:none;
+    font-size: 2.6rem;
+    line-height: 30px;
+  }
+  textarea{
+    display: block;
+    width: 100%;
+    height: 200px;
+    border: none;
+  }
+}
+.gray-blank{
+    background-color: @color-bg;
+    height: 70px;
+  }
+.no-record{
+  display: inline-block;
+  padding: 50px;
+}
+.li-no-record{
+  text-align: center;
+  border-bottom: none !important;
+}
+.dealer_checked{
+  background-color:@color-secondary;
+}
+.error-tip{
+  width: 90%;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 30px;
+  right: 58px;
+  color: #FFF;
+  background-color: @color-bg-darker;
+  opacity: 0.8;
+  text-align: center;
+  border-radius: 4px;
+}
+/*弹窗*/
+.m-popup-cover{
+  display: none;
+  background: rgba(0, 0, 0,.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 12;
+}
+.m-popup-wrap{
+  width: 92%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 50%;
+  position: relative;
+  .close{
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: @color-main;
+    color: #fff;
+    line-height: 67px;
+    text-align: center;
+    font-size: 7rem;
+    font-weight: bold;
+    transform: rotate(45deg);
+  }
+  .m-btns{
+    text-align: center;
+    font-size: 0;
+    .u-btn{
+      width: 50%;
+      border-radius: 0 0 10px;
+    }
+  }
+    .red-tt{
+    color: @color-main;
+    font-size: 3.2rem;
+    margin-bottom: 32px;
+  }
+   .tt{
+    font-size: 3.2rem;
+    line-height: 100px;
+    border-bottom: 1px solid @color-border-lighter;
+    text-align: center;
+    .u-icon-new{
+      vertical-align: baseline;
+      margin-right: 10px;
+    }
+   }
+   .nbb{
+    border-bottom: none;
+   }
+}
+.m-popup-wrap-sm{
+  width: 72%;
+}
+.m-popup-wrap-md{
+  width: 80%;
+}
+.m-popup-content{
+  padding: 64px 32px;
+  .l{
+    line-height: 3.6rem;
+  }
+  .content{
+    input{
+      border: 1px solid @color-border-lighter;
+      // padding: 0 10px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .u-input-user{
+      padding-left: 70px;
+      background-position: -450px 0;
+    }
+    .u-input-tel{
+      padding-left: 70px;
+      background-position: -450px -103px;
+    }
+    .error-tip{
+      width: 100%;
+      left: 0;
+    }
+  }
+  .uli-half{
+    padding-top: 16px;
+    color: @color-main;
+    li{
+      list-style: disc;
+      list-style-position: inside;
+      width: 50%;
+      float: left;
+      line-height: 64px;
+      .b{
+        color: #000;
+      }
+    }
+  }
+}
+.m-popup-content1{
+  padding: 50px 30px 10px 30px;
+}
+.m-popup-bottom{
+  .more{
+    text-align: center;
+    color: @color-main;
+    border-top: 1px solid @color-border-lighter;
+    line-height: 80px;
+  }
+}
+.m-act-list{
+  margin-top: 30px;
+  li{
+    .g-lr(@lw:240px;);
+    font-size: 2.6rem;
+    border: 1px solid @color-border-lighter;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    .fl{
+      img{
+        max-width: 100%;
+      }
+    }
+    .sm{
+      font-size: 2.4rem;
+      color: @color-font-lighter;
+      .f-slh(100%);
+    }
+    h3{
+      margin-bottom: 28px;
+      line-height: 3.4rem;
+      height: 80px;
+      overflow: hidden;
+    }
+  }
+}
+/*弹窗结束*/
+/*金融留资方案详情*/
+.m-updown{
+  padding: 10px 0;
+  background-color: #fff;
+  li{
+    float: left;
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid @color-border-lighter;
+    .h3{
+      color: #fc5959;
+      font-size: 3rem;
+      margin-bottom: 35px;
+      height: 85px;
+      vertical-align: bottom;
+      position: relative;
+      h3{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        font-size: 3rem;
+      }
+    }
+    p{
+      margin-bottom: 30px;
+      font-size: 2.6rem;
+    }
+  }
+}
+/*金融留资方案详情结束*/
+.u-icon-color{
+  display: inline-block;
+  margin-right: 10px;
+  .u-icon-radio;
+}
+/* 经销商滑块*/
+.m-changeDealer{
+  .m-changeCar;
+  .dealer{
+    li{
+      padding: 35px 0;
+    .g-lr(@rw:150px;@pt: 35px;@space:40px;);
+    border-bottom: 1px solid @color-border-lighter;
+    .al{
+      padding-left: 30px;
+      height: 130px;
+      overflow:  hidden;
+      h3{
+        font-size: 3.2rem;
+        line-height: 4rem;
+        margin-bottom: 22px;
+        .f-slh(100%);
+      }
+      .d{
+        font-size: 2.6rem;
+        color: @color-font-light;
+      }
+    }
+    .fr{
+      padding: 10px 0;
+      text-align: center;
+      border-left: 1px solid @color-border-lighter;
+      .u-icon-map{
+        margin: 22px 0;
+      }
+    }
+    }
+  }
+}
+/* 经销商滑块结束*/
+/* 登录页*/
+.m-login-wrap{
+  .g-slider-fix;
+  .m-popup-cover;
+  display: block;
+  position: fixed;
+  transform:translate3d(100%,0,0); 
+  .back{
+    width: 52px;
+    text-align: center;
+    position: fixed;
+    left: 52px;
+    top:50%;
+    margin-top: -277px;
+    padding: 140px 0;
+    color:#fff;
+    font-size: 3rem;
+    line-height: 1.2;
+    z-index: 14;
+    .icon{
+      display: block;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      line-height: 46px;
+      border: 1px solid #fff;
+      font-size: 0;
+      margin-top: 10px;
+      margin-left: 2px;
+      transform: rotate(180deg);
+      i{
+        margin-left: -3px;
+      }
+    }
+  }
+}
+.g-slider-fix-active{
+  transform:translate3d(0,0,0);
+}
+.m-login{
+  width: 80%;
+  height: 100%;
+  overflow: scroll;
+  color:@color-font-light;
+  font-size: 3rem;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  .logo{
+    background-color: #fbfbfb;
+    padding: 60px 0;
+    text-align: center;
+    img{
+      max-width: 100%;
+    }
+  }
+  .city{
+    border-top: 1px solid @color-border-lighter;
+    border-bottom: 1px solid @color-border-lighter;
+    height: 100px;
+    line-height: 100px;
+    position: relative;
+    padding-left: 40px;
+    .change{
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      width: 120px;
+      height: 60px;
+      line-height: 60px;
+      border: 1px solid @color-border-lighter;
+      border-radius: 25px;
+      font-size: 2.8rem;
+      text-align: center;
+    }
+    .c{
+      color:@color-font;
+      font-size: 3.2rem;
+    }
+  }
+  .list{
+    padding-left: 30px;
+    dt,dd{
+      height: 90px;
+      line-height: 90px;
+      border-bottom: 1px solid @color-border-lighter;
+      .u-icon{
+        margin-right: 32px;
+      }
+    }
+    dt{
+      font-size: 3.2rem;
+      .u-icon{
+        margin-right: 24px;
+      }
+    }
+    dd{
+      margin-left: 10px;
+    }
+  }
+}
+/* 登录页结束*/
+/*报错页面*/
+.bg-f9f9f9 {background:#f9f9f9;}
+.error-wp {padding:100px 0;text-align:center;}
+.error-bg {display:inline-block;border-radius:50%;overflow:hidden;width:280px;height:280px;background:#dbeef4;position:relative;}
+.error-bg .road {width:100%;height:233px;left:0;position:absolute;top:50px;background:url(../../images/page/road.png) no-repeat;background-size:100% 100%;}
+.error-bg .car {width:33px;height:24px;left:-26px;position:absolute;top:105px;background:url(../../images/page/car.png) no-repeat;background-size:100% 100%;-webkit-animation:carMove 2s 1 linear;
+animation-direction: alternate;animation-fill-mode: forwards;}
+.error-wording {margin-top:22px;line-height:1.6em;}
+.error-btn {margin-top:72px;}
+.error-btn>a {width:175px;height:80px;display:inline-block;line-height:80px;border:1px #aaa solid;border-radius:8px;color:#2b2b2b;}
+.error-btn>a:active {background:#fff;}
+.bg-502 {display:inline-block;border-radius:50%;overflow:hidden;width:280px;height:280px;background:#59d9fb;position:relative;}
+.bg-502>.bg {width:100%;height:207px;left:0;position:absolute;top:0;background:url(../../images/page/bg-502.png) no-repeat center bottom #a9edff;background-size:260px 160px;}
+.bg-502>.bg>.blbl {width:35px;height:29px;background:url(../../images/page/bg-502-blbl.png) no-repeat;position:absolute;bottom:72px;left:50%;margin-left:3px;animation:flash 1s infinite;}
+.bg-upgrd {display:inline-block;border-radius:50%;overflow:hidden;width:280px;height:280px;background:#a9edff;position:relative;}
+.bg-upgrd>.bg {
+    width: 183px;
+    height: 213px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    background: url(../../images/page/bg-upgrd.png) no-repeat;
+    background-size: 100% 100%;
+    margin-left: -92px;
+    margin-top: -106px;
+}
+.bg-upgrd>.bg>.rd1 {width:70px;height:70px;background: url(../../images/page/bg-upgrd-rd.png) no-repeat;background-size:100% 100%;position:absolute;right:30px;top:18px;animation:rd 3s infinite linear;}
+.bg-upgrd>.bg>.rd2 {width:35px;height:35px;background: url(../../images/page/bg-upgrd-rd.png) no-repeat;background-size:100% 100%;position:absolute;right:11px;bottom:40px;animation:rd2 1.5s infinite linear;}
+@keyframes rd {
+  0%{
+    -webkit-transform:rotate(0);
+  transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(360deg);
+  transform:rotate(360deg);
+  }
+}
+@keyframes rd2 {
+  0%{
+    -webkit-transform:rotate(0);
+  transform:rotate(0);
+  }
+
+  100% {
+    -webkit-transform:rotate(-360deg);
+  transform:rotate(-360deg);
+  }
+}
+@keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+@keyframes carMove {
+  0% {
+    transform: translate(0,0) rotate(0);
+  opacity:1;
+  }
+  
+  70% {
+    transform: translate(160px,0) rotate(0);
+  opacity:1;
+  }
+
+  100% {
+    transform: translate(183px,0)rotate(0);
+  opacity:1;
+  }
+}
+/*报错页面结束*/
+
+.tongguolv{
+  font-size: 2.4rem;
+  background-color: #fff;
+  padding: 0 18px;
+  height: 50px;
+  line-height: 50px;
+  color: @color-font-lighter;
+  max-width: 200px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 留资页面蒙层 */
+.f-black-lock{
+  position: absolute;
+  top: 100px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.m-clue-loading{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  display: block;
+  height: 200px;
+  width: 200px;
+}
+
+//找好店 
+.store-index-wrap{
+  .m-pannel:first-child{
+    position: relative;
+    z-index: 2;
+  }
+  // .s-color-main{
+  //   color: #2c2c2c;
+  // }
+  // .m-pannel{
+  //   position: relative;
+  //   z-index: 1;
+  // }
+  .brand-select{
+    padding:0 25px;
+    background:#FFF;
+    border:1px solid #ddd; 
+    z-index: 1;
+    li{
+      height: 90px;
+      line-height: 90px;
+      border-bottom:1px solid #F0EFF7;
+      padding-left:107px;
+      text-align: left;
+      i{
+        left:25px;
+        top:17px;
+      }
+    }
+    .sub-tit{
+      color:#c90329; 
+    }
+    .blue-tit{
+      color:@color-blue;
+    }
+  }
+}
+
+//金融留资
+.finacne-liuzi-wrap{
+  .u-btn-app{
+    max-width: 690px;
+    margin:50px auto 0;
+    background-color: #e3324f;
+    border-color: #e3324f;   
+  }
+}
+
+//任性贷列表
+.finance-list-wrap{
+  .f-bt-red{
+    border-bottom: 3px solid #e23550;
+  }
+  .m-finance-list{
+    h3{
+      height: 70px;
+    }
+    .img{
+      height:70px;
+      width:70px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    .more{
+      bottom:6px;
+    }
+  }
+}
+
+//相关促销
+.m-promotion{
+  li{
+    font-size: 2.0rem;
+    a{
+      height: 35px;
+      line-height: 35px;
+    }
+    .fr{
+      top:28px;
+    }
+  }
+}
+
+// 经销商活动
+.store-detail-wrap{
+  .shop2{
+    .title{
+      .al{
+        padding-right: 0;
+      }
+    }
+    .info{
+      padding-right:100px;
+      line-height: 28px;
+    }
+  }
+}
+
+// 特殊
+.u-icon-radio {
+    border:none;
+    border-radius: 0;
+    width: 38px;
+    height: 38px;
+    background: url("../../images/lib/checkbox_1.png") no-repeat;
+    background-size: 38px 38px;
+}
+.dealer_checked{
+    background: url("../../images/lib/checkbox_2.png") no-repeat;
+    background-size: 38px 38px; 
+}
+
+[v-cloak] {
+  display: none;
+}

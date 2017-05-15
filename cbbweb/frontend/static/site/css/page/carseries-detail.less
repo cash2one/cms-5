@@ -1,0 +1,693 @@
+@import "../lib/variable.less";
+.btn-dealer-d,
+.btn-dealer-u,
+.ico-active,
+.ico-arrow-more,
+.ico-carser-d,
+.ico-carser-u,
+.ico-change,
+.ico-coupon-half,
+.ico-cupon,
+.ico-finance-first,
+.ico-news-title,
+.ico-price,
+.ico-sale-txt,
+.ico-settings,
+.ico-sort-d,
+.ico-video,
+.btn-arrow-u,
+.btn-arrow-d,
+.ico-sort-u{
+  background-image: url(../../images/page/bg-detail.png);
+  background-repeat: no-repeat;
+}
+
+
+.btn-dealer-d { background-position:  -0px -0px; height: 13px; width: 60px; }
+.btn-dealer-u { background-position:  -0px -13px; height: 13px; width: 60px; }
+.ico-active { background-position:  -0px -26px; height: 35px; width: 35px; }
+.ico-arrow-more { background-position:  -35px -26px; height: 8px; width: 4px; }
+.ico-carser-d { background-position:  -39px -26px; height: 5px; width: 9px; }
+.ico-carser-u { background-position:  -48px -26px; height: 5px; width: 9px; }
+.ico-change { background-position:  -35px -34px; height: 13px; width: 16px; }
+.ico-coupon-half { background-position:  -0px -61px; height: 47px; width: 42px; }
+.ico-cupon { background-position:  -0px -108px; height: 35px; width: 35px; }
+.ico-finance-first { background-position:  -35px -108px; height: 22px; width: 22px; }
+.ico-news-title { background-position:  -35px -47px; height: 14px; width: 16px; }
+.ico-price { background-position:  -0px -143px; height: 36px; width: 36px; }
+.ico-sale-txt { background-position:  -62px -16px; height: 73px; width: 73px; }
+.ico-settings { background-position:  -0px -179px; height: 32px; width: 32px; }
+.ico-sort-d { background-position:  -51px -34px; height: 10px; width: 7px; }
+.ico-sort-u { background-position:  -51px -47px; height: 10px; width: 7px; }
+.ico-video{
+  width: 38px;
+  height: 20px;
+  background-position: right top;
+  display: inline-block;
+}
+.btn-arrow-u{
+  display: inline-block;
+  width: 25px;
+  height: 13px;
+  background-position: right -20px;
+}
+.btn-arrow-d{
+  display: inline-block;
+  width: 25px;
+  height: 13px;
+  background-position: right -33px;
+}
+
+
+.to-top(@size,@outColor,@innerColor,@left,@top:0){
+  display:block;
+  overflow:hidden;
+  width:0px;
+  height:0px;
+  border:@size solid @innerColor;
+  border-color:@outColor @innerColor;
+  border-width:0 @size @size @size;
+  position:absolute;
+  left:@left;
+  top:@top;
+  margin-top:-(@size);
+}
+
+.carser-mt{
+  margin-top: 35px;
+}
+
+.mod-main{
+  background-color: #fff;
+  padding: 20px;
+  h1{
+    float: left;
+    font-size:22px;
+    color: #515050;
+    margin-right: 12px;
+    img{
+      margin-right: 10px;
+      vertical-align: middle;
+      width:27px;
+      max-height: 24px;
+    }
+  }
+}
+.page-nav{
+  height: 42px;
+  line-height: 40px;
+  span{
+    margin: 0 10px;
+  }
+}
+
+.carmod-num{
+  float: left;
+  padding-top: 6px;
+  font-size:14px;
+  position: relative;
+  z-index: 10;
+  span.ico-carser-d{
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .carmod-num-list{
+    display: none;
+    position: absolute;
+    width: 250px;
+    height: 280px;
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+    padding: 10px;
+    right: 0;
+    top:22px;
+    overflow-y: auto;
+    dl{
+      padding: 10px 10px 5px;
+      font-size: 12px;
+    }
+    dt{
+      height: 26px;
+      line-height: 26px;
+      color: #c90329;
+      font-weight: bold;
+      background-color: #f2f2f2;
+      border-bottom: 1px solid #e0dfdf;
+      padding: 0 12px;
+    }
+    dd{
+      line-height: 2.2;
+      padding: 0 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow:ellipsis; 
+    }
+    a{
+
+      &:hover{
+        color: #c90329;
+      }
+    }
+  }
+
+  &:hover{
+    span.ico-carser-d{
+      background-position:  -48px -26px;
+    }
+    .carmod-num-list{
+      display: block;
+    }
+
+  }
+
+}
+
+.carmod-decor{
+  height: 45px;
+  line-height: 45px;
+  p{
+    float: left;
+    font-size: 14px;
+    color: #c90329;
+  }
+  span{
+    float: left;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 15px;
+  }
+  a{
+    float: left;
+    color: #aeaeae;
+  }
+}
+
+.carser-focus{
+  float: left;
+  width: 430px;
+  .carser-focus-c{
+    position: relative;
+    height: 260px;
+    text-align: center;
+    padding: 0;
+    img{
+      display: inline-block;
+    }
+    .halve-icon{
+      width: 42px;
+      height: 42px;
+      background: url(../../images/page/bg-detail.png) no-repeat;
+      background-position: -457px -140px;
+      position: absolute;
+      z-index: 2;
+      right: 15px;
+      top: 0;
+      color: #FFF;
+      padding: 5px 0 0 2px;
+      font-family: '宋体';
+      text-align: center;
+    }
+  }
+  .carser-focus-ul{
+    margin-top: 15px;
+    li{
+      position: relative;
+      float: left;
+      cursor: pointer;
+      width: 79px;
+      height: 53px;
+      border: 1px solid #e2e2e2;
+      margin-right: 5px;
+      &:last-child{
+        margin: 0;
+      }
+      &.active{
+        border: 1px solid #c90329;
+        span{
+          top:-1px !important;
+          .to-top(5px,#c90329,#fff,35px)
+        }
+      }
+    }
+  }
+  .carser-focus-nav{
+    img {
+      width: 79px;
+      height: 53px;
+    }
+  }
+}
+
+.carser-info{
+  float: right;
+  width: 505px;
+  .price{
+    font-size: 14px;
+    color: #636363;
+    margin-bottom: 5px;
+
+    strong{
+      color: #c90329;
+      font-size: 40px;
+      margin: 0 5px;
+      line-height: 1em;
+    }
+  }
+  .factory{
+
+  }
+  .btn{
+    margin: 20px 0;
+    span{
+      display: inline-block; 
+      vertical-align: -6px;
+    }
+    a.u-btn-deepred, a.u-btn-lightRed{
+      width: 140px;  
+      height: 40px;
+      line-height: 40px;  
+      text-align: center;
+      font-size: 16px;
+      display: inline-block;
+      margin-right: 15px;
+    }
+    a.loan-plan-a{
+      color:#c90239;
+    }
+  }
+
+  .settings{
+    padding: 10px 0;
+    border-top: 1px dashed #cdcdcd;
+    border-bottom: 1px dashed #cdcdcd;
+    p{
+      float: left;
+      line-height: 50px;
+      font-size: 14px;
+      span{
+        display: inline-block;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+    }
+    ul{
+      float: left;
+      margin-left: 15px;
+      width: 410px;
+      color: #aeaeae;
+      li{
+        float: left;
+        width:205px;
+        line-height: 24px;
+        .label{
+          width: 72px;
+          text-align: right;
+          float:left;
+        }
+        span{
+          width: 130px;
+          float:left;
+          color: #636363;
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+        }
+      }
+    }
+
+  }
+
+  .tags{
+    padding: 30px 0;
+    ul{
+      float: left;
+      width: 165px;
+      height: 55px;
+      border-right:1px solid @color-sm-gray;
+      &.last{
+        border:none;
+      }
+    }
+    li{
+      text-align: center;
+      font-size: 14px;
+      color: #a0a0a0;
+      line-height: 1.5em;
+      span{
+        display: inline-block;
+
+      }
+    }
+  }
+
+  .dealer-list{
+    position: relative;
+    border: 1px solid #e2e2e2;
+    height: 115px;
+    dl{
+      padding:10px 20px 20px;
+    }
+    dt{
+      a{
+        color: #c90329;
+        font-size: 14px;
+        line-height: 2.5;
+      }
+    }
+    dd{
+      line-height: 1.6;
+      &.title{
+        font-weight: bold;
+      }
+    }
+    .ico-sale-txt{
+      width: 73px;
+      height: 73px;
+      position: absolute;
+      right: -2px;
+      top: 0;
+      z-index:3;
+    }
+    .btn-dealer-d{
+      position: absolute;
+      left:45%;
+      bottom: 0;
+      cursor: pointer;
+    }
+    .btn-dealer-u{
+      position: absolute;
+      left:45%;
+      bottom: 0;
+      cursor: pointer;
+    }
+    .dealer-list-each{
+      display: none;
+      position: absolute;
+      width: 503px;
+      border: 1px solid #e2e2e2;
+      min-height: 115px;
+      max-height: 300px;
+      left: 0;
+      top: 0;
+      margin: -1px 0 0 -1px;
+      overflow-y: auto;
+      background-color: #fff;
+      z-index:2;
+      dl{
+        border-bottom: 1px solid #e2e2e2;
+        &:last-child{
+          border-bottom: none;
+        }
+      }
+    }
+    &:hover{
+      .dealer-list-each{
+        display: block;
+      }
+    }
+  }
+
+}
+
+.carser-banner{
+  margin: 25px 0;
+}
+
+.carser-onsale{
+  padding: 20px 15px;
+  border: 1px solid #e2e2e2;
+  margin-top: 20px;
+  position: relative;
+  img{
+    float: left;
+    width: 210px;
+    height: 140px;
+  }
+  .info{
+    float: left;
+    width: 470px;
+    margin:0 15px;
+    h3{
+      font-size: 18px;
+      color: #3c3c3c;
+      font-weight: normal;
+      &:hover{
+        color:#ca032a;
+      }
+    }
+    p{
+      font-size:14px;
+      color: #5d5d5d;
+      line-height: 50px;
+      strong{
+        color: #c90329;
+        font-size: 28px;
+      }
+      .price-local{
+        font-size: 24px;
+      }
+      .carser-onsale{
+        font-size:12px;
+        color: #949393;
+        margin-left: 20px;
+      }
+    }
+    table{
+      width: 100%;
+      text-align: center;
+      border: 1px solid #e2e2e2;
+
+      th{
+        background-color: #e6e6e6;
+        padding: 8px 5px;
+        color: #646464;
+        font-size: 14px;
+        line-height: 1.5em;
+        font-weight: normal;
+      }
+      td{
+        background-color: #f6f6f6;
+        padding: 8px 5px;
+        line-height: 1.8em;
+        border-left: 1px dashed #e2e2e2;
+        &.first{
+          border:none;
+        }
+      }
+    }
+  }
+  .btn-list{
+    float: left;
+
+    a{
+      margin-right: 15px;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+    a.btn-series-drive{
+      color:#c90239;
+    }
+    .chebaba-tags{
+
+    }
+    .price{
+      padding-top: 88px;
+    }
+  } 
+  .m-label{
+    position: absolute;
+    right: 15px;
+    top: 25px;
+  }
+}  
+
+.carser-video{
+  padding-top: 15px;
+  dl{
+    float: left;
+    text-align: center;
+    width: 225px;
+    margin-right: 12px;
+    &:last-of-type{
+      margin-right: 0;
+    }
+  }
+  dt{
+    line-height: 2.5;
+    font-size: 14px;
+    color: #5b5b5b;
+  }
+  dd{
+    position: relative;
+
+    span{
+      position: absolute;
+      left:10px;
+      bottom: 10px;
+    }
+  }
+
+}
+
+.carser-recomm{
+  padding-top: 15px;
+  dl{
+    float: left;
+    text-align: center;
+    width: 225px;
+    margin-right: 12px;
+    &:last-of-type{
+      margin-right: 0;
+    }
+  }
+  dt{
+    line-height: 2.5;
+    font-size: 14px;
+    color: #5b5b5b;
+    font-weight: bold;
+  }
+  dd{
+    img{
+      display: block;
+      border: 1px solid #e2e2e2;
+    }
+  }
+}
+
+.carser-test{
+  position: relative;
+  left: -23px;
+  dl{
+    float: left;
+    width: 280px;
+    padding: 20px 26px 0;
+    border-right:1px dotted #D0D0D0;
+    //:nth-of-type(3n+2)
+    &.middle{
+      margin-left:50px;
+      margin-right: 35px;
+    }
+    .title{
+      label{
+        display:inline-block;
+        width: 100px;
+        margin-right: 10px;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  dt{
+    color: #6c6c6c;
+    font-size: 16px;
+    max-height: 50px;
+    line-height: 25px;
+  }
+  dd{
+    font-size: 14px;
+    line-height: 1.6;
+    &.title{
+      position: relative;
+      font-size:12px;
+      line-height: 3;
+      span{
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+      }
+    }
+  }
+  a{
+
+    &.more{
+      display: block;
+      width: 155px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #4f4f4f;
+      background-color: #f2f2f2;
+      margin: 25px auto 0;
+    }
+  }
+}
+.focus-pic{
+  .bigpic{
+    float: left;
+    width: 664px;
+    height: 440px;
+    img{
+      width: 664px;
+      height: 440px;
+    }
+  }
+
+  .focus-pic-list{
+    float: right;
+    width: 275px;
+    height: 440px;
+    p{
+      text-align: center;
+      background-color: #d9d9d9;
+      height: 30px;
+      line-height: 30px;
+      cursor: pointer;
+      &:hover{
+        background-color: #333;
+      }
+      span{
+        vertical-align: middle;
+      }
+    }
+    ul{
+      height: 375px;
+      width: 275px;
+      overflow-y: hidden;
+    }
+    li{
+      float: left;
+      width: 85px;
+      height: 55px;
+      cursor: pointer;
+      border: 1px solid #ffffff;
+      margin-left: 3px;
+      margin-top: 5px;
+      &.active{
+        border: 1px solid #c90329;
+      }
+      img{
+        display: block;
+      }
+      
+    }
+
+  }
+
+}
+
+.car-test-more{
+  display: block;
+  width: 155px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+  color: #4f4f4f;
+  background-color: #f2f2f2;
+  margin: 25px auto 0; 
+}
+
+.carser-test{
+  /*.item-content{
+    height: 75px;
+    display: block;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis
+  }*/
+}

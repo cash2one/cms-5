@@ -1,0 +1,129 @@
+@import "../lib/variable.less";
+//惠挑车
+.hui-wrap{
+	.bd{
+		ul{
+			width: 1100px;
+		}
+		li{
+			width: 480px;
+			height: 335px;
+			background: #FFF;
+			position: relative;
+			margin:30px 30px 0 0;
+			float: left;
+			&:hover{
+				.info-r{
+					color: #7a7a7a;
+					strong{
+						color: #ca0329;
+					}
+				}
+			}
+			a,img{
+				display: block;
+			}
+			.pic{
+				width: 480px;
+				height: 240px;
+				position: relative;
+				.intro{
+					display: none;
+					width: 100%;
+					background: #666;
+					background: rgba(0,0,0,0.5);
+					height: 44px;
+					line-height: 44px;
+					color: #FFF;
+					position: absolute;
+					bottom: 0;
+					left:0;
+					text-align: center;
+					padding:0 10px;
+					box-sizing: border-box;
+				}
+				a,img{
+					height: 100%;
+					margin:0 auto;
+				}
+				a{
+					overflow:hidden;
+					height: 240px;
+				}
+				&:hover{
+					.intro{
+						display: block;
+					}
+				}
+			}
+			.info{
+				height: 63px;
+				margin-top: 15px;
+				padding:0 15px;
+				&:hover{
+					.name{
+						color:#ca0329;
+					}
+					.price{
+						color:#494949;
+					}
+					.info-r{
+						color:#ca0329;
+						strong{
+							color:#fd0131
+						}
+					}
+				}
+			}
+			.info-l{
+				width: 257px;
+				float:left;
+				border-right:1px solid #EAE9E9;
+			}
+			.info-r{
+				margin-left:307px;
+				color: #7a7a7a;
+				strong{
+					color: #ca0329;
+					font-family: 'Arial';
+					font-size: 38px;
+					margin-right:5px;
+				}
+			}
+			.name{
+				height: 35px;
+				overflow: hidden;
+				font-size: 26px;
+				color: #4F4F4F;
+				font-weight: bold;
+				&:hover{
+					color: @color-deepred;
+				}
+			}
+			.price{
+				margin-top: 10px;
+				font-size: @font14;
+			}
+			.label{
+				width: 54px;
+				height: 44px;
+				background: url(../../images/page/bg-detail.png) no-repeat;
+				background-position: -445px -187px;
+				position: absolute;
+				left:20px;
+				top:-7px;
+				color: #FFF;
+				font-family: '宋体';
+				text-align: center;
+				padding-top:8px;
+				p{
+					line-height: 15px;
+				}
+				strong{
+					font-size: 14px;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+}   

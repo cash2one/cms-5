@@ -1,0 +1,238 @@
+@import "../lib/variable";
+//任性贷首页
+#loan-index-head {
+  min-width: 990px;
+  #loan-plan-form {
+    position: relative;
+  }
+  .loan-ad-content {
+    position: absolute;
+    width: 990px;
+    left: 50%;
+    margin-left: -495px;
+  }
+  .g-ad-lg {
+    height: 350px;
+    background-color:#7C0A00;
+  }
+  .loan-plan-wrap {
+    width: 250px;
+    height: 350px;
+    position: absolute;
+    right: 0;
+    border: 0px solid #000;
+    z-index: 100;
+    background:url(../../images/page/loan/loan-form-bg.png);
+    .loan-plan-form-top{
+      padding:1px 15px;
+      div.cur{
+        outline: 2px solid @color-orange;
+      }
+      .loan-plan-form-tit{
+        font-size: @font18;
+        color:@color-white;
+        margin: 20px 0;
+      }
+      .u-btn-magenta{
+        margin-top: 55px;
+        padding:7px 0;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 15px;
+      }
+      .input-group{
+        margin-bottom: 20px;
+        cursor: pointer;
+        input{
+          width:163px;
+          cursor: pointer;
+        }
+        .input-group-addon{
+          height: 35px;
+          line-height: 35px;
+          padding:0;
+          width:35px;
+          border-top:none;
+          border-bottom:none;
+        }
+      }
+    } 
+    .loan-plan-form-bot{
+      position: absolute;
+      bottom:0;
+      width:100%;
+      height: 55px;
+      a{
+        color:@color-gray;
+        font-size: @font16;
+        text-align: center;
+        display: block;
+        height: 100%;
+        width: 100%;
+        line-height: 55px;
+        font-size: 13px;
+        em{
+          width: 15px;
+          height: 15px;
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 5px;
+        }
+      }
+      i{
+        background: url(../../images/page/bg-detail.png) -490px -48px;
+        width: 9px;
+        height: 15px;
+        position: absolute;
+        top:23px;
+        right: 10px;
+      }
+      &:hover{
+        a{
+          color:@color-white;
+        }
+        i{
+          background-position: -477px -48px;
+        }
+      }
+    }
+  }
+
+}
+.loan-index-wrap{
+  .u-loan-plan{
+    width: 485px;
+    height: 180px;
+    border-top: 2px solid @color-gray;
+    background-color: @color-white;
+    margin-bottom: 20px;
+    .u-loan-plan-wr{
+      margin-left: 15px;
+      width: 465px;
+    }
+    .u-loan-plan-txt {
+      width:210px;
+      position: relative;
+      p.title{
+        float:left;
+        font-size: @font20;
+        border-top: 2px solid @color-orange;
+        margin: -2px 0 10px -15px;
+        padding:15px 5px 8px 15px;
+        color:@color-black;
+      }
+      span{
+        float:left;
+        font-size: @font14;
+        color:@color-gray;
+        height: 1.5em;
+      }
+      .loan-pirct{
+        border-top:1px solid @color-gray;
+        padding-top: 15px;
+        p{
+          font-size: @font16;
+          color:@color-black;
+          line-height: 1.5em;
+          //font-weight: bold;
+          margin: 10px 0;
+          span{
+            float:right;
+            label{
+              color:@color-deepred;
+            }
+          }
+        }
+      }
+    }
+    .u-loan-plan-img{
+      height: 100%;
+      width: 215px;
+      overflow: hidden;
+      img{
+        margin: 20px auto;
+        display: block;
+        width: 210px;
+        height: 140px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+#loan-index-financial{
+  padding-left:1px;
+  .loan-fnc-1{
+    background: url(../../images/page/loan/loan-financal-1.jpg) no-repeat;
+    p{ color:#fc9463}
+  }
+  .loan-fnc-2{
+    background: url(../../images/page/loan/loan-financal-2.jpg) no-repeat;
+    p{ color:#fc7676}
+  }
+  .loan-fnc-3{
+    background: url(../../images/page/loan/loan-financal-3.jpg) no-repeat;
+    p{ color:#3f98fc}
+  }
+  .u-loan-index-fnc{
+    border:1px solid @color-sm-gray;
+    float:left;
+    margin-left: -1px;
+    position: relative;
+    height: 350px;
+    width:328px;
+    background-color: #fff;
+    &:hover{
+      border:1px solid @color-bright-red;
+      z-index: 1000;
+    }
+    h2{
+      margin:15px 15px;
+      font-size: @font20;
+      font-weight: bold;
+      color: @color-sm-black;
+    }
+    p{
+      margin:0 15px;
+      font-size: @font14;
+      line-height: 1em;
+    }
+    .u-loan-img{
+      position: relative;
+      img{
+        float:right;
+      }
+    }
+    .u-series-wrap{
+      margin: 180px 0 10px 15px;
+      a{
+        padding:5px 13px;
+        font-size: @font14;
+        border:1px solid @color-sm-gray;
+        margin-right: 15px;
+        color:@color-gray;
+        &:hover{
+          border-color:@color-orange;
+          color:@color-orange;
+        }
+      }
+      a.cur{
+        border-color:@color-orange;
+        color:@color-orange;
+      }
+    }
+    .u-btn-lightRed{
+      height: 35px;
+      line-height: 35px;
+      width:285px;
+      display: inline-block;
+      text-align: center;
+      margin:15px 0;
+      margin-left: 15px;
+    }
+    .u-btn-lightRed:hover{
+      background-color: @color-deepred;
+      color:@color-white;
+    }
+  }
+}

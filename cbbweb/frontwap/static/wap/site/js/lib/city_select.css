@@ -1,0 +1,124 @@
+.m-citySelect, .m-citySelect *{margin: 0;padding: 0;box-sizing:border-box;}
+.m-citySelect{
+  position: absolute;
+  width: 568px;
+  color:#333;
+  font-size: 12px;
+  line-height: 1.8;
+  padding-bottom: 15px;
+  min-height: 300px;
+}
+.m-citySelect .hot{
+  line-height: 45px;
+  padding-left: 10px;
+  border-bottom: 1px solid #dcdcdc;
+}
+.m-citySelect .search{
+  width: 182px;
+  position: absolute;
+  right:10px;
+  top: 5px;
+  z-index: 2;
+}
+.m-citySelect .search input{
+  width: 100%;
+  border:1px solid #dcdcdc;
+  height: 35px;
+  line-height: 35px;
+  padding-left: 35px;
+  color: #858585;
+}
+.m-citySelect .search input:focus{
+  outline: 2px solid #c9002c;
+}
+.m-citySelect .search .result{
+  width: 100%;
+  background: #fff;
+}
+.m-citySelect .search .result span{
+  display: block;
+  padding-left:20px;
+  line-height:35px;
+  border:1px solid #dcdcdc;
+  border-bottom:1px dotted #dcdcdc;
+  border-top: 0;
+  cursor: pointer;
+}
+.m-citySelect .search .result span:hover{
+  background-color: #f9f9f9;
+}
+.m-citySelect .search .result span:last-child{
+  border-bottom: 1px solid #dcdcdc;
+}
+.m-citySelect .hot span{
+  color:#fb5b58;
+  font-weight: bold;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.m-citySelect .nav{
+  line-height: 43px;
+  padding-left: 10px;
+  border-bottom: 1px solid #dcdcdc;
+  background: #f9f9f9;
+}
+.m-citySelect .nav a{
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 24px;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+  background: #fff;
+  color: #848484;
+  text-decoration: none;
+  margin: 0 15px 0 0;
+  vertical-align: middle;
+  border-radius: 6px;
+}
+.m-citySelect  .loading{
+  height: 300px;
+  display: block;
+  line-height: 300px;
+  text-align: center;
+  color:#c9002c;
+}
+.m-citySelect .content ul{
+  padding:5px 10px;
+  height: 220px;
+  overflow: auto;
+  position: relative;
+}
+.m-citySelect .content li{
+  list-style:none;
+  position: relative;
+  padding: 15px 0 10px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.m-citySelect .content h3{
+  font-size: 14px;
+  position: absolute;
+  top: 15px;
+  left: 8px;
+  color: #888;
+}
+.m-citySelect .content dl{
+  overflow: hidden;
+  padding-left: 32px;
+  margin-bottom: 5px;
+}
+.m-citySelect .content dt{
+  float:left;
+  margin-right: 10px;
+  color:#000;
+}
+.m-citySelect .content dd{
+  float:left;
+  width: 370px;
+}
+.m-citySelect .content dd span{
+  padding:0 8px;
+  cursor: pointer;
+  color: #717171;
+}

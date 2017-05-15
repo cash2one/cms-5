@@ -1,0 +1,257 @@
+{% extends 'wap/base/base.html' %}
+{% block title %}
+  {{city.city_name}}东风日产、启辰汽车报价_官方优惠活动
+{% endblock %}
+{% block description %}
+  <meta name="description" content="为您提供{{city.city_name}}东风日产、{{city.city_name}}启辰最新报价，{{city.city_name}}东风日产、{{city.city_name}}启辰官网价格，{{city.city_name}}东风日产、{{city.city_name}}启辰促销优惠信息，{{city.city_name}}东风日产、{{city.city_name}}启辰优秀4s店等信息。了解最新{{city.city_name}}东风日产、{{city.city_name}}启辰信息就上{{sign}}！">
+  <meta name="Keywords" content="{{city.city_name}}东风日产, {{city.city_name}}启辰, {{city.city_name}}东风日产报价,{{city.city_name}}启辰报价">
+{% endblock %}
+
+  {% block css%}
+    <link href="//cdn.bootcss.com/Swiper/3.3.0/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ static('wap/site/css/page/index.css') }}">
+  {% endblock %}
+  {% block head %}
+    <div class="g-topNav">
+      <div class="m-topNav">
+        <div class="left">
+          <i class="i-icon i-icon-logo"></i>
+        </div>
+        {% block hd_title %}
+        {% endblock %}
+        <div class="right">
+          <ul class="u-menu f-fr f-cb">
+            <li><i class="u-icon u-icon-menu j-menu"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  {% endblock%}
+  {% block body%}
+    <div class="g-wrap">
+      {% include 'wap/site/include/banner.html' %}
+      {# introduce #}
+      <div class="m-intro">
+        <div class="f-of f-width">
+          <div class="itm"><i class="i-icon i-icon-standard"></i>精准报价</div>
+          <div class="itm"><i class="i-icon i-icon-activity"></i>海量活动</div>
+          <div class="itm"><i class="i-icon i-icon-weekend"></i>每周上新</div>
+          </div>
+        <div class="border"></div>
+      </div>
+      <div class="m-programa">
+        <div class="f-of">
+          <a href="/{{ city.city_alias }}/car">
+            <div class="item">
+              <i class="i-icon-recommend"></i>
+              <p>好车推荐</p>
+            </div>
+          </a>  
+          <a href="/{{ city.city_alias }}/dealer">
+            <div class="item">
+              <i class="i-icon-favorable"></i>
+              <p>附近优惠</p>
+            </div>
+          </a>
+          <a href="http://m.chebaba.com/topic/sylphy/sylphy.html">
+            <div class="item">
+              <i class="i-icon-gift"></i>
+              <p>厂家钜惠</p>
+            </div>
+          </a>
+          <a href="/{{ city.city_alias }}/finance">
+            <div class="item">
+              <i class="i-icon-loan"></i>
+              <p>贷款购车</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      {# nav #}
+      <ul class="m-tabNav f-cb j-tab">
+        <li class="active"><a href="###">全部</a></li>
+        <li class=""><a href="###">三厢</a></li>
+        <li class=""><a href="###">两厢</a></li>
+        <li class=""><a href="###">SUV</a></li>
+        <li class=""><a href="###">进口</a></li>
+      </ul>
+      {# list #}
+      <div class="m-tabContent-wrap j-tabContent">
+        <ul class="m-tabContent">
+          {% set car_data=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=0, per_page=4, page=1) %}
+          {% if car_data%}  
+            {% for itm in car_data%}
+              <li>
+              <!-- <a href="{{catalog_url(model_table=MODELS.T_BASE_CAR_SERIES.name, model_instanceid=50001)}}"> --> {#itm.series.id#}
+              <a href="{{'/'~city.city_alias~itm.series.url}}">
+               {# <a href="{{city_url('site.car_type_param')}}"> #}
+                  <h3 class="tit">{{itm.brand.name}} {{itm.series.name}}</h3>
+                  {% set discount = itm.series.offer_price.discount/10000 %}
+                  {% if discount > 1 %}
+                  <p class="u-tag f-dn">送{{'%.4f'|format(itm.series.offer_price.discount/10000)}}万</p>
+                  {% elif 0 < discount < 1 %}
+                  <p class="u-tag f-dn">送{{itm.series.offer_price.discount}}元</p>
+                  {% else %}
+                  {{ '' }}
+                  {% endif %}
+                  <div class="img">
+                    <img src="{{ static('wap/site/images/lib/pic_loading.jpg') }}" data-lazy="{{itm.series.wap_thumbnail}}" alt="{{itm.brand.name}}"/>
+                  </div>
+                  <div class="price">
+                    <div class="l">优惠价：<span class="s-color-main">{{'%.2f'|format(itm.series.offer_price.price/10000)}}万起</span></div>
+                    <div class="r">官方指导价：<span class="s-color-font-light">{{'%.2f'|format(itm.series.offer_price.guide_price/10000)}}万起</span></div>
+                  </div>
+                  <div class="m-btn-wrap">
+                    <a class="u-btn u-btn-default u-btn-block" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-11-0000&car_series={{ itm.series.id }}&clueType=7">获取优惠</a>
+                  </div>
+                  {% if itm.series.activity_list[0] %}
+                  <a class="u-hotLink f-nbb" href="###" style="display:none">
+                    <h3 class="text"><i class="label">热</i>{{itm.series.activity_list[0].activity_title}}</h3>
+                    <i class="u-icon u-icon-right"></i>
+                  </a>
+                  {% else %}
+                    {% if (itm.series.financial and itm.series.financial.first_pay_amount and itm.series.financial.monthly_pay_amount)  %}
+                    <a class="u-hotLink f-nbb" href="{{ city_url('site.finance_detail',series_id=itm.series.id) }}">
+                      <h3 class="text"><i class="label labelx">贷</i>首付仅需
+                        <span class="s-color-main">
+                        {% if itm.series.financial.first_pay_amount >=10000 %}
+                          {{ '%.2f'|format(itm.series.financial.first_pay_amount/10000) }}万元
+                        {% else %}
+                          {{ itm.series.financial.first_pay_amount }}元
+                        {% endif %}
+                        </span>，月供<span class="s-color-main">{{ itm.series.financial.monthly_pay_amount }}元</span>，免担保</h3>
+                      <i class="u-icon u-icon-right"></i>
+                    </a>
+                    {% endif %}
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}  
+          {% endif %}
+        </ul>
+        <ul class="m-tabContent f-dn">
+        </ul>
+        <ul class="m-tabContent f-dn">
+        </ul>
+        <ul class="m-tabContent f-dn">
+        </ul>
+        <ul class="m-tabContent f-dn">
+        </ul>
+      </div>  
+    </div>
+    {# footer #}
+    <div class="g-bottom">
+      <div class="m-bottom">
+        车巴巴@2016版权所有<span class="b">|</span>服务热线：400-830-8899
+      </div>
+    </div>
+    
+  {% endblock %} #}
+  
+  {% block js %}
+   <script type="text/javascript" src="{{ static('wap/site/js/lib/tab.js') }}"></script>
+   <script src="//cdn.bootcss.com/Swiper/3.3.0/js/swiper.jquery.min.js"></script>
+   <script>
+    $(function(){
+      /*固定顶部*/
+      var $items = $('.j-tab');
+      var top = $items.offset().top-100;
+      $(window).scroll(function(){
+        var scrollHeight = $(document).scrollTop();
+        if(scrollHeight >= top){
+          $items.addClass('z-title-fixed');
+        }
+        if(scrollHeight < top){
+          $items.removeClass('z-title-fixed');
+        }
+      })
+      /*轮播图*/
+      var slider = new Swiper('.j-slide', {
+        speed: 800,
+        autoplay: 4000,
+        pagination: '.swiper-pagination'
+      });
+
+      var ops ={
+          nav:$('.m-tabNav'),
+          navItm:$('.m-tabNav li'),
+          cnt:$('.m-tabContent'),
+          cntItm:$('.m-tabContent li'),
+          sign:'page',
+          index:0,
+          lis:'li',
+          param:{url:'{{rest(API.CAR_CATALOG_DATA)|safe }}',
+                  param:{city_id:{{city.city_id}},car_type:0,per_page:4,page:1}
+                }
+        }
+
+      main.init(ops);
+      main.cnt.changeReset = function(obj,index){
+        obj.ops.param.car_type = index;
+        $('.m-tabContent').eq(index).html('');
+        return true;
+      }
+      main.scroll.loading = function(index){
+        if($('#load').length<=0){
+            $('.m-tabContent').eq(index).append("<div id='load' style='text-align: center;padding:40px 0 10px 0'><img src='{{ static('images/lib/loading.gif') }}' ></div>")
+        }
+      }
+      main.scroll.respondData = function(data,index){
+        $('#load').remove();
+          if(!$.isEmptyObject(data)&&!$.isEmptyObject(data.result)){
+            var html = '';
+            $.each(data.result,function(ind,itm){
+              var discount = (itm.series.offer_price.discount/10000) > 1? (itm.series.offer_price.discount/10000).toFixed(4)+'万':itm.series.offer_price.discount+'元';
+              var url = itm.series.url? itm.series.url:"##";
+              html += '<li>\
+                          <a href="/{{city.city_alias}}'+url+'">\
+                              <h3 class="tit">'+itm.brand.name+' '+itm.series.name+'</h3>\
+                              <div class="img">';
+                html +='<img src="{{ static("wap/site/images/lib/pic_loading.jpg") }}" data-lazy="'+itm.series.wap_thumbnail+'" alt="'+itm.brand.name+'"/>';
+                html +='</div>\
+                              <div class="price">\
+                                <div class="l">优惠价：<span class="s-color-main">'+(itm.series.offer_price.price/10000).toFixed(2)+'万起</span></div>\
+                                <div class="r">官方指导价：<span class="s-color-font-light">'+(itm.series.offer_price.guide_price/10000).toFixed(2)+'万起</span></div>\
+                              </div>\
+                              <div class="m-btn-wrap">\
+                                <a class="u-btn u-btn-default u-btn-block" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-11-0000&car_series='+itm.series.id+'&clueType=7">获取优惠</a>\
+                              </div>';
+              if(!$.isEmptyObject(itm.activity_list)){
+                html += '<a class="u-hotLink f-nbb" href="###">\
+                                <h3 class="text"><i class="label">热</i>'+itm.activity_list[0].activity_title+'</h3>\
+                                <i class="u-icon u-icon-right"></i>\
+                              </a>'
+              }
+
+              if ( $.isEmptyObject(itm.activity_list) && itm.series.financial.first_pay_amount && itm.series.financial.monthly_pay_amount) {
+                var month = itm.series.financial.monthly_pay_amount>=10000? (itm.series.financial.monthly_pay_amount/10000).toFixed(2) + '万':itm.series.financial.monthly_pay_amount + '元';
+                var href = '{{ city_url('site.finance_detail',series_id='series') }}';
+                    href = href.replace('series',itm.series.id);
+                html +='<a class="u-hotLink f-nbb" href="'+href+'">\
+                          <h3 class="text"><i class="label labelx">贷</i>首付仅需<span class="s-color-main">'+(itm.series.financial.first_pay_amount/10000).toFixed(2)+'</span>万，月供<span class="s-color-main">'+month+'</span>，免担保</h3>\
+                          <i class="u-icon u-icon-right"></i>\
+                        </a>'
+              };
+
+              html += '</a></li>';                                       
+            });
+            $('.m-tabContent').eq(index).append(html);
+            return true;
+          }
+          if($.isEmptyObject(data.result)){
+            return false;
+          }
+      }   
+
+      //懒加载
+      $(window).on('scroll', function(){
+        CBB.lazyLoad([{
+          id:'.j-tabContent',top:50
+        }]);
+      }); 
+
+    });
+  </script>
+  {% endblock %}  
+  

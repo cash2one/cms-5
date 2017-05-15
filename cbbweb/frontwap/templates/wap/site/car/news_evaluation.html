@@ -1,0 +1,37 @@
+{% set news=run(API.ARTICLE_NEWEST_BY_CARSERIES, series_id=catalogs.model_instanceid) %}
+{% if news %}
+<div class="m-pannel">
+  <div class="head">
+    <div class="tit">新闻评测</div>
+  </div>
+  <div class="body">
+    <a class="m-news" href="{{ city_url('cms.article',id=news[0].id)~"?series_id="~catalogs.model_instanceid }}">
+    <div class="l">
+      <img src="{{ news[0].front_img_path }}" alt="{{brandName}}{{seriesName}}">
+    </div>
+    <div class="r">
+      <div class="u-news">
+        <div class="text">{{ news[0].title }}</div>
+        <div class="date">{{ news[0].update_date.strftime('%Y/%m/%d') }}</div>
+      </div>
+    </div>
+    </a>
+  </div>
+</div>
+{# <p>{{dumps_json(catalogs, add_pre=true)}}</p> #}
+{% endif %}
+{% if sub_id %}
+<a class="u-moreLink f-nbb" href={{ city_url('site.product_image_series_model',series_id=catalogs.model_instanceid,model_id=sub_id) }}>
+  <h3 class="text">
+    更多车辆图片
+  </h3>
+  <i class="u-icon u-icon-right"></i>
+</a>
+{% else %}
+<a class="u-moreLink f-nbb" href={{ city_url('site.product_image_series',series_id=catalogs.model_instanceid) }}>
+  <h3 class="text">
+    更多车辆图片
+  </h3>
+  <i class="u-icon u-icon-right"></i>
+</a>
+{% endif %}

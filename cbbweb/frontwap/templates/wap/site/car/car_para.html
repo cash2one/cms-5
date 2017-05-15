@@ -1,0 +1,74 @@
+{% extends 'wap/base/base.html' %}
+{% set seo = run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=id) %}
+{% if seo %}
+  {% block seo %}
+    <meta name="description" content="{{ seo.brand.name }} {{seo.type.name}}最新的参数配置详情介绍,深度解读{{ '' }}{{ '' }}相关优缺点,信息来自东风日产电商网站车巴巴(chebaba.com)">
+    <meta name="Keywords" content="{{ seo.type.name }}参数,{{ seo.type.name }}配置,{{ seo.type.name }}优缺点">
+  {% endblock %}
+  {% block title %}{{seo.brand.name}} {{seo.type.name}}最新参数配置详情_优缺点 - 车巴巴电商平台{% endblock %}
+{% endif %}
+
+
+{% block body %}
+<div class="g-wrap">
+  
+    <h3 class="u-title-center z-title-fixed">{{seo.brand.name}} {{seo.type.name}}</h3>
+ 
+  <ul class="m-para-wrap j-scroll">
+	  {% set car_type_all_property=run(API.CAR_TYPE_ALL_PROPERTY,car_type_id=id) %} {# car_type_id=112#}
+	  {% if car_type_all_property %}
+	  {% for property in car_type_all_property %}
+    <li>
+      <div class="u-title"><h3 class="text">{{ property.group_name}}
+      </h3></div>
+	    {% for pro in property.property_list %}
+      <dl class="para">
+        <dt>{{ pro.name }}</dt>
+        <dd>{{ pro.property_value or '无' }}</dd>
+      </dl>
+	    {% endfor %}
+    </li>
+	  {% endfor %}
+	  {% endif %}
+  </ul>
+</div>
+{% set car_type_data=run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=id) %} {# #}
+{% if car_type_data %}
+  <div class="g-fixed-bottom">
+    <div class="m-bottom-suspend">
+      <div class="fl">
+        <img src="{{car_type_data.series.imgs[0].CDNPATH|default(static('./images/lib/param.jpg'))}}" alt="">
+      </div>
+      <div class="am">
+        <h3 class="tit">{{car_type_data.series.name}}</h3>
+        <p class="price">{{'%.2f'|format(car_type_data.series.start_guideprice/10000)}}万起</p>
+      </div>
+      <div class="fr">
+        <a class="u-btn u-btn-app u-btn-block u-btn-lg" href="{{ city_url('site.left_data') }}?key=NV-Chebabanew-Wap-V1-Ch-Le-PoC-Msg1-07-0000&car_series={{car_type_data.series.id}}&car_type={{id}}">立即申请</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+  
+{% endblock %}
+{% block js %}
+<script>
+  $(function(){
+    $(window).scroll(function(){
+      var scrollHeight = $(document).scrollTop();
+      var $items = $('.j-scroll li');
+      var $titles = $items.find('.u-title');
+      $items.each(function(){
+        var itemOffsetTop = $(this).offset().top-232;
+        if(scrollHeight > itemOffsetTop){
+          $titles.removeClass('z-title-fixed-l');
+          $(this).find('.u-title').addClass('z-title-fixed-l');
+        }
+        if(scrollHeight < 100){
+          $titles.removeClass('z-title-fixed-l');
+        }
+      })
+    })
+  })
+</script>
+{% endblock %}

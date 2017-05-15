@@ -1,0 +1,78 @@
+{% extends 'wap/base/base.html' %}
+
+{% block body %}
+  {% set percent = request.GET['percent'] %}
+  {% set id = request.GET['id'] %}
+  {% set number = request.GET['number'] %}
+<div class="g-topNav">
+  <div class="m-topNav">
+    <div class="left"><i class="u-icon u-icon-left" onclick="history.go(-1)"></i></div>
+    <div class="title">任性贷</div>
+    <div class="right">
+      <ul class="u-menu f-fr f-cb">
+        <li><i class="u-icon u-icon-menu j-menu"></i></li>
+      </ul>
+    </div>
+  </div>
+  
+</div>
+<div class="g-wrap">
+  <img class="ok" src="{{ static('images/lib/fine.png') }}">
+  <h1 class="m-clue-tit">很高兴的通知你，您的申请我们已经收到！</h1>
+  <p class="m-clue-content">相关客服人员，会在24小时内跟您取得联系，告知您心仪的车型的最佳贷款方案。在线申请获取自己可贷款金额哦~~</p>
+  <div class="m-next-btn-two m-next-btn-two-special">
+    {# <button class="u-btn j-nothanks">不了谢谢</button> #}
+    {# <button class="u-btn u-btn-app j-xin">去测试贷款额度</button> #}
+  </div>
+  <div class="m-hot-link">
+    <script>
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div id="' + s + '"></div>');
+        (window.slotbydup=window.slotbydup || []).push({
+            id: '2433181',
+            container: s,
+            size: '690,230',
+            display: 'inlay-fix'
+        });
+    })();
+    </script>
+    <script src="http://dup.baidustatic.com/js/om.js"></script>
+  </div>
+</div>
+<div class="m-popup-cover">
+<div class="m-popup-wrap">
+  <div class="m-popup-content">
+    <h3 class="red-tt">在线预审可知贷款额度哦，真的关闭吗？</h3>
+    <p class="s-color-font-light">这样您将无法获得：</p>
+    <ul class="uli-half f-cb">
+      <li><p class="b">车型贷款额度</p></li>
+      <li><p class="b">最新金融活动</p></li>
+      <li><p class="b">私人订制服务</p></li>
+      <li><p class="b">小秘贴心服务</p></li>
+    </ul>
+  </div>
+    <div class="m-btns">
+      <button class="u-btn j-close">关闭</button>
+      <button class="u-btn u-btn-app j-xin">继续测试</button>
+    </div>
+  </div>
+</div>
+
+<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script>
+  $(function(){
+    $(".j-nothanks").click(function(){
+      // $(".m-popup-cover").show();
+      window.location.href = "/{{city.city_alias}}/finance";
+    })
+    $(".j-close").click(function(){
+      $(".m-popup-cover").hide();
+      window.location.href = "/{{city.city_alias}}/finance";
+    })
+    $('.j-xin').click(function(){
+      window.location.href = '{{ city_url('site.checkloan') }}?flag=1&percent={{percent}}&id={{id}}&number={{number}}'
+    });
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.5, user-scalable=0">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="author" content="m.chebaba.com">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Expires" content="-1">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="description" content="东风日产电商平台——车巴巴商城">
+  <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+  <title>惠挑车——频道页</title>
+  <link rel="stylesheet" href="../wap/site/css/lib/common.css">
+</head>
+<body>
+<div class="g-topNav">
+  <div class="m-topNav">
+    <div class="left"><i class="u-icon u-icon-left"></i></div>
+    <div class="title">惠挑车</div>
+    <div class="right">
+      <ul class="u-menu f-fr f-cb">
+        <li><a href="/" class="menu"><i class="u-icon u-icon-home"></i></a></li>
+        <li><i class="u-icon u-icon-menu"></i></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="g-wrap">
+  <h3 class="u-title-center z-title-fixed">全新启辰 2015年款 TFSI 舒适型</h3>
+  <ul class="m-para-wrap j-scroll">
+    <li>
+      <div class="u-title"><h3 class="text">1111111111111111</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="u-title"><h3 class="text">22222222222222</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="u-title"><h3 class="text">3333333333</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="u-title"><h3 class="text">4基本参数</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="u-title"><h3 class="text">5基本参数</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="u-title"><h3 class="text">6基本参数</h3></div>
+      <dl class="para">
+        <dt>我真是参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+      <dl class="para">
+        <dt>参数名称</dt>
+        <dd>简介</dd>
+      </dl>
+    </li>
+  </ul>
+</div>
+<div class="g-fixed-bottom">
+  <div class="m-item-lr f-cb">
+    <div class="l">
+      <img src="../images/lib/param.jpg" alt="">
+    </div>
+    <div class="r">
+      <h3 class="tit">全新天籁</h3>
+      <p class="price">优惠价：<span class="s-color-main">10.10 万起</span></p>
+      <p class="guide-price">指导价：<span >10.10 万 ~ 11.00 万</span></p>
+      <a class="u-btn u-btn-app u-btn-block u-btn-sm" href="###">立即申请</a>
+    </div>
+  </div>
+</div>
+<style>
+
+</style>
+<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script>
+  $(function(){
+    $(window).scroll(function(){
+      var scrollHeight = $(document).scrollTop();
+      var $items = $('.j-scroll li');
+      var $titles = $items.find('.u-title');
+      $items.each(function(){
+        var itemOffsetTop = $(this).offset().top-232;
+        if(scrollHeight > itemOffsetTop){
+          $titles.removeClass('z-title-fixed-l');
+          $(this).find('.u-title').addClass('z-title-fixed-l');
+        }
+        if(scrollHeight < 100){
+          $titles.removeClass('z-title-fixed-l');
+        }
+      })
+    })
+  })
+</script>
+</body>
+</html>

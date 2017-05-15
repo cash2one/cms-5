@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="applicable-device" content="pc">
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                test car series
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+            <link href="{{ static('cms/hui/carseries/css/test.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+            <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ static('cms/hui/carseries/js/test.js') }}"></script>
+
+            <script type="text/javascript">
+                window.onload = function() {
+                    init_page();
+                };
+            </script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body>
+            <div id="navbar" class="navbar navbar-default">
+                <div id="navbar-container" class="navbar-container">
+                    <a href="#" class="pull-left">
+                        <img class="df_logo" src="{{ static('cms/hui/carseries/images/logo.png') }}" alt="logo" />
+                    </a>
+                    <div class="navbar-header pull-left">
+                        <a href="#" class="navbar-brand">
+                            <small>
+                                车巴巴
+                            </small>
+                        </a>
+                    </div>
+                    <div class="navbar-buttons navbar-header pull-right ">
+                        <ul class="nav">
+                        </ul>
+                    </div>
+                    <nav class="navbar-menu pull-left">
+                    </nav>
+                </div>
+            </div>
+
+            <div class="main-container" id="main-container">
+                <div class="main-content">
+                    {% set car_series=get_object(MODELS.T_BASE_CAR_SERIES, id=catalogs.model_instanceid) %}
+                    {% if car_series %}
+                        <div class="breadcrumbs">
+                            <ul class="breadcrumb col-xs-8">
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">惠挑车</a></li>
+                                <li class="active">{{ car_series.car_series_cn }} - {{ rest(API.LIST, model=MODELS.T_BASE_CAR_SERIES, offset=0, count=8, car_brand_id=1) }}</li>
+                            </ul>
+
+                            <div class="col-xs-4 text-right">
+                                {{ car_series.car_series_cn }}共有{{ run(API.COUNT, model=MODELS.T_BASE_CAR_TYPE, car_series_id=car_series.id, car_type_status=1) }}款在售车型
+                            </div>
+                        </div>
+                        <div class="page-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="list-inline">
+                                        {% set car_brand=get_object(MODELS.T_BASE_CAR_BRAND, id=1) %}
+                                        {% if car_brand %}
+                                            <!-- <li>
+                                                <img src="{{ car_brand.logo_img }}" alt="logo">
+                                            </li> -->
+                                            <li>- {{ car_brand.car_brand_cn }} -</li>
+                                        {% endif %}
+                                        <li>- {{ car_series.car_series_cn }} -</li>
+                                        <li>- {{ city.id }}|{{ city.city_name }}|{{ city.city_alias }} -</li>
+                                        <li>{{catalog_url(path='/xxx')}}</li>
+                                        <li>{{catalog_url(model_table=MODELS.T_BASE_CAR_SERIES.name, model_instanceid=101401)}}</li>
+                                        <li>{{run(API.CATALOG_URL, model_table=MODELS.T_BASE_CAR_SERIES.name, model_instanceid=101401)}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#synpage">
+                                                        同步分页
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="synpage" class="panel-collapse collapse {% if request.GET.get('page') %} in {% endif %} ">
+                                                <div class="panel-body">
+                                                    {% set _page=request.GET.get('page') %}
+                                                    {% set _car_brand_id=request.GET.get('car_brand_id') %}
+                                                    {% set car_series_page=page_objs(model=MODELS.T_BASE_CAR_SERIES, per_page=8, page=_page, car_brand_id=_car_brand_id) %}
+                                                    {% if car_series_page %}
+                                                        <p>
+                                                            <span> 当前车系数量 : {{ car_series_page.paginator.count }}，</span>
+                                                            <span> 总页面数 : {{ car_series_page.paginator.num_pages }}</span>
+                                                        </p>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>中文名</th>
+                                                                    <th>英文名</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for car_series in car_series_page.object_list %}
+                                                                    <tr>
+                                                                        <td>{{ car_series.car_series_cn }}</td>
+                                                                        <td>{{ car_series.car_series_en }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="nav text-center">
+                                                            <ul id="car_series_page" class="pagination">
+                                                                {#
+                                                                    {% if _page|int > 1 %}
+                                                                        <li class="previous"><a href="javascript:void(0)">前一页</a></li>
+                                                                    {% else %}
+                                                                        <li class="previous disabled"><a href="javascript:void(0)">前一页</a></li>
+                                                                    {% endif %}
+                                                                #}
+                                                                {% for i in range(car_series_page.paginator.num_pages) %}
+                                                                    <li {% if _page|int == i+1 %}class="active"{% endif %}><a href="{{ catalog_url(catalogs.cata_full_alias)}}?car_brand_id={{_car_brand_id}}&page={{i+1}}">{{ i+1 }}</a></li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#asynpage">
+                                                        异步分页
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="asynpage" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% set _page=1 %}
+                                                    {% set _car_brand_id=1 %}
+                                                    {% set car_series_page=page_objs(model=MODELS.T_BASE_CAR_SERIES, per_page=8, page=_page, orderby=['car_series_en'], car_brand_id=_car_brand_id) %}
+                                                    {% if car_series_page %}
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>中文名</th>
+                                                                    <th>英文名</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="car_series_tbody">
+                                                                {% for car_series in car_series_page.object_list %}
+                                                                    <tr>
+                                                                        <td>{{ car_series.car_series_cn }}</td>
+                                                                        <td>{{ car_series.car_series_en }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="nav text-center">
+                                                            <ul class="pagination" id="asynul">
+                                                                {#
+                                                                    {% if _page|int > 1 %}
+                                                                        <li class="previous"><a href="javascript:void(0)">前一页</a></li>
+                                                                    {% else %}
+                                                                        <li class="previous disabled"><a href="javascript:void(0)">前一页</a></li>
+                                                                    {% endif %}
+                                                                #}
+                                                                {% for i in range(car_series_page.paginator.num_pages) %}
+                                                                    <li {% if i == 0 %}class="active"{% endif %}><a href="javascript:void(0)" rest_url="{{ rest(API.LIST, model=MODELS.T_BASE_CAR_SERIES, offset=i*8, count=8, orderby=['car_series_en'], car_brand_id=1) }}" class="rest_get">{{ i+1 }}</a></li>
+                                                                {% endfor %}
+                                                                {#
+                                                                    {% if _page|int < car_series_page.paginator.num_pages %}
+                                                                        <li class="next"><a href="javascript:void(0)">后一页</a></li>
+                                                                    {% else %}
+                                                                        <li class="next disabled"><a href="javascript:void(0)">后一页</a></li>
+                                                                    {% endif %}
+                                                                #}
+                                                            </ul>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#synlist">
+                                                        同步列表
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="synlist" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% set car_types=list_objs(model=MODELS.T_BASE_CAR_TYPE, count=10, orderby=['-car_type_name',], car_brand_id=1) %}
+                                                    {% if car_types %}
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>车系</th>
+                                                                    <th>中文名</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for car_type in car_types %}
+                                                                    <tr>
+                                                                        <td>{{ car_type.car_series_id }}</td>
+                                                                        <td>{{ car_type.car_type_name }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#asynlist">
+                                                        异步列表
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="asynlist" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>车系</th>
+                                                                <th>中文名</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="asyntbody">
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                    <button type="button" rest_url="{{ rest(API.LIST, model=MODELS.T_BASE_CAR_SERIES, count=10, orderby=['-car_series_en'], car_brand_id=1) }}" class="btn btn-primary" id="getseriesbtn">获取车系信息</button>
+                                                    <button type="button" class="btn btn-primary" id="clearseriesbtn">清空车系信息</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#syndata">
+                                                        同步数据
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="syndata" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% set info_list=run(API.CAR_BRAND_SERIES, id=1) %}
+                                                    {% if info_list %}
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>品牌</th>
+                                                                    <th>车系</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for info in info_list %}
+                                                                    <tr>
+                                                                        <td>{{ info.brand_name }}</td>
+                                                                        <td>{{ info.series_name }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#asyndata">
+                                                        异步数据
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="asyndata" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>品牌</th>
+                                                                <th>车系</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="asyndatatbody">
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- <button type="button" rest_url="{{ rest(API.CAR_BRAND_SERIES, id=1) }}" class="btn btn-primary" id="getinfobtn">获取品牌信息</button> -->
+                                                    {% csrf_token %}
+                                                    <button type="button" rest_url="{{ rest(API.CAR_BRAND_SERIES) }}" class="btn btn-primary" id="getinfobtn">获取品牌信息</button>
+                                                    <button type="button" class="btn btn-primary" id="clearinfobtn">清空品牌信息</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="footer col-xs-12">
+                    <div class="footer-inner">
+                        <div class="footer-content text-center">
+                            <span>
+                                Copyright © 2008-2015 chebaba.com，All Rights Reserved 粤ICP备1505
+                            </span>
+                            <br />
+                            <span>
+                                版权所有 东风日产乘用车公司
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    {% endblock %}
+</html>

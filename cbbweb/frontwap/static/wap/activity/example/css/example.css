@@ -1,0 +1,28 @@
+
+
+#girl {
+    position: relative;
+    width: 400px;
+    height: 700px;
+}
+    #girl_body {
+        position: relative;
+        width: 400px;
+        height: 700px;
+    }
+
+    #girl_trousers {
+        position: relative;
+        width: 400px;
+        height: 700px;
+
+        top: -700px;
+    }
+
+    #girl_jacket {
+        position: relative;
+        width: 400px;
+        height: 700px;
+
+        top: -1400px;
+    }

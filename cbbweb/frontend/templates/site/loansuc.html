@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+{% block title %}提交成功{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/global.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static('site/css/page/leave-pub-part.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+     <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+   <script type="text/javascript" src="{{ static('site/js/lib/jquery.formCheck.js') }}" ></script>
+    <script type="text/javascript" src="{{ static('site/js/page/sign.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/modelPlug.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/popWin.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+<!--获取URL参数-->
+{% set series_id = request.GET.get('series_id', 0) %} <!--车系-->
+
+{% set series=run(API.CAR_SERIES_BY_ID, car_series_id=series_id) %}
+{% set dealerList=run(API.FINANCE_CITY_BRAND_DEALER, car_brand_id=series.car_brand_id,city_id=city.city_id,per_page=50,page=1) %}
+<!--获取省份数据-->
+{% set province=run(API.FINANCE_ALL_PROVINCE) %}
+
+{# <p> {{ dumps_json(series_dealer, add_pre=True)|safe }}</p> #}
+{# <p> {{ dumps_json(province, add_pre=True)|safe }}</p> #}
+
+
+<div class="g-head">
+
+  <div class="m-logo f-cb">
+    <div class="f-fl">
+      <i class="u-icon u-icon-logo"></i>
+    </div>
+    <ul class="f-fr f-cb m-list-logo-right">
+        <li class="f-br padding-lr">
+          <i class="u-icon u-icon-jzbj"></i>
+          <span class="cc s-main">精准报价</span>
+        </li>
+        <li class="f-br padding-lr" >
+          <i class="u-icon u-icon-hlhd"></i>
+          <span class="cc s-main">海量活动</span>
+        </li>
+        <li class=" padding-l">
+          <i class="u-icon u-icon-qfw"></i>
+          <span class="cc s-main">全方位购车优惠</span>
+        </li>
+      </ul>
+    <div>
+      
+    </div>
+    <i></i>
+  </div>
+</div>
+{% block header_nav %}
+
+
+{% endblock %}
+ <div class="g-body f-pr f-ov">
+    <div class="m-information">
+      <div class="m-info-title">
+        <span class="tt s-lg f-w-md"></span>
+      </div>
+      <div class="m-info-success f-cb">
+        <div class="f-fl left">
+          <img src="../../../static/site/images/test/chenggong.png" alt="" class="">
+          <span class="f-db cc">获取优惠成功</span>
+        </div>
+        <div class="f-fl right">
+          <div>
+          <p class="s-lg s-color-r">很高兴通知您，您的需求我们已经收到！</p>
+          <div class="cc">
+            <p class="s-nm 6">相关客服人员，会在24小时内跟您取得联系，告知厂家最新的优惠政策。</p>
+          <p class="s-nm">您在这，可以关注车巴巴官方微博或者微信随时查看相关信息。</p>
+          </div>
+          
+          </div>
+        <div class="bgi">
+          <div class="ewm1">
+            <img src="../../../static/site/images/lib/ewm-weixin.jpg" width="140" height="140" alt="" class="img"><span class="f-db s-nm s-color-w" >求关注哟~</span>
+          </div>
+          <div class="ewm2">
+          <img src="../../../static/site/images/lib/ewm-weibo.jpg" width="140" height="140" alt="" class="img"><span class="f-db s-nm s-color-w">求涨粉哟~</span>
+          </div>
+          <div class="ewm3">
+            <span class="f-db s-list-title s-color-w">扫二维码</span>
+            <span class="f-db s-nm s-color-w">获取更多车巴巴</span>
+            <span class="f-db s-nm s-color-w">活动和咨询</span>
+          </div>
+          
+        
+        </div>
+        <img src="" alt="">
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=.5, user-scalable=0">
+  <meta name="applicable-device" content="mobile">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="author" content="m.chebaba.com">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="description" content="东风日产电商平台——车巴巴商城">
+  <meta name="Keywords" content="东风日产,汽车电商,车巴巴商城,启辰,轩逸,楼兰">
+  <title>惠挑车——新闻页</title>
+  <link rel="stylesheet" href="../wap/site/css/lib/common.css">
+</head>
+<body>
+<div class="g-topNav">
+  <div class="m-topNav">
+    <div class="left"><i class="u-icon u-icon-left"></i></div>
+    <div class="title">惠挑车</div>
+    <div class="right">
+      <ul class="u-menu f-fr f-cb">
+        <li><a href="/" class="menu"><i class="u-icon u-icon-home"></i></a></li>
+        <li><i class="u-icon u-icon-menu"></i></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="g-wrap">
+  <div class="m-news-wrap">
+    <h3 class="h3">新一代路虎发现2016年发布小于发现神行</h3>
+    <p class="small">
+      <label>2016/12/25 </label>
+      <label>来源：汽车之家</label>
+    </p>
+
+    <div class="img">
+      <img src="../wap/site/images/lib/newsimg.jpg" alt=""/>
+    </div>
+    <div class="content">
+      <p class="p1">
+        今年的法兰克福车展上，</p>
+    </div>
+    <a class="more">继续阅读</a>
+  </div>
+  <div class="m-pannel">
+    <div class="head">
+      <div class="tit">相关阅读</div>
+    </div>
+    <div class="body f-pb-l">
+      <ul class="m-news-list f-cbli">
+        <li>
+          <div class="l">
+            <img src="../images/lib/240-160.jpg" alt="">
+          </div>
+          <div class="r">
+            <div class="u-news">
+              <div class="text">启辰T70买全险送价值6000元装潢
+                大礼包
+              </div>
+              <div class="date">2016/2/9</div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="l">
+            <img src="../images/lib/240-160.jpg" alt="">
+          </div>
+          <div class="r">
+            <div class="u-news">
+              <div class="text">启辰T70买全险送价值6000元装潢
+                大礼包
+              </div>
+              <div class="date">2016/2/9</div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="l">
+            <img src="../images/lib/240-160.jpg" alt="">
+          </div>
+          <div class="r">
+            <div class="u-news">
+              <div class="text">启辰T70买全险送价值6000元装潢
+                大礼包
+              </div>
+              <div class="date">2016/2/9</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="g-fixed-bottom">
+  <div class="m-bottom-suspend">
+    <div class="fl">
+      <img src="../images/lib/param.jpg" alt="">
+    </div>
+    <div class="am">
+      <h3 class="tit">全新天籁全新天籁全新天籁全新天籁全新天籁全新天籁</h3>
+      <p class="price">10.10万</p>
+    </div>
+	  <div class="fr">
+		  <a class="u-btn u-btn-app u-btn-block u-btn-lg" href="###">立即申请</a>
+	  </div>
+  </div>
+</div>
+<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script>
+	$(function(){
+		if($(".m-news-wrap .content .p1").height()<300){
+			$(".m-news-wrap .more").hide();
+			$(".m-news-wrap .content").css("height","auto");
+		}else{
+			$(".m-news-wrap .more").click(function(){
+				$(this).hide();
+				$(".m-news-wrap .content").css("height","auto");
+			})
+		}
+	})
+</script>
+</body>
+</html>

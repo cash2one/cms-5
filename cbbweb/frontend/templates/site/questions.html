@@ -1,0 +1,251 @@
+{% extends 'base/base.html' %}
+{% block title %}公共留资{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/global.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static('site/css/page/leave-pub-part.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+     <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+   <script type="text/javascript" src="{{ static('site/js/lib/jquery.formCheck.js') }}" ></script>
+    <script type="text/javascript" src="{{ static('site/js/page/sign.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/modelPlug.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/popWin.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+<!--获取URL参数-->
+{% set series_id = request.GET.get('series_id', 0) %} <!--车系-->
+
+{% set series=run(API.CAR_SERIES_BY_ID, car_series_id=series_id) %}
+{% set dealerList=run(API.FINANCE_CITY_BRAND_DEALER, car_brand_id=series.car_brand_id,city_id=city.city_id,per_page=50,page=1) %}
+<!--获取省份数据-->
+{% set province=run(API.FINANCE_ALL_PROVINCE) %}
+
+{# <p> {{ dumps_json(series_dealer, add_pre=True)|safe }}</p> #}
+{# <p> {{ dumps_json(province, add_pre=True)|safe }}</p> #}
+
+
+<div class="g-head">
+
+  <div class="m-logo f-cb">
+    <div class="f-fl">
+      <i class="u-icon u-icon-logo"></i>
+    </div>
+    <ul class="f-fr f-cb m-list-logo-right">
+        <li class="f-br padding-lr">
+          <i class="u-icon u-icon-jzbj"></i>
+          <span class="cc s-main">精准报价</span>
+        </li>
+        <li class="f-br padding-lr" >
+          <i class="u-icon u-icon-hlhd"></i>
+          <span class="cc s-main">海量活动</span>
+        </li>
+        <li class=" padding-l">
+          <i class="u-icon u-icon-qfw"></i>
+          <span class="cc s-main">全方位购车优惠</span>
+        </li>
+      </ul>
+    <div>
+      
+    </div>
+    <i></i>
+  </div>
+</div>
+{% block header_nav %}
+
+
+{% endblock %}
+ <div class="g-body f-pr">
+    <div class="m-information">
+      <div class="m-info-title">
+        <span class="tt s-lg f-w-md"></span>
+      </div>
+      <div class="m-questions">
+        <div class="m-text">
+          <p class="s-nm">尊敬的用户 <span class="s-color-r">XXX</span> 您好，</p>
+          <p class="s-nm">感谢您对东风日产车巴巴的关注，为让你<span class="s-color-r">享受更多厂家福利</span>，拥有一个<span class="s-color-r">更好的购车体验</span>，</p>
+          <p class="s-nm">建议您完善<span class="s-color-r">如下信息</span>，非常感谢！！</p>
+        </div>
+        <dl class="m-qusetion-test">
+          <dt class="s-nm">&#9679; 您所在的城市北京味限购城市，您的牌子状态为？</dt>
+          <dd>
+            <ul class="f-cb">
+              <li class="cc"><input id="1a" type="radio" name="test1" class="dx"><label for="1a" class="s-main">已有牌照</label></li>
+              <li class="cc"><input  id="1b" type="radio" name="test1" class="dx"><label for="1b" class="s-main">上外地牌</label></li>
+              <li class="cc"><input id="1c" type="radio" name="test1" class="dx"><label for="1c" class="s-main">摇号中</label></li>
+            </ul>
+          </dd>
+        </dl>
+<!--
+        <dl class="m-qusetion-test">
+          <dt class="s-nm f-ib">&#9679; 您的置换车型为：</dt>
+          <dd class="f-ib">
+            <input type="text" placeholder="请输入您的品牌车型" class="u-input u-input-short "><a href="javascript:void(0); " class="s-sm s-a-blue anchor ">二手车免费估值</a>
+          </dd>
+        </dl>
+-->
+        <dl class="m-qusetion-test">
+          <dt class="s-nm">&#9679; 你是否已经体验过<span class="s-color-r">逍客</span>？</dt>
+          <dd>
+            <ul  class="f-cb">
+              <li class="cc"><input id="3a" type="radio" name="test3" class="dx"><label for="3a" class="s-main">体验过了</label></li>
+              <li class="cc"><input  id="3b" type="radio" name="test3" class="dx"><label for="3b" class="s-main">从没体验过</label></li>
+              
+            </ul>
+          </dd>
+        </dl>
+        <dl class="m-qusetion-test">
+          <dt class="s-nm">&#9679; 您是否考虑过其他车型？</dt>
+          <dd>
+            <ul class="f-cb">
+              <li class="cc"><input id="4a" type="radio" name="test4"  class="dx"><label for="4a" class="s-main">认准了要买逍客</label></li>
+              <li class="cc"><input  id="4b" type="radio" name="test4"  class="dx"><label for="4b" class="s-main">还有几个对比车型</label></li>
+              
+            </ul>
+          </dd>
+        </dl>
+        <dl class="m-qusetion-test">
+          <dt class="s-nm f-ib">&#9679; 您目前买车的心理价位是多少：</dt>
+          <dd class="f-ib">
+            <input type="text" class="u-input u-input-short2 ">
+              
+            
+          </dd>
+        </dl>
+        <dl class="m-qusetion-test">
+          <dt class="s-nm">&#9679; 您想买哪种颜色的<span>逍客</span>？</dt>
+          <dd>
+            <ul>
+              <li class="f-cb list">
+                <label  class="f-fl"  class="s-nm">外观：</label>
+                <ul class="f-cb f-fl">
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  
+                  <li class="cc">
+                    <input type="radio" id="61b" name="test61">
+                    <label for="61b" class="s-main"><i class="f-ib u-icon-rking color"></i>玫瑰金</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61c" name="test61">
+                    <label for="61c" class="s-main"><i class="f-ib u-icon-flblack color"></i>斐丽黑</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61d" name="test61">
+                    <label for="61d" class="s-main"><i class="u-icon u-icon-color-more color"></i>更多<i class="u-icon u-icon-arrowdown arrow"></i></label>
+                  </li>
+                </ul>
+              </li>
+              <li class="f-cb list">
+                <label class="f-fl"  class="s-nm">内饰：</label>
+                <ul class=" f-fl f-cb">
+                 <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="61a" name="test61">
+                    <label for="61a" class="s-main"><i class="f-ib u-icon-xyred color"></i>泫雅红</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="62a" name="test62">
+                    <label for="62a" class="s-main"><i class="f-ib u-icon-black color"></i>黑色</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="62b" name="test62">
+                    <label for="62b" class="s-main"><i class="f-ib u-icon-mi color"></i>米色</label>
+                  </li>
+                  <li class="cc">
+                    <input type="radio" id="62d" name="test62">
+                    <label for="62d" class="s-main"><i class="u-icon u-icon-color-more color"></i>更多<i class="u-icon u-icon-arrowdown arrow"></i></label>
+                  </li>
+                </ul>
+              </li>
+              
+            </ul>
+          </dd>
+        </dl>
+        <dl class="m-qusetion-test">
+          <dt class="s-nm">&#9679; 您的其他要求？</dt>
+          <dd>
+            <textarea name="" id="" class="text"></textarea>
+          </dd>
+        </dl>
+        <dl class="m-qusetion-test">
+          <dt></dt>
+          <dd>
+            <div class="f-ml125">
+              <span class="u-btn u-btn-bg-r u-btn-lg">确认提交</span>
+            </div>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  <!-- 右侧定位-->
+  <div class="m-info-car">
+    <div>
+      <i></i>
+    </div>
+    <div class="m-info-img-upload">
+      <img src="../../../static/site/images/test/imgche_03.jpg" alt="">
+    </div>
+    <div class="tt">
+      <span class="s-sm">
+        新逍客 1.4T 双离合 230TSI 舒适型
+      </span>
+    </div>
+    <ul class="cc f-cb">
+      <li class="f-br">
+        <dl>
+          <dt class="s-main">官方指导价</dt>
+          <dd class="s-nm">18.52万</dd>
+        </dl>
+      </li>
+      <li class="f-br">
+        <dl>
+          <dt class="s-main">限时促销价</dt>
+          <dd class="s-nm">16.52万</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt class="s-main">优惠幅度</dt>
+          <dd class="s-nm">2.50万</dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+ </div>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'base/base.html' %}
+{% block css %}
+    {{ super() }}
+<link href="{{ static('site/css/page/loan-index.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% set car_financial=run(API.DOWNPAY_MONTHLY_COUNT,city_id=city.city_id,)%}
+{% block js %}
+{{ super() }}
+<script type="text/javascript" src="{{ static('site/js/lib/seriesPlug.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/lib/modelPlug.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/page/loanIndex.js') }}"></script>
+<script type="text/javascript" src="{{ static('site/js/lib/popWin.js') }}"></script>
+{% endblock %}
+{% block header %}
+{{ super() }}
+<div id="loan-index-head">
+    <div class="f-width-mian f-center" id="loan-plan-form">
+        <!--<div class="m-crumb">
+            <span>当前位置：</span>
+            <a href="#">首页</a>
+            <span class="separator">></span>
+            <a href="#">任性贷</a>
+        </div>-->
+        <div class="loan-plan-wrap">
+            <div class="loan-plan-form-top">
+                <h2 class="loan-plan-form-tit">我心仪的车</h2>
+                <div class="input-group" id="series-wrap" data-url="{{ rest(API.GROUP_BRAND_CAR_SERIES)}}">
+                    <input class="" type="text" id="loan-form-series" readonly placeholder="选择车系">
+                    <div class="input-group-addon fr"><i class="cbb cbb-angle-down"></i></div>
+                </div>
+                <div class="input-group f-ol-n" id="model-wrap" data-url="{{ rest(API.GROUP_SERIES_CAR_TYPES)}}">
+                    <input class="" type="text" id="loan-form-model" readonly placeholder="选择车型（可不选）">
+                    <div class="input-group-addon fr"><i class="cbb cbb-angle-down"></i></div>
+                </div>
+                <a href="#" class="u-btn-magenta" id="loan-plan-submit">看看适合我的车贷方案</a>
+
+            </div>
+            <div class="loan-plan-form-bot">
+                <i></i>
+                <a href="/{{city.city_alias}}/finance/apply?dlrCode=H2912&series_id=50001&loan_plan=228&sku=24&percent=50&lead_key=NV-Chebabanew-Pc-V3-TO-Le-PoC-Msg8-03-0000" target="_blank">
+                    {# <em class="cbb cbb-search"></em> #}
+                    {# 专业授信 在线审贷 #}
+                    推荐方案：新蓝鸟 2年免息分期
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="g-ad-lg clearfix">
+        <div class="loan-ad-content">
+            <script>
+                (function() {
+                    var s = "_" + Math.random().toString(36).slice(2);
+                    document.write('<div id="' + s + '"></div>');
+                    (window.slotbydup=window.slotbydup || []).push({
+                        id: '2430836',
+                        container: s,
+                        size: '990,350',
+                        display: 'inlay-fix'
+                    });
+                })();
+            </script>
+            <script src="http://dup.baidustatic.com/js/os.js"></script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+    <div class="loan-index-wrap mainbody">
+        <div class="m-title-begin-red"><i></i>热门金融车型</div>
+        <div class="m-box clearfix" id="loan-index-plan">
+            {% for car in car_financial%}
+            {% if loop.index%2==0 %}
+            <a class="u-loan-plan fr" href="/{{city.city_alias}}/finance_detail/{{car.series_id}}">
+                <div class="u-loan-plan-wr">
+                    <div class="u-loan-plan-txt fl">
+                        <p class="title">{{car.series_name}}</p>
+                        <span class="clear">{{car.count}}种金融车贷方案</span>
+
+                        <div class="loan-pirct clear">
+                            <p>首付低至<span><label>{{'%.2f'|format(car.downpay/10000)}}万</label>起</span></p>
+
+                            <p>月供仅需<span><label>{% if car.monthly >10000 %}{{'%.2f'|format(car.monthly/10000)}} 万{% else %}{{'%.0f'|format(car.monthly)}}{% endif %}元</label>起</span></p>
+                        </div>
+                    </div>
+                    <div class="u-loan-plan-img fr">
+                        <img src="{{car.series_img}}@250w" alt="{{car.series_name}}" title="{{car.series_name}}">
+                    </div>
+                </div>
+            </a>
+            {% else %}
+            <a class="u-loan-plan fl" href="/{{city.city_alias}}/finance_detail/{{car.series_id}}">
+                <div class="u-loan-plan-wr">
+                    <div class="u-loan-plan-txt fl">
+                        <p class="title">{{car.series_name}}</p>
+                        <span class="clear">{{car.count}}种金融车贷方案</span>
+
+                        <div class="loan-pirct clear">
+                            <p>首付低至<span><label>{{'%.2f'|format(car.downpay/10000)}}万</label>起</span></p>
+
+                            <p>月供仅需<span><label>{% if car.monthly >10000 %}{{'%.2f'|format(car.monthly/10000)}} 万{% else %}{{'%.0f'|format(car.monthly)}}{% endif %}元</label>起</span></p>
+                        </div>
+                    </div>
+                    <div class="u-loan-plan-img fr">
+                        <img src="{{car.series_img}}@250w" alt="{{car.series_name}}" title="{{car.series_name}}">
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <div class="m-title-begin-red"><i></i>热门金融产品</div>
+        <div class="m-box clearfix" id="loan-index-financial">
+            <div class="u-loan-index-fnc loan-fnc-1">
+                <h2>日产金融 - 低息分期贷</h2>
+                <p>在线预审 急速审贷 超低利率</p>
+                <div class="u-series-wrap">
+                    <a class="cur" data-sriesid="492915" href="javascript:;">轩逸</a><a data-sriesid="10220" href="javascript:;">奇骏</a><a data-sriesid="101401" href="javascript:;">新逍客</a><a data-sriesid="49291" href="javascript:;">天籁</a>
+                </div>
+                <a href="{{city_url('site.finance_apply')}}?series_id=492915&loan_plan=204&sku=24&percent=50&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" target="_blank" data-key="NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" data-sku="24" data-percent="50" data-planid="204" data-url="{{city_url('site.finance_apply')}}" class="u-btn-lightRed">申请贷款</a>
+            </div>
+            <div class="u-loan-index-fnc loan-fnc-2">
+                <h2>日产金融 - 5010 分期贷</h2>
+                <p>在线预审 简单手续 超低首付</p>
+                <div class="u-series-wrap">
+                    <a class="cur" data-sriesid="353861" href="javascript:;">新楼兰</a><a data-sriesid="10060" href="javascript:;">轩逸经典</a><a data-sriesid="50001" href="javascript:;">蓝鸟</a><!--<a data-sriesid="24526" href="javascript:;">阳光</a>-->
+                </div>
+                <a href="{{city_url('site.finance_apply')}}?series_id=353861&loan_plan=207&sku=12&percent=20&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" target="_blank" data-key="NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" data-sku="12" data-percent="20" data-planid="207" data-url="{{city_url('site.finance_apply')}}" class="u-btn-lightRed">申请贷款</a>
+            </div>
+            <div class="u-loan-index-fnc loan-fnc-3">
+                <h2>招商银行 - 零利率分期贷</h2>
+                <p>在线预审 急速审贷 灵活还贷</p>
+                <div class="u-series-wrap">
+                    <a class="cur" data-sriesid="50001" href="javascript:;">蓝鸟</a><a data-sriesid="353861" href="javascript:;">新楼兰</a><!--<a data-sriesid="47710" href="javascript:;">轩逸</a>-->
+                </div>
+                <a href="{{city_url('site.finance_apply')}}?series_id=50001&loan_plan=237&sku=12&percent=30&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" target="_blank" data-key="NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-04-0000" data-sku="12" data-percent="30" data-planid="237" data-url="{{city_url('site.finance_apply')}}" class="u-btn-lightRed">申请贷款</a>
+            </div>
+        </div>
+	</div>
+{% endblock %}

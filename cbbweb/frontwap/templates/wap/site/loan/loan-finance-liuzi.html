@@ -1,0 +1,319 @@
+{% extends 'wap/base/base.html' %}
+{% block title %}金融贷款_分期购车{% endblock %}
+ 
+{% block description%}
+  <meta name="Keywords" content="金融贷款_分期购车">
+  <meta name="description" content="{{sign}}金融贷款_分期购车">
+{% endblock %}
+
+{% block body %}
+  {% csrf_token %}
+  {% set series_id = request.GET['series_id'] %}
+  {% set key =request.GET['key'] %}
+  {% set finance_id = request.GET['finance_id'] %}
+  {% if request.GET['type_id'] %}
+    {% set type_id = request.GET['type_id'] %}
+  {% endif %}
+  {% if request.GET['dealer_id'] %}
+    {% set dealer_id = request.GET['dealer_id'] %}
+  {% endif %}
+  {% if request.GET['loan_line'] %}
+    {% set loan_line = request.GET['loan_line'] %}
+  {% endif %}
+  {% if request.GET['first_num'] %}
+    {% set first_num = request.GET['first_num'] %}
+  {% endif %}
+  {% if request.GET['month_num'] %}
+    {% set month_num = request.GET['month_num'] %}
+  {% endif %}
+  {% if request.GET['loan_num'] %}
+    {% set loan_num = request.GET['loan_num'] %}
+  {% endif %}
+  <div class="g-topNav">
+    <div class="m-topNav">
+      <div class="left"><i class="u-icon u-icon-left" onclick="history.go(-1)"></i></div>
+      <div class="title">申请贷款</div>
+      <div class="right">
+        <ul class="u-menu f-fr f-cb">
+          <li><i class="u-icon u-icon-menu j-menu"></i></li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+  <div class="g-wrap-bg finacne-liuzi-wrap">
+  <div class="m-pannel">
+      <div class="head">
+        <div class="tit">车型与经销商信息</div>
+      </div>
+      <div class="body">
+        <div class="m-form">
+        <div class="item">
+          {% set car_series = get_object(MODELS.T_BASE_CAR_SERIES, id=series_id) %}
+          <div class="select" data-type="series">
+            <span id="series" data-series="{{ series_id }}">{{car_series.car_series_cn}}</span>
+            <!-- <i class="u-icon u-icon-right"></i> -->
+          </div> 
+        </div>
+        <div class="item">
+          {% if type_id %}
+            {% set car_type = get_object(MODELS.T_BASE_CAR_TYPE,id=type_id) %}
+            {% set type_name = car_type.car_type_name[car_series.car_series_cn|length():] %}
+          {% else %}
+            {% set car_type_list = list_objs(model=MODELS.T_BASE_CAR_TYPE,car_series_id=series_id) %}
+            {% if car_type_list %}
+              {% set car_type = car_type_list[0] %}
+              {% set type_name =car_type.car_type_name[car_series.car_series_cn|length():] %}
+            {% endif %}
+          {% endif %}
+            <div class="select j-select" data-type="type">
+              <span id="type" data-type="{{ car_type.id }}">{{ type_name }}</span>
+              <i class="u-icon u-icon-right"></i>
+            </div>      
+        </div>
+        <div class="item">
+          {% if dealer_id %}
+            {% set dealer = get_object(MODELS.T_BASE_DEALER,id=dealer_id) %}
+            {% set dealer_name = dealer.dlr_short_name %}
+            {% set dealer_code = dealer.dlr_code %}
+          {% else %}
+            {% set dealer = run(API.DEALER_DEFAULT,city_id=city.city_id) %}
+            {% set dealer_name = dealer.dealer_list[0].dlr_short_name %}
+            {% set dealer_code = dealer.dealer_list[0].dlr_code %}
+            {% set dealer_id = dealer.dealer_list[0].id %}
+          {% endif %}
+            <div class="select j-select" data-type="dealer">
+              <span id="dealer" data-dealer="{{ dealer_code }}">{{ dealer_name }}</span>
+              <i class="u-icon u-icon-right"></i>
+            </div>      
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="m-pannel">
+      <div class="head">
+        <div class="tit">东风日产金融方案详情</div>
+      </div>
+      <div class="body">
+        {# city.city_id写死 series_id写死 #}
+        {% set finance = run(API.LOWEST_MONTHLY_PAYMENT,city_id=city.city_id,car_series_id=series_id,car_type_id=car_type.id,dealer_id=dealer_id,finacial_product_id=finance_id) %}
+        <ul class="m-updown f-cb">
+          {# {{ dumps_json(finance,add_pre=True)|safe }} #}
+          {% if finance %}
+          <li>
+            <div class="h3"><h3 id="loan_line">{{ finance.sku_item }}期</h3></div>
+            <p>贷款期限</p>
+          </li>
+          <li>
+            <div class="h3"><h3><span id="first_num">{{ '%2.f'|format(finance.first_pay_amount/10000) }}</span>万</h3></div>
+            <p>首付 <span id="first_scale">{{ finance.first_pay_percent }}</span> % </p>
+          </li>
+          <li>
+            <div class="h3"><h3><span id="month_num">{{ '%2.f'|format(finance.monthly_pay_amount) }}</span>元</h3></div>
+            <p>月供金额</p>
+          </li>
+          <li>
+            <div class="h3"><h3><span id="loan_num">{{ finance.loan_cost }}</span>元</h3></div>
+            <p>贷款成本</p>
+          </li>
+        {% endif %}          
+        </ul>
+      </div>
+    </div>
+    <div class="m-pannel">
+      <div class="head">
+        <div class="tit">填写个人信息</div>
+      </div>
+      <div class="body">
+        <div class="m-form">
+        <div class="item"><span class="error-tip" style="display:none">请输入姓名</span>
+        <input id="userName" class="u-input u-input-user" type="text" placeholder="输入姓名"></div>
+        <div class="item"><span class="error-tip" style="display:none">请输入正确的手机号码</span>
+        <input id="userTel" class="u-input u-input-tel" type="tel" placeholder="手机号码"></div>
+      </div>
+      </div>
+    </div>
+    <div class="f-pd-s">
+    <button class="j-submit u-btn u-btn-bd u-btn-block f-mt-m u-btn-app">提交申请</button>
+    </div>
+  </div>
+  <div class="g-slider-fix">
+    <div class="m-changeCar m-changeDealer">
+      <div id="template"></div>
+      <div class="back j-back">
+        点击此处返回
+        <span class="icon">
+          <i class="u-icon u-icon-left-white"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  <script src="{{ static ('wap/site/js/lib/jq.carSelect.js') }}"></script>
+  <script src="{{ static ('wap/site/js/lib/jq.finance_car_dealer.js') }}"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BMvPNolfzSZK2FTuPPk0i9Lp"></script>
+  <script>
+    var pos = [];
+
+    $(function(){
+      
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+          pos.push(Number(r.point.lat));
+          pos.push(Number(r.point.lng));
+        }
+        else {
+          alert('failed'+this.getStatus());
+        }        
+      },{enableHighAccuracy: true});
+
+      $('.u-input-user').blur(function(){
+        if(!$(this).val()){
+          $('.error-tip:first').show();
+        }
+      });
+      $('.u-input-tel').blur(function(){
+        var tel = $(this).val();
+        if(!validatemobile(tel)) {
+          $('.error-tip:last').show();
+        }
+      });
+      $('.error-tip').click(function(){
+        $(this).hide();
+        $($(this).siblings()[0]).val('').focus();
+      });
+
+      $('.j-select').click(function(){
+
+        var options = {
+          type:$(this).data('type'),
+          target:'body',
+          city_id:{{ city.city_id }},
+          series_id:{{ series_id }},
+          finance_id:{{ finance_id }},
+
+          data_car_type:{{ dumps_json(run(API.CAR_TYPES_BY_CAR_SERIES_ID,car_series_id=series_id), add_pre=false)|safe }},
+
+          //重置金融方案 请求路由 
+          reset_finance_url:'{{ rest(API.LOWEST_MONTHLY_PAYMENT) }}'
+        };
+        $.ajax({
+          url:'{{ rest(API.DEALER_DISTANCE) }}',
+          type:'GET',
+          data:{
+            brand_id:'{{ car_series.car_brand_id }}',
+            series_id:'{{ car_series.id }}',
+            city_id:'{{ city.city_id }}',
+            latitude:pos[0],
+            longitude:pos[1]
+          }
+        })
+        .done(function(data){
+          options.data_dealer = data.result.dealer_list;
+          $(this).finance_Car_Dealer(options);
+        });
+      });
+
+      $('#userName').blur(function(){
+        if(!$(this).val()){
+          $('.error-tip:first').show();
+          errorGone();
+        }else{
+          $('.error-tip:first').hide();
+        }
+      });
+
+      $('#userTel').blur(function(){
+        var tel = $(this).val();
+        if(!validatemobile(tel)) {
+          $('.error-tip:last').show();
+          errorGone();
+        };
+      });
+
+      //提交留资
+      $('.j-submit').click(function(){
+        $('.g-wrap-bg').append('<div id="clueFlock" class="f-black-lock"></div>');
+        $('.g-wrap-bg').append('<img id="clueLoading" class="m-clue-loading" src="{{ static ('images/lib/clue_loading.gif') }}">');
+        if($('#userName').val() && $('#userTel').val() 
+           && ($('.error-tip').is(':hidden'))){
+           var dataP = {
+            name:$('#userName').val(),
+            phone:$('#userTel').val(),
+            dlrCode:$('#dealer').data('dealer'),
+            carTypeId:$('#type').data('type'),
+            carSeriesId:$('#series').data('series'),
+            pageId:'{{key}}',
+            activityName:key_name['{{ key }}'],
+            csrfmiddlewaretoken: jQuery("[name='csrfmiddlewaretoken']")[0].attributes["value"].value,
+            clueType:8,
+            source:17
+           }
+           $.ajax({
+              url:'{{ rest(API.CLUE_SAVE_API) }}',
+              type:'GET',
+              data:dataP
+            })
+            .done(function(data){
+              $('#clueFlock').remove();
+              $('#clueLoading').remove();
+              var status = JSON.parse(data.result);
+              if(status.error == 0){
+                var finance = { 
+                  id:{{ finance_id }},
+                  //还款期限写死
+                  period:$('#loan_line').text(),  
+                  //首付比例写死
+                  downpay_scale:$('#first_scale').text()
+                }
+                window.location.href = "{{ city_url('site.finance_done') }}?percent="+finance.downpay_scale+"&id="+finance.id+"&number="+finance.period;
+              }
+            })
+            .fail(function(err){
+              $('#clueFlock').remove();
+              $('#clueLoading').remove();
+              console.log('fail');
+            });
+        }else{
+          setTimeout(function(){
+            $('#clueFlock').remove();
+            $('#clueLoading').remove();
+          },1000);
+          if(!$('#userName').val()){
+            $('#userName').siblings('.error-tip').show();
+            errorGone();
+            return;
+          }
+          if(!$('#userTel').val()){
+            $('#userTel').siblings('.error-tip').show();
+            errorGone();
+            return;
+          }
+        }
+      })
+
+    });
+
+    //错误提示自动消失
+    function errorGone (){
+      setTimeout(function(){
+        $('.error-tip').hide();
+      },3000);
+    };
+
+    //手机号码验证
+    function validatemobile(mobile) { 
+      if(mobile.length!=11) {  
+         return false; 
+      } 
+      var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+      if(!myreg.test(mobile)) {  
+         return false; 
+      } 
+      return true;
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,209 @@
+{% extends 'wap/base/base.html' %}
+{% block css%}
+  <link href="//cdn.bootcss.com/Swiper/3.3.0/css/swiper.min.css" rel="stylesheet">
+{% endblock %}
+{% block hd_title%}任性贷{% endblock%}
+{% block body %}
+	<div class="g-wrap">
+  {% include 'wap/site/include/banner.html' %}
+  <div class="m-ad-wrap"> 
+    {# <a href="{{ city_url('site.checkloan') }}"><img src="{{ static('images/lib/loan_index_approval.jpg')}}"></a> 
+    <img class='j-changeCar' src="{{ static('images/lib/loan_index_car.png')}}">#}
+    <img class='j-changeCar' src="{{ static('images/lib/loan_index_temp.png')}}">
+  </div>
+  <div class="m-pannel">
+    <div class="head">
+      <div class="tit">热门金融车型</div>
+    </div>
+    <div class="body">
+      <ul class="m-carList">
+      	{% set series = run(API.DOWNPAY_MONTHLY_COUNT,city_id=city.city_id)%}
+      	{# <p>{{dumps_json(series, add_pre=true)}}</p> #}
+      	{% if series %}
+					{% for itm  in series %}
+		        <li class="f-ge m-financial-car">
+		        	<a href={{ city_url('site.finance_detail',series_id=itm.series_id) }}>
+			          <img class="fl" src="{{itm.series_img|default(static('images/lib/param.jpg'))}}@270w" >
+			          <div class="ar">
+			            <div class="car-tit">{{itm.series_name}}</div> 
+			            <div class="financial-type">{{itm.count}} 种金融车贷方案</div>
+			            <div class="car-sub-tit">首付低至：<span>{{ '%.2f'|format(itm.downpay/10000) }} 万起</span></div>
+			            <div class="car-sub-tit">月供仅需：<span>{{itm.monthly}}元起</span></div>
+			          </div>
+		          </a>
+		        </li>
+	       	{% endfor %}
+	      {% endif %}  
+      </ul>
+    </div>
+  </div>
+  <div class="m-pannel">
+    <div class="head">
+      <div class="tit">热门金融产品</div>
+    </div>
+    <div class="body">
+      <ul class="m-carList">
+        <li class="m-hotpro f-ge">
+          <div class="al">
+            <i class="i-dixi"></i>日产金融<span>低息分期贷</span>      
+          </div>
+          <div class="fr">
+            零利率
+          </div>
+          <div class="content">首付一半，一年无利息，无月供，适合资金周转充足用户</div>
+          <form class="financial-form" action="###">
+            <div class="j-selcar checked"><input type="radio" name="product_1" value="47710"/ checked="checked"><span>轩逸</span></div>
+            <div class="j-selcar"><input type="radio" name="product_1" value="10220" /><span>奇骏</span></div>
+            <div class="j-selcar"><input type="radio" name="product_1" value="101401"/><span>新逍客</span></div>
+          </form>
+          <div class="m-btns2">
+            <button data-id="204" class=" u-btn-block u-btn u-btn-default j-subLoan">申请贷款</button>
+          </div>
+        </li>
+        <li class="m-hotpro f-ge">
+          <div class="al">
+            <i class="i-dixi"></i>日产金融<span>5010分期贷</span>      
+          </div> 
+          <div class="fr">
+            零利率
+          </div>
+          <div class="content">首付一半，一年无利息，无月供，适合资金周转充足用户</div>
+          <form class="financial-form" action="###">
+            <div class="j-selcar checked"><input type="radio" name="product_2" value="353861" checked="checked" /><span>新楼兰</span></div>
+            <div class="j-selcar"><input type="radio" name="product_2" value="10060" /><span>轩逸经典</span></div>
+            <div class="j-selcar"><input type="radio" name="product_2" value="50001" /><span>蓝鸟</span></div>
+          </form>
+          <div class="m-btns2">
+            <button data-id="207" class=" u-btn-block u-btn u-btn-default j-subLoan">申请贷款</button>
+          </div>
+        </li>
+        <li class="m-hotpro f-ge">
+          <div class="al">
+            <i class="i-fenqi"></i>招商银行<span>零利率分期贷</span>      
+          </div>
+          <div class="fr">
+            零利率
+          </div>
+          <div class="content">首付一半，一年无利息，无月供，适合资金周转充足用户</div>
+          <form class="financial-form" action="###">
+            <div class="j-selcar checked"><input type="radio" name="product_3" value="353861" checked="checked" /><span>新楼兰</span></div>
+            <div class="j-selcar"><input type="radio" name="product_3" value="50001" /><span>蓝鸟</span></div>
+          </form>
+          <div class="m-btns2">
+            <button data-id="237" class=" u-btn-block u-btn u-btn-default j-subLoan">申请贷款</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="serise" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="u-title-ver title">
+      <div class="tit">选择自己心仪车系</div>
+    </div>
+    {% set series = run(API.FINANCE_GROUP_BRAND_CAR_SERIES)%}
+    {% if series %}
+    {% for itm1 in series %}
+			<ul class="cars" style="height:auto">
+      	<li class="{% if itm1.brand.name == '启辰' %} blue-tit {% else %} sub-tit {% endif %}">{{itm1.brand.name}}</li>
+      	{% for itm2 in itm1.series_list %}
+					<li data-url="{{ city_url('site.finance_detail',series_id=itm2.id) }}" data-id="{{itm2.id}}"><p class="c">{{itm2.name}}</p></li>
+      	{% endfor %}
+    	</ul>
+    {% endfor %}
+    {% endif %}
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+<div id="cartype" class="g-slider-fix">
+  <div class="m-changeCar">
+    <div class="title1">选择具体车型</div>
+      <ul class="cars" style="height:auto">  
+      </ul>
+    <div class="back j-back"> 点击此处返回 <span class="icon"><i class="u-icon u-icon-left-white"></i></span></div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.3.0/js/swiper.jquery.min.js"></script>
+<!--<script src="../wap/site/js/lib/ui.js"></script>-->
+<script>
+  $(function(){
+    /*轮播图*/
+    var slider = new Swiper('.j-slide', {
+      speed: 800,
+      autoplay: 4000,
+      pagination: '.swiper-pagination'
+    });
+    
+    $('body').on('click','.j-selcar',function(){
+      $(this).addClass('checked').siblings().removeClass('checked');
+      $(this).find('[type="radio"]')[0].checked=true;
+    });
+
+    $('.m-hotpro:last').removeClass('f-ge');
+    $('.m-financial-car:last').removeClass('f-ge');
+
+    $('.j-subLoan').click(function(){
+      var series_id =$(this).parent().siblings('form').children('.checked').children('[type = "radio"]').val(),
+          finance_id = $(this).data('id');
+      console.log(series_id);
+      if(series_id){
+        window.location.href = '{{ city_url('site.finance_apply') }}?key=NV-Chebabanew-Wap-V3-Ch-Le-PoC-Msg8-04-0000&series_id='+series_id+"&city_id={{ city.city_id }}&finance_id="+finance_id;
+      }
+    });
+    $('body').on('click','.checked',function(){
+      $(this).removeClass('checked');
+      $(this).find('[type="radio"]')[0].checked=false;
+    });
+  })
+
+  /*选择金融车系*/
+  function hideSlide(el){
+    $('html').removeClass('f-lock');
+    el.closest('.g-slider-fix').removeClass('g-slider-fix-active');
+  }
+  function showSlide(el){
+    $('html').addClass('f-lock');
+    el.addClass('g-slider-fix-active');
+  }
+  $('.j-changeCar').click(function(){
+    showSlide($('#serise'))
+  })
+
+  //选择车系
+  $('#serise').on('click','[data-id]',function(){
+    showSlide($("#cartype"));
+    var self = $(this);
+    $.ajax({
+      url: '{{rest(API.FINANCE_CAR_SERIES_CAR_TYPE)}}',
+      type: 'GET',
+      dataType: 'json',
+      data: {car_series_id:self.data('id'),city_id:'{{city.city_id}}'}
+    })
+    .done(function(data) {
+      //console.log(data);
+      var html = '';
+      if(data.status == 'success' && data.result.length>0){
+        $.each(data.result,function(index,el){
+          var href = self.data('url')+'/'+el.id;
+          html +='<a href="'+href+'"><li data-carid="'+el.id+'"><p class="c">'+el.name+'</p><div class="r">￥'+(el.guide_price/10000).toFixed(2)+'万</div></li></a>';
+        });
+        $('#cartype').find('.cars').html(html);
+      }    
+    })
+    .fail(function() {
+      console.log("error");
+    });
+  });
+
+
+  $('.j-back').click(function(){
+    hideSlide($(this))
+  })
+  
+</script>
+{% endblock %}

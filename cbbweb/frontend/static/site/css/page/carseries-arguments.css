@@ -1,0 +1,169 @@
+.btn-arg-close,
+.ico-arg-down,
+.ico-arg-t-d,
+.ico-arg-t-u,
+.ico-arg-up {
+  background-image: url(../../images/page/bg-arg.png);
+  background-repeat: no-repeat;
+}
+.btn-arg-close {
+  background-position: 0px 0px;
+  height: 13px;
+  width: 13px;
+}
+.ico-arg-down {
+  background-position: -13px 0px;
+  height: 4px;
+  width: 7px;
+}
+.ico-arg-t-d {
+  background-position: -13px -4px;
+  height: 4px;
+  width: 7px;
+}
+.ico-arg-t-u {
+  background-position: -13px -8px;
+  height: 4px;
+  width: 7px;
+}
+.ico-arg-up {
+  background-position: -20px 0px;
+  height: 4px;
+  width: 7px;
+}
+.arg-list {
+  background-color: #fff;
+}
+.arg-list table {
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  table-layout: fixed;
+}
+.arg-list table caption {
+  cursor: pointer;
+  background-color: #fdfdfd;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  color: #494949;
+  text-indent: 1.5em;
+  text-align: left;
+  height: 40px;
+  line-height: 40px;
+}
+.arg-list table caption span {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.arg-list table th {
+  text-align: right;
+  width: 20%;
+  border: 1px solid #e2e2e2;
+  background-color: #fdfdfd;
+  font-weight: normal;
+  padding-right: 20px;
+  color: #9c9c9c;
+}
+.arg-list table td {
+  text-align: center;
+  width: 20%;
+  border: 1px solid #e2e2e2;
+  color: #333;
+}
+.arg-list table.list th {
+  height: 40px;
+  line-height: 40px;
+}
+.arg-list table.list td {
+  height: 40px;
+  line-height: 40px;
+  word-break: break-all;
+}
+.arg-list table.list td.dif {
+  color: #c90329;
+  font-weight: bold;
+}
+.arg-list .settings {
+  text-align: left;
+  padding: 15px;
+}
+.arg-list .settings dt {
+  line-height: 2.5;
+  color: #494949;
+}
+.arg-list .settings dd {
+  line-height: 2;
+}
+.arg-list .settings dd input {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.arg-list .settings ul {
+  width: 160px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #d2d2d2;
+}
+.arg-list .settings li {
+  text-align: center;
+  width: 155px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  border: 1px solid #9c9c9c;
+  color: #9c9c9c;
+  background-color: #f9f9f9;
+  margin-bottom: 12px;
+}
+.arg-list .settings li.active {
+  border: 1px solid #c90329;
+  color: #c90329;
+  background-color: #ffeded;
+}
+.arg-list .mod {
+  position: relative;
+  padding: 15px;
+}
+.arg-list .mod .btn-arg-close {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.arg-list .mod dl {
+  padding-bottom: 20px;
+}
+.arg-list .mod dd {
+  line-height: 2.2;
+  color: #9c9c9c;
+}
+.arg-list .mod dd span {
+  color: #c90329;
+}
+.arg-list .mod dd img {
+  width: 180px;
+  height: 120px;
+}
+.arg-list .mod dt {
+  line-height: 3;
+  color: #3355aa;
+  padding-bottom: 20px;
+  display: block;
+  width: 95%;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.arg-list .mod p select {
+  width: 90px;
+  height: 28px;
+}
+.arg-list .mod p a {
+  display: inline-block;
+  color: #585858;
+  margin-left: 6px;
+  border: 1px solid #e2e2e2;
+  padding: 4px 5px;
+}

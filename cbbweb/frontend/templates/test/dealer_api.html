@@ -1,0 +1,127 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='经销商',
+            tag_id='dealer',
+            api_list=[
+                {
+                    'api_name': API.DEALER_BY_ID,
+                    'kwargs': {
+                        'dealer_id': 432
+                    }
+                },
+                {
+                    'api_name': API.DEALER_DEFAULT,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'county_id': 0,
+                        'brand_id': 0,
+                        'series_id': 0,
+                        'per_page': 2,
+                        'page': 1,
+                        'newest_activity': 1,
+                    }
+                },
+                {
+                    'api_name': API.DEALER_SCORE,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'county_id': 0,
+                        'brand_id': 0,
+                        'series_id': 0,
+                        'per_page': 2,
+                        'page': 1,
+                        'newest_activity': 1,
+                    }
+                },
+                {
+                    'api_name': API.DEALER_DISTANCE,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'county_id': 0,
+                        'brand_id': 0,
+                        'series_id': 0,
+                        'longitude': 1.0,
+                        'latitude': 1.0,
+                        'per_page': 2,
+                        'page': 1,
+                        'newest_activity': 1,
+                    }
+                },
+                {
+                    'api_name': API.DEALER_ON_SALE_CAR_TYPES,
+                    'kwargs': {
+                        'dealer_id': 2829,
+                        'car_type': 0,
+                        'per_page': 2,
+                        'page': 1,
+                    }
+                },
+                {
+                    'api_name': API.DEALER_ON_SALE_CAR_TYPES_COUNT,
+                    'kwargs': {
+                        'dealer_id': 2829
+                    }
+                },
+                {
+                    'api_name': API.DEALER_GROUP_SERIES_CAR_TYPES,
+                    'kwargs': {
+                        'dealer_id': 3090,
+                        'car_series_id': 14660,
+                        'property_key': 'pailiang',
+                    }
+                },
+                {
+                    'api_name': API.DEALER_ACTIVITY_SERIES_CAR_TYPES,
+                    'kwargs': {
+                        'dealer_id': 3069,
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.DEALER_CAR_SERIES_PROPERTY,
+                    'kwargs': {
+                        'car_series_id': 43013,
+                        'prop_keys': ['pailiang', 'zhengchezhibao'],
+                    }
+                },
+                {
+                    'api_name': API.DEALER_HOT_CAR_SERIES,
+                    'kwargs': {
+                        'count': 3
+                    }
+                },
+                {
+                    'api_name': API.DEALER_PROMOTION_ACTIVITY,
+                    'kwargs': {
+                        'dealer_id': 432,
+                        'count': 6
+                    }
+                },
+                {
+                    'api_name': API.DEALER_CITY_ACTIVITY,
+                    'kwargs': {
+                        'city_id': 20041,
+                        'activity_type': 1,
+                        'count': 6
+                    }
+                },
+                {
+                    'api_name': API.DEALER_CITY_ACTIVITY,
+                    'kwargs': {
+                        'city_id': 20041,
+                        'activity_type': 2,
+                        'count': 6
+                    }
+                },
+                {
+                    'api_name': API.DEALER_OFFICAL_CAR_INFO,
+                    'kwargs': {
+                        'dealer_id': 432,
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

@@ -1,0 +1,29 @@
+.m-intro{text-align: center; color: #828282; font-size: 2.4rem;margin-top: -4px;}
+.m-intro .border{background:url(../../images/lib/border.png) repeat left bottom; height:10px;  }
+.m-intro .itm{float: left;width: 33.33%;line-height: 4rem; border-right:1px solid #e3e3e3;}
+.m-intro .f-of{padding:15px 0 8px}
+.i-icon{background: url(../../images/lib/icons.png); display:inline-block;vertical-align: middle;margin-right: 5px;margin-bottom: 5px;}
+.i-icon-standard{height: 38px;width: 38px;background-position:-578px 360px;}
+.i-icon-activity{height: 38px;width: 38px;background-position:-540px 360px;}
+.i-icon-weekend{height: 38px;width: 38px;background-position:-619px 362px;}
+
+.m-programa{padding: 20px 0;text-align: center; color: #828282; background-color: #fff;font-size: 2.8rem; border: 1px solid #ddd; margin: 20px 0}
+.m-programa .item{float: left;width: 25%;line-height: 4rem; }
+.m-programa .item i{width:142px;height:141px;background:url(../../images/lib/index_catalog.png) no-repeat;display: inline-block;}
+.m-programa .item p{
+    font-size: 2.6rem;
+    color: #828282;	
+}
+.m-programa .item .i-icon-recommend{background-position:0 0;}
+.m-programa .item .i-icon-favorable{background-position:0 -150px;}
+.m-programa .item .i-icon-gift{background-position:-150px 0;}
+.m-programa .item .i-icon-loan{background-position:-150px -150px;}
+
+
+.f-of{ overflow: hidden;}
+.f-width{background-color: #fff}
+.f-pdbt15{ padding: 15px 0}
+.f-bwithe{ background-color: #fff;}
+.g-wrap{ background-color: #f9f9f9;}
+.m-tt-ind{ background-color: #fff;border-top: 1px solid #ddd;}
+

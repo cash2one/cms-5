@@ -1,0 +1,519 @@
+.dshop #dsp-activity span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  float: left;
+  background-color: #c90329;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+}
+.dshop #dsp-activity dl {
+  margin-left: 35px;
+}
+.dshop #dsp-activity dl dd {
+  width: 310px;
+  height: 50px;
+  float: left;
+  font-size: 12px;
+  line-height: 2em;
+}
+.dshop #dsp-activity dl dd .description {
+  font-size: 14px;
+  color: #c90329;
+}
+.dshop #dsp-activity dl dd .btn {
+  display: block;
+  widht: 130px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 600;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.dshop #dsp-activity dl dd:first-child {
+  width: 455px;
+}
+.dshop #dsp-activity dl dd:last-child {
+  width: 140px;
+}
+.dshop #dsp-activity dl dd.last {
+  width: 140px;
+}
+.dshop .g-dsp-wrap {
+  background-color: #ffffff;
+  margin: 25px 0;
+  padding: 20px;
+}
+.dshop .g-dsp-wrap .dsp-img img {
+  width: 210px;
+  height: 140px;
+  max-width: 210px;
+  box-shadow: 3px 3px 3px #999999;
+}
+.dshop .g-dsp-wrap .dsp-img .dsp-img-wrap {
+  line-height: 2em;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.dshop .g-dsp-wrap .dsp-img .dsp-img-wrap span i {
+  color: #fe6600;
+  font-size: 16px;
+}
+.dshop .g-dsp-wrap .dsp-img .dsp-img-wrap b {
+  color: #fe6600;
+  margin-left: 10px;
+}
+.dshop .g-dsp-wrap .dsp-detail {
+  position: relative;
+  width: 720px;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit {
+  margin-bottom: 10px;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 {
+  line-height: 1.5em;
+  color: #3c3c3c;
+  float: left;
+  position: relative;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 i {
+  width: 32px;
+  height: 25px;
+  display: inline-block;
+  background: url(../../images/page/bg-detail.png) -444px -105px no-repeat;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 em {
+  width: 15px;
+  height: 18px;
+  display: inline-block;
+  background: url(../../images/page/bg-detail.png) -468px -65px no-repeat;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 em:hover .dsp-ewm {
+  display: block;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 em .dsp-ewm {
+  display: none;
+  position: absolute;
+  padding: 13px 13px 0 13px;
+  background-color: #ffffff;
+  right: -40px;
+  top: 35px;
+  border: 1px solid #e2e2e2;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 em .dsp-ewm img {
+  width: 65px;
+  height: 65px;
+  display: block;
+}
+.dshop .g-dsp-wrap .dsp-detail .tit h2 em .dsp-ewm p {
+  line-height: 2em;
+  color: #999999;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+}
+.dshop .g-dsp-wrap .dsp-detail p {
+  line-height: 2em;
+}
+.dshop .g-dsp-wrap .dsp-detail p .map {
+  margin: 0 5px;
+  color: #0171bc;
+}
+.dshop .g-dsp-wrap .dsp-detail p .map i {
+  display: inline-block;
+  margin: 0 3px;
+  height: 16px;
+}
+.dshop .g-dsp-wrap .dsp-detail p .message {
+  margin: 0 5px;
+  color: #0171bc;
+}
+.dshop .g-dsp-wrap .dsp-detail p .message i {
+  color: #0171bc;
+  font-size: 18px;
+  margin: 0 3px;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount {
+  margin-top: 15px;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .btn {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+  font-size: 18px;
+  margin-right: 15px;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .u-btn-deepred {
+  font-weight: 600;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .dsp-loan {
+  color: #0171bc;
+  margin-right: 10px;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .dsp-loan i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 3px;
+  background: url(../../images/page/bg-detail.png) -482px -64px no-repeat;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .dsp-exchange {
+  color: #0171bc;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-discount .dsp-exchange i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 3px;
+  background: url(../../images/page/bg-detail.png) -480px -120px no-repeat;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-tag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 538px;
+  height: 25px;
+  text-align: right;
+}
+.dshop .g-dsp-wrap .dsp-detail .dsp-tag .tag {
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  padding: 0px 15px;
+  margin-left: 3px;
+  display: inline-block;
+  height: 23px;
+  line-height: 23px;
+  cursor: default;
+}
+.dshop .g-dsp-wrap .car-type-tap {
+  border: 1px solid #e2e2e2;
+  margin: 20px 0;
+}
+.dshop .g-dsp-wrap .car-type-tap dd {
+  float: left;
+  width: 236px;
+  height: 77px;
+  border-right: 1px solid #e2e2e2 ;
+  background-color: #f7f7f7;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 77px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd:last-child {
+  border: none;
+  width: 237px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd.cur,
+.dshop .g-dsp-wrap .car-type-tap dd:hover {
+  font-weight: 600;
+  background-color: #ffffff;
+  color: #c90329;
+}
+.dshop .g-dsp-wrap .car-type-tap dd.cur span.car,
+.dshop .g-dsp-wrap .car-type-tap dd:hover span.car {
+  background-position: -10px -225px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd.cur span.suv,
+.dshop .g-dsp-wrap .car-type-tap dd:hover span.suv {
+  background-position: -10px -163px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd.cur span.twogray,
+.dshop .g-dsp-wrap .car-type-tap dd:hover span.twogray {
+  background-position: -10px -285px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd.cur span.outgray,
+.dshop .g-dsp-wrap .car-type-tap dd:hover span.outgray {
+  background-position: -10px -104px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd span {
+  width: 75px;
+  height: 33px;
+  display: inline-block;
+  background: url(../../images/lib/bg-common.png);
+  vertical-align: middle;
+}
+.dshop .g-dsp-wrap .car-type-tap dd span.car {
+  background-position: -10px -195px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd span.suv {
+  background-position: -10px -133px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd span.twogray {
+  background-position: -10px -255px;
+}
+.dshop .g-dsp-wrap .car-type-tap dd span.outgray {
+  background-position: -10px -74px;
+}
+.dshop .g-dsp-wrap #car-no-outgray dd {
+  width: 315px;
+}
+.dshop .g-dsp-wrap #car-no-outgray dd:last-child {
+  border: none;
+  width: 316px;
+}
+.dshop .g-dsp-wrap .car-type-list {
+  min-height: 355px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item {
+  position: relative;
+  border: 1px solid #ffffff;
+  float: left;
+  margin: 10px 20px 10px 0;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item:hover {
+  border-color: #e2e2e2;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item.last {
+  margin-right: 0;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item img {
+  width: 300px;
+  max-width: 300px;
+  height: 200px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text {
+  margin: 10px 15px;
+  position: relative;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .exchange-model-wrap .series-name {
+  display: block;
+  line-height: 2em;
+  font-size: 14px;
+  color: #6c6c6c;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .exchange-model-wrap .series-name i {
+  margin-left: 8px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .exchange-model-wrap .model-wrap {
+  margin: 0;
+  margin-left: 5px;
+  display: none;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .exchange-model-wrap .model-wrap .u-plug-model {
+  position: inherit;
+  box-shadow: none;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .cur {
+  z-index: 100;
+  border: 1px solid #e2e2e2;
+  position: absolute;
+  background-color: #ffffff;
+  width: 280px;
+  left: -16px;
+  top: 0;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .cur > a {
+  margin-left: 5px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .cur .model-wrap {
+  display: block;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text p {
+  font-size: 13px;
+  color: #6c6c6c;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text p b {
+  color: #c90329;
+  font-size: 16px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text p span {
+  margin-left: 20px;
+  font-size: 12px;
+  color: #999999;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .car-btn {
+  margin: 8px 0;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .car-btn .btn {
+  display: inline-block;
+  width: 80px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  margin-right: 8px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .series-text .car-btn .btn:hover {
+  font-weight: 600;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .exchange {
+  color: #0171bc;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .exchange i {
+  width: 19px;
+  height: 19px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  background: url(../../images/page/bg-detail.png) -480px -82px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .exchange:hover {
+  color: #c90329;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .exchange:hover i {
+  background-position: -461px -83px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .tag {
+  display: block;
+  position: absolute;
+  width: 42px;
+  height: 47px;
+  right: 10px;
+  background: url(../../images/page/bg-detail.png) -458px -140px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .tag p {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.2em;
+  height: 25px;
+  margin-top: 5px;
+  color: #ffffff;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .message {
+  background-color: #f9f9f9;
+  padding: 5px 10px;
+  width: 280px;
+  display: block;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .message i {
+  display: inline-block;
+  width: 20px;
+  height: 15px;
+  vertical-align: middle;
+  margin-right: 5px;
+  background: url(../../images/page/bg-detail.png);
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .message:hover {
+  color: #c90329;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .message.message-info i {
+  background-position: -479px -105px;
+}
+.dshop .g-dsp-wrap .car-type-list .car-item .message.message-discount i {
+  width: 16px;
+  height: 16px;
+  background-position: -482px -64px;
+}
+.dshop .g-dsp-wrap .m-title-begin-red {
+  margin: 0;
+  font-size: 20px;
+}
+.dshop .g-dsp-wrap .m-title-begin-red i {
+  margin-left: 0;
+}
+.dshop .g-dsp-wrap .m-title-begin-red span {
+  font-size: 14px;
+  float: right;
+}
+.dshop .g-dsp-wrap .m-title-begin-red span b {
+  color: #0171bc;
+  margin: 0 5px;
+}
+.dshop .dl-service-col-1 {
+  color: #ffa31c;
+}
+.dshop .dl-service-col-2 {
+  color: #717bd8;
+}
+.dshop .dl-service-col-3 {
+  color: #dcab66;
+}
+.dshop .dl-service-col-4 {
+  color: #636d76;
+}
+.dshop .dl-service-col-5 {
+  color: #ce1245;
+}
+.dshop .dl-service-col-6 {
+  color: #839164;
+}
+.dshop .dl-service-col-7 {
+  color: #73aac4;
+}
+.dshop #dshop-map {
+  height: 410px;
+  width: 950px;
+  margin: 20px auto;
+}
+.send-phone-wrap .f-field {
+  margin: 15px 0;
+  font-size: 16px;
+}
+.send-phone-wrap .f-field span {
+  display: inline-block;
+  width: 130px;
+  text-align: right;
+  float: left;
+  line-height: 35px;
+  margin-right: 15px;
+  height: 35px;
+}
+.send-phone-wrap .f-field .send-phone-drop {
+  display: inline-block;
+  float: left;
+  border: 1px solid #e2e2e2;
+  padding: 0px 10px;
+  width: 300px;
+}
+.send-phone-wrap .f-field .send-phone-drop input {
+  border: none;
+  vertical-align: top;
+  height: 35px;
+  line-height: 35px;
+  width: 170px;
+  background: none;
+}
+.send-phone-wrap .f-field .send-phone-drop span {
+  float: inherit;
+  width: 35px;
+  margin: 0;
+  font-size: 12px;
+}
+.send-phone-wrap .f-field .send-phone-drop a {
+  margin-right: 10px;
+}
+.send-phone-wrap .f-field .send-phone-drop a:last-child {
+  margin: 0;
+}
+.send-phone-wrap .f-field .send-phone-drop a i {
+  display: inline-block;
+  background: url("../../images/page/bg-detail.png") no-repeat;
+  width: 23px;
+  height: 23px;
+  vertical-align: middle;
+}
+.send-phone-wrap .f-field .send-phone-drop a #man {
+  background-position: -176px -255px;
+}
+.send-phone-wrap .f-field .send-phone-drop a #woman {
+  background-position: -177px -278px;
+}
+.send-phone-wrap .f-field .send-phone-drop .active #man {
+  background-position: -152px -255px;
+}
+.send-phone-wrap .f-field .send-phone-drop .active #man + span {
+  color: #0172bb;
+}
+.send-phone-wrap .f-field .send-phone-drop .active #woman {
+  background-position: -152px -278px;
+}
+.send-phone-wrap .f-field .send-phone-drop .active #woman + span {
+  color: #fb5b5a;
+}
+.send-phone-wrap .f-field .send-phone-btn {
+  padding: 10px 50px;
+  display: inline-block;
+  background-color: #e2e2e2;
+  color: #ffffff;
+}

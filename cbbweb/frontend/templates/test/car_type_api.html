@@ -1,0 +1,85 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='车型',
+            tag_id='car_type',
+            api_list=[
+                {
+                    'api_name': API.CAR_TYPE_BY_ID,
+                    'kwargs': {
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_DATA,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_PROPERTY,
+                    'kwargs': {
+                        'car_type_id': 97,
+                        'prop_keys': ['fadongjixinghao',
+                                      'fadongjixingshi',
+                                      'fadongjiteyoujishu']
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_GROUP_PROPERTY,
+                    'kwargs': {
+                        'car_type_id': 97,
+                        'group_key': 'jibencanshu'
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_ALL_PROPERTY,
+                    'kwargs': {
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_PRICE_PROPERTY,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_SERIES_PRICE_PROPERTY,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_DEALER,
+                    'kwargs': {
+                        'city_id': 20267,
+                        'county_id': 0,
+                        'car_type_id': 97,
+                        'per_page': 2,
+                        'page': 1,
+                        'orderby': 'price',
+                        'descending': False
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPE_CITY_DEALER_COUNT,
+                    'kwargs': {
+                        'city_id': 20267,
+                        'car_type_id': 97
+                    }
+                },
+                {
+                    'api_name': API.CAR_TYPES_BY_CAR_SERIES_ID,
+                    'kwargs': {
+                        'car_series_id': 14660
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

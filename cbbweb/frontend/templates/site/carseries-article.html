@@ -1,0 +1,139 @@
+{% extends 'base/base.html' %}
+{% set dealer_info=run(API.CAR_ARTICLE_INFO, city_id=city.city_id, article_id=article.id) %}
+{% block title %}{{article.title}}{% if paginator.num_pages > 1%}({{paginator.cur_page}}){% endif %} - {{ dealer_info['car_series_list'][0]['name'] }}评测_提车作业 - {{platform}}{% endblock %}
+{% block description %}
+<meta name="Keywords" content="{{article.keywords}}">
+<meta name="description" content="{{article.description}}">
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link href="{{ static('site/css/page/carseries-article.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block js %}
+{{ super() }}
+<script>
+    $('.m-sidebar dd a').on('click', function () {
+        $('.m-sidebar dd a').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
+{% endblock %}
+
+<!--container-->
+
+
+{% block main %}
+{#{{ dumps_json(paginator, add_pre=True)|safe }}#}
+{#{{ dumps_json(article, add_pre=True)|safe }}#}
+<div class="chebaba-container">
+    <!--<p class="page-nav">当前位置：<a href="">首页</a><span>&gt;</span><a href="/car">惠挑车</a><span>&gt;</span><a
+            href="">{{article.title}}</a></p>-->
+
+    <div class="carseries-t-l">
+        <div class="mod-wrap">
+            <div class="txt">
+                <h1>{{article.title}}</h1>
+                <h6>发布时间：{{article.created_date.strftime('%Y-%m-%d')}}&nbsp;&nbsp;&nbsp;&nbsp;发布来源：{{article.source}}&nbsp;&nbsp;&nbsp;类型：{{section.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--分享<span class="ico-find-share"></span>--></h6>
+
+                <!--<a href="" class="banner">{{article.front_img_path}}</a>-->
+                <div class="banner">
+                    <script>
+                        (function () {
+                            var s = "_" + Math.random().toString(36).slice(2);
+                            document.write('<div id="' + s + '"></div>');
+                            (window.slotbydup = window.slotbydup || []).push({
+                                id: '2430811',
+                                container: s,
+                                size: '681,59',
+                                display: 'inlay-fix'
+                            });
+                        })();
+                    </script>
+                    <script src="http://dup.baidustatic.com/js/os.js"></script>
+                </div>
+                {{article.trans_content|safe}}
+
+                {% if paginator.num_pages > 1 %}
+                <dl class="pagination clearfix">
+                    <dt>共{{paginator.num_pages}}页</dt>
+
+                    {% if paginator.cur_page > 1 %}
+                    <dd><a href="{{city_url('cms.article',id=article.id~'_'~(paginator.cur_page-1))}}">上一页</a></dd>
+                    {% endif %}
+
+                    {% for i in range(paginator.num_pages) %}
+                    <dd><a href="{{city_url('cms.article',id=article.id~'_'~(i+1))}}">{{i+1}}</a></dd>
+                    {% endfor %}
+
+                    {% if paginator.cur_page < paginator.num_pages %}
+                    <dd><a href="{{city_url('cms.article',id=article.id~'_'~(paginator.cur_page+1))}}">下一页</a></dd>
+                    {% endif %}
+
+
+                </dl>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+    <div class="carseries-t-r">
+        <div class="mod-block">
+            <!--<h3 class="title">热门车型</h3>-->
+            <dl class="list">
+                <dd>
+                    <a href="{{ dealer_info['car_series_list'][0]['url'] }}">
+                    <img src="{{ dealer_info['car_series_list'][0]['pc_thumbnail']}}@185w" alt="{{ dealer_info['car_series_list'][0]['name'] }}" title="{{ dealer_info['car_series_list'][0]['name'] }}">
+                    </a>
+                </dd>
+                <dt>{{ dealer_info['car_series_list'][0]['name'] }}</dt>
+
+                <dd>&yen;{{'%.2f'|format(dealer_info['car_series_list'][0]['start_guideprice']/10000)}}-{{'%.2f'|format(dealer_info['car_series_list'][0]['end_guideprice']/10000)}}
+                    万元
+                </dd>
+            </dl>
+            <!--<dl class="list">-->
+            <!--<dd><a href=""><img src="images/temp/img-focus.png" width="185" height="120" alt=""></a></dd>-->
+            <!--<dt>新逍客</dt>-->
+            <!--<dd>&yen;10.08-14.87 万元</dd>-->
+            <!--</dl>-->
+            <h4>推荐经销商</h4>
+            {% for dealer in dealer_info['dealer'] %}
+            <dl class="dealer-info">
+                <dt>
+                    {% if dealer.is_vip > 0 %}
+                    <img src="../../../static/site/images/page/client-vip.png" alt="">
+                    {% endif %}
+                    {{dealer.dlr_short_name}}
+                </dt>
+                {% for subDealer in dealer.car_type_list %}
+                <dd><a href={{subDealer.url}}>{{subDealer.name}}</a><a
+                        href="/{{city.city_alias}}/info/apply?series_id={{car_series_ids[0]}}&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-07-0000"
+                        class="qa">询价</a><span>{{'%.2f'|format(subDealer.offer_price.price/10000)}}万</span></dd>
+                {% endfor %}
+                <dd class="more"><a href={{dealer.url}}>查看全部报价&nbsp;&GT;</a></dd>
+            </dl>
+            {% endfor %}
+
+        </div>
+        <div class="mod-block">
+            <h3 class="title">推荐文章</h3>
+            {% set article_info=run(API.ARTICLE_NEWEST_BY_CARSERIES, series_id=car_series_ids[0],count=5,page=0) %}
+            <ul class="article">
+                {% for art_list in article_info %}
+
+                <li><a href={{city_url('cms.article',id=art_list.id)}}>·&nbsp;{{art_list.title}}</a></li>
+
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+{% endblock %}
+

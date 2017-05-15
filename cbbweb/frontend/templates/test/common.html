@@ -1,0 +1,66 @@
+
+{% macro api_tag(name=None, tag_id=None, api_list=[]) -%}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{ tag_id }}">
+                    {{ name }}
+                </a>
+            </h4>
+        </div>
+        <div id="{{ tag_id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                {% if api_list %}
+                    {% for api in api_list %}
+                        
+                        <div>
+                            <br />
+                            <div class="highlight">
+                                {% set doc_string=api_doc(api.api_name.value) %}
+                                {% if doc_string %}
+                                    {{ doc_string|safe }}
+                                {% endif %}
+                            </div>
+                            <div class="label label-success api_title">
+                                API.{{ api.api_name.name }}
+                                <br />
+                                <div class="label label-primary">
+                                    {{ rest(api.api_name, **api.kwargs) }}
+                                </div>
+                                <br />
+                                {% if api.introduction %}
+                                    <div class="label label-primary">
+                                        {{ api.introduction }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% set result=run(api.api_name, **api.kwargs) %}
+                            {% if result %}
+                                <script type="text/javascript">
+                                    json_dict["{{ api.api_name.name }}_json"] = {{ dumps_json(result)|safe }};
+                                </script>
+                                <div class="api_result">
+                                    <br />
+                                    <button class="collapse-btn">折叠所有层</button>
+                                    <button class="expand-btn">展开所有层</button>
+                                    <button class="toggle-btn">切换所有层</button>
+                                    <button class="toggle-1-btn">切换第1层</button>
+                                    <button class="toggle-2-btn">切换第2层</button>
+                                    <button class="toggle-3-btn">切换第3层</button>
+                                    <button class="toggle-4-btn">切换第4层</button>
+                                    <div class="json_result" json_key="{{ api.api_name.name }}_json">
+                                        
+                                    </div>
+                                    {# {{ dumps_json(result, add_pre=True)|safe }} #}
+                                </div>
+                            {% else %}
+                                <div class="api_no_data">no data</div>
+                            {% endif %}
+                            <br />
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{%- endmacro %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                test catalogs
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+            <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            {% if catalogs %}
+                <h3>
+                    <span class="label label-primary">{{ catalogs.cata_name }}</span>
+                </h3>
+                
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#catalogs_info">
+                                    频道基本信息
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="catalogs_info" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>参数</th>
+                                            <th>值</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>标题</td>
+                                            <td>{{ catalogs.title }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PC模板</td>
+                                            <td>{{ catalogs.pc_template }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if cata_attrs %}
+                        {% for ca_key, cata_attr in cata_attrs.items() %}
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#{{ cata_attr.enname|replace(" ", "_") }}">
+                                            {{ cata_attr.cnname }} : {{ cata_attr.value }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="{{ cata_attr.enname|replace(" ", "_") }}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>参数</th>
+                                                    <th>值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>属性中文名</td>
+                                                    <td>{{ cata_attr.cnname }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>属性值</td>
+                                                    <td>{{ cata_attr.value }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif%}
+        {% endblock %}
+    </body>
+</html>

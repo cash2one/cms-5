@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block meta %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="applicable-device" content="pc">
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                test car series
+            {% endblock %}
+        </title>
+
+        {% block css %}
+            <link href="{{ static('3rd/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+            <link href="{{ static('cms/hui/carseries/css/test.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+        {% block js %}
+            <script type="text/javascript" src="{{ static('3rd/jquery/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ static('3rd/bootstrap/js/bootstrap.min.js') }}"></script>
+
+            <script type="text/javascript" src="{{ static('cms/hui/carseries/js/test.js') }}"></script>
+
+            <script type="text/javascript">
+                window.onload = function() {
+                    init_page();
+                };
+            </script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body>
+            <div id="navbar" class="navbar navbar-default">
+                <div id="navbar-container" class="navbar-container">
+                    <a href="#" class="pull-left">
+                        <img class="df_logo" src="{{ static('cms/hui/carseries/images/logo.png') }}" alt="logo" />
+                    </a>
+                    <div class="navbar-header pull-left">
+                        <a href="#" class="navbar-brand">
+                            <small>
+                                车巴巴
+                            </small>
+                        </a>
+                    </div>
+                    <div class="navbar-buttons navbar-header pull-right ">
+                        <ul class="nav">
+                        </ul>
+                    </div>
+                    <nav class="navbar-menu pull-left">
+                    </nav>
+                </div>
+            </div>
+
+            <div class="main-container" id="main-container">
+                <div class="main-content">
+                    {% set car_series=get_object(MODELS.T_BASE_CAR_SERIES, id=catalogs.model_instanceid) %}
+                    {% if car_series %}
+                        <div class="breadcrumbs">
+                            <ul class="breadcrumb col-xs-8">
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">惠挑车</a></li>
+                                <li class="active">{{ car_series.car_series_cn }} - {{ rest(API.LIST, model=MODELS.T_BASE_CAR_SERIES, offset=0, count=8, car_brand_id=1) }} -- {{ rest(API.CAR_SERIES_DATA) }} --- {{ rest(API.CAR_BRAND_SERIES, car_brand_cn='日产') }} ---- {{ rest(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=477) }} </li>
+                            </ul>
+
+                            <div class="col-xs-4 text-right">
+                                43013{{ car_series.car_series_cn }}共有{{ run(API.COUNT, model=MODELS.T_BASE_CAR_TYPE, car_series_id=43013) }}款在售车型
+                            </div>
+                        </div>
+                        <div class="page-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="list-inline">
+                                        {% set car_brand=get_object(MODELS.T_BASE_CAR_BRAND, id=1) %}
+                                        {% if car_brand %}
+                                            <!-- <li>
+                                                <img src="{{ car_brand.logo_img }}" alt="logo">
+                                            </li> -->
+                                            <li>- {{ car_brand.car_brand_cn }} -</li>
+                                        {% endif %}
+                                        <li>- {{ car_series.car_series_cn }} -</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel-group" id="accordion">
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#typedata">
+                                                        车型数据
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="typedata" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <p>API.CAR_TYPE_DEALER</p>
+                                                    {% set car_type_dealer=run(API.CAR_TYPE_DEALER, city_id=city.city_id, county_id=0, car_type_id=48, per_page=4, page=1, orderby='price', descending=False) %}
+                                                    {% if car_type_dealer %}
+                                                        <p>{{ dumps_json(car_type_dealer, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.DEALER</p>
+                                                    {% set dealer=run(API.DEALER, city_id=city.city_id, county_id=1, brand_id=0, series_id=0, per_page=2, page=1) %}
+                                                    {% if dealer %}
+                                                        <p>{{ dumps_json(dealer, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.CAR_CATALOG_DATA</p>
+                                                    {% set car_data=run(API.CAR_CATALOG_DATA, city_id=city.city_id, car_type=0, per_page=4, page=1) %}
+                                                    {% if car_data %}
+                                                        <p>{{ dumps_json(car_data, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+                                                    
+                                                    <p>API.CAR_SERIES_DATA</p>
+                                                    {% set car_series_data=run(API.CAR_SERIES_DATA, city_id=city.city_id, car_series_id=492915) %}
+                                                    {% if car_series_data %}
+                                                        <p>{{ dumps_json(car_series_data, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.CAR_SERIES_PROPERTY</p>
+                                                    {% set prop_keys=['29', '33', '34', '35', '36', '37', '45', '53', '199'] %}
+                                                    {% set car_series_property=run(API.CAR_SERIES_PROPERTY, car_series_id=43013, prop_keys=prop_keys) %}
+                                                    {% if car_series_property %}
+                                                        <p>{{ dumps_json(car_series_property, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.CAR_TYPE_DATA</p>
+                                                    {% set car_type_data=run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=477) %}
+                                                    {% if car_type_data %}
+                                                        <p>{{ dumps_json(car_type_data, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.CAR_TYPE_PROPERTY</p>
+                                                    {% set prop_keys=['34','36','45','53','29','35'] %}
+                                                    {% set car_props=run(API.CAR_TYPE_PROPERTY, car_type_id=114, prop_keys=prop_keys) %}
+                                                    {% if car_props %}
+                                                        <p>{{ dumps_json(car_props, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.CAR_TYPE_GROUP_PROPERTY</p>
+                                                    {% set car_type_group_property=run(API.CAR_TYPE_GROUP_PROPERTY, car_type_id=114, group_key='1') %}
+                                                    {% if car_type_group_property %}
+                                                        <p>{{ dumps_json(car_type_group_property, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.ON_SALE_CAR_TYPES</p>
+                                                    {% set on_sale_car_types=run(API.ON_SALE_CAR_TYPES, city_id=city.city_id, car_series_id=492933, per_page=4, page=1, orderby='discount') %}
+                                                    {% if on_sale_car_types %}
+                                                        <p>{{ dumps_json(on_sale_car_types, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.HOT_CAR_SERIES</p>
+                                                    {% set hot_car_series=run(API.HOT_CAR_SERIES, city_id=city.city_id, count=3) %}
+                                                    {% if hot_car_series %}
+                                                        <p>{{ dumps_json(hot_car_series, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+
+                                                    <p>API.DEALER_ON_SALE_CAR_TYPES</p>
+                                                    {% set dealer_on_sale_car_types=run(API.DEALER_ON_SALE_CAR_TYPES, dealer_id=2829, car_type=0, per_page=4, page=1) %}
+                                                    {% if dealer_on_sale_car_types %}
+                                                        <p>{{ dumps_json(dealer_on_sale_car_types, add_pre=True)|safe }}</p>
+                                                    {% endif %}
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#carproperty">
+                                                        车型属性
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="carproperty" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% set prop_keys=['34','36','45','53','29','35'] %}
+                                                    {% set car_props=run(API.CAR_TYPE_PROPERTY, car_type_id=114, prop_keys=prop_keys) %}
+                                                    {% if car_props %}
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                {% for prop in prop_keys %}
+                                                                    {{ loop.cycle('<tr>', '', '')|safe }}
+                                                                    {% if prop in car_props %}
+                                                                        <td style="width: 100px; background-color: #eee;">{{ car_props[prop].name }}</td>
+                                                                        <td style="width: 100px;">{{ car_props[prop].property_value }}</td>
+                                                                    {% endif %}
+                                                                    {{ loop.cycle('', '', '</tr>')|safe }}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                {% for prop in prop_keys %}
+                                                                    {{ loop.cycle('<tr>', '')|safe }}
+                                                                    {% if prop in car_props %}
+                                                                        <td style="width: 100px; background-color: #eee;">{{ car_props[prop].name }}</td>
+                                                                        <td style="width: 100px;">{{ car_props[prop].property_value }}</td>
+                                                                    {% endif %}
+                                                                    {{ loop.cycle('', '</tr>')|safe }}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                {% for prop in prop_keys %}
+                                                                    {% if prop in car_props %}
+                                                                        <tr>
+                                                                            <td>{{ car_props[prop].order_no }}</td>
+                                                                            <td>{{ car_props[prop].property_key }}</td>
+                                                                            <td>{{ car_props[prop].name }}</td>
+                                                                            <td>{{ car_props[prop].property_value }}</td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    {% endif %}
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="footer col-xs-12">
+                    <div class="footer-inner">
+                        <div class="footer-content text-center">
+                            <span>
+                                Copyright © 2008-2015 chebaba.com，All Rights Reserved 粤ICP备1505
+                            </span>
+                            <br />
+                            <span>
+                                版权所有 东风日产乘用车公司
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    {% endblock %}
+</html>

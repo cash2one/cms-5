@@ -1,0 +1,543 @@
+@import "../lib/variable";
+.to-left(@size,@outColor,@innerColor,@top,@left:0){
+  display:block;
+  overflow:hidden;
+  width:0px;
+  height:0px;
+  border:@size solid @innerColor;
+  border-color:@outColor @innerColor;
+  border-width:@size @size @size 0 ;
+  position:absolute;
+  left:@left;
+  top:@top;
+  margin-left:-(@size);
+}
+.to-top(@size,@outColor,@innerColor,@left,@top:0){
+  display:block;
+  overflow:hidden;
+  width:0px;
+  height:0px;
+  border:@size solid @innerColor;
+  border-color:@outColor @innerColor;
+  border-width:0 @size @size @size;
+  position:absolute;
+  left:@left;
+  top:@top;
+  margin-top:-(@size);
+}
+
+//css sprite
+.btn-find-code,
+.ico-arrow-find-l,
+.ico-arrow-find-r,
+.ico-credit,
+.ico-find-down,
+.ico-find-up,
+.ico-location-pin,
+.ico-star-full,
+.ico-find-share,
+.ico-star-none{
+  background-image: url(../../images/page/bg-dealer-detail.png);
+  background-repeat: no-repeat;
+}
+
+.btn-find-code { background-position:  -0px -0px; height: 13px; width: 13px; }
+.ico-arrow-find-l { background-position:  -0px -13px; height: 14px; width: 8px; }
+.ico-arrow-find-r { background-position:  -0px -27px; height: 14px; width: 8px; }
+.ico-credit { background-position:  -13px -0px; height: 16px; width: 16px; }
+.ico-find-down { background-position:  -0px -41px; height: 12px; width: 8px; }
+.ico-find-up { background-position:  -0px -53px; height: 12px; width: 8px; }
+.ico-location-pin { background-position:  -0px -65px; height: 14px; width: 11px; }
+.ico-star-full { background-position:  -29px -0px; height: 27px; width: 93px; }
+.ico-star-none { background-position:  -29px -27px; height: 27px; width: 93px; }
+.ico-find-share{
+  display: inline-block;
+  width: 14px;
+  height: 13px;
+  background-position: right top;
+}
+
+
+.dealer-t-l{
+  float: left;
+  width: 745px;
+  .mod-wrap{
+    background-color: #fff;
+    padding: 30px;
+    margin-bottom: 25px;
+    .pic{
+      .pic-images{
+        img{
+          margin-bottom: 25px;
+        }
+      }
+    }
+  }
+  .txt{
+    h1{
+      text-align: center;
+      font-size:28px;
+      color: #333;
+      font-weight: normal;
+    }
+    h6{
+      text-align: center;
+      font-size:12px;
+      color: #999;
+      border-bottom: 1px solid #e2e2e2;
+      height: 30px;
+      line-height: 30px;
+      font-weight: normal;
+      margin-top: 30px;
+    }
+    .banner{
+      display: block;
+      margin: 15px 0;
+    }
+    p{
+      color: #3c3c3c;
+      font-size: 16px;
+      line-height: 1.8;
+      text-indent: 2em;
+      &.time{
+        color: #c90329;
+        text-align: center;
+        line-height: 2.2;
+      }
+    }
+  }
+
+  .t-title{
+    padding: 15px 0;
+    h5{
+      float: left;
+      width: 340px;
+      font-size: 14px;
+      color: #808080;
+      font-weight: normal;
+    }
+    ul{
+      float: right;
+      width: 80px;
+
+
+    }
+    li{
+      float: left;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      text-align: center;
+      border: 1px solid #e2e2e2;
+      span{
+        display: inline-block;
+        vertical-align: middle;
+      }
+      &:last-of-type{
+        border-left: 0;
+      }
+    }
+
+  }
+
+  .price{
+    table{
+      width: 100%;
+      text-align: center;
+      border: 1px solid #e2e2e2;
+    }
+    td{
+      border: 1px solid #e2e2e2;
+      line-height: 3;
+      span{
+        display: inline-block;
+        margin-right: 3px;
+      }
+      &.change{
+        font-weight: bold;
+        color: #c90329;
+      }
+    }
+    th{
+      font-weight: normal;
+      color: #5c5c5c;
+      border: 1px solid #e2e2e2;
+      line-height: 3.2;
+
+    }
+    caption{
+      border: 1px solid #e2e2e2;
+      border-bottom: 0;
+      line-height: 3;
+      color: #626262;
+      font-size: 16px;
+      background-color: #eeeeee;
+    }
+    .btn-qa{
+      display: inline-block;
+      width: 55px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      color: #c90329;
+      border: 1px solid #c90329;
+      background-color: #ffeded;
+    }
+    .btn-try2{
+      display: inline-block;
+      width: 55px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      color: #c90329;
+      border: 1px solid #c90329;
+      margin: 0 5px;
+    }
+    .btn-cre{
+      display: inline-block;
+
+      span{
+        display: inline-block;
+        vertical-align:middle;
+
+      }
+    }
+  }
+
+  .info{
+
+    .t-title{
+      padding-top: 0;
+    }
+    .detail{
+      padding: 12px;
+      border: 1px solid #e2e2e2;
+      img{
+        float: left;
+        margin-right: 15px;
+        width: 230px;
+      }
+
+    }
+    .car-detail{
+      float: left;
+      h5{
+        font-weight: normal;
+        color: #808080;
+        font-size: 12px;
+        line-height: 2.2;
+        strong{
+            font-size: 14px;
+            var{
+              font-style: normal;
+              font-size:16px;
+              color: #c90329;
+            }
+        }
+
+      }
+      p{
+        line-height: 2;
+        a{
+          width: 115px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 14px;
+          margin-right: 10px;
+        }
+        span{
+          display: inline-block;
+          margin-right: 3px;
+          vertical-align: middle;
+        }
+
+      }
+    }
+  }
+
+  .tab-find-sale{
+    background-color: #fff;
+    padding-bottom: 10px;
+    p{
+      height: 50px;
+      line-height: 50px;
+      border-bottom: 1px solid #cbcbcb;
+      background-color: #f1f1f1;
+      span{
+        display: inline-block;
+        color: #666;
+        font-size: 20px;
+        padding: 0 30px;
+        cursor: pointer;
+        &.active{
+          background-color: #fff;
+          position: relative;
+          bottom:-1px;
+          color: #c90329;
+          //border-right: 1px solid #cbcbcb;
+        }
+
+      }
+    }
+    .tab-find-c{
+      padding: 10px 0;
+      ul{
+
+      }
+      #dshop-activity{
+        display: none;
+      }
+      li{
+        overflow: hidden;
+        width: 320px;
+        z-index: 1;
+        height: 38px;
+        margin-left: 35px;
+        line-height: 38px;
+        border-bottom: 1px dashed #ccc;
+        float:left;
+        a{
+          float: left;
+          font-size: 14px;
+          color: #666;
+          display: inline-block;
+          max-width:240px;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+        }
+        span{
+          float: right;
+        }
+      }
+    }
+
+  }
+
+}
+
+.dealer-t-r{
+  float: right;
+  width: 225px;
+  position: relative;
+  .cbb-caret-left{
+    position: absolute;
+    top:50px;
+    left:-12px;
+    color:@color-white;
+  }
+  .mod-block{
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 25px;
+    font-size: 12px;
+    color: #6c6b6b;
+    .dl_img img{
+      box-shadow: 3px 3px 1px #999;
+    }
+  }
+  .star{
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px dashed #cccccc;
+    .ico-star-none{
+      display: inline-block;
+      position: relative;
+      top:7px;
+      overflow: hidden;
+      margin-right: 10px;
+    }
+    .ico-star-full{
+      display: block;
+      position: absolute;
+      left:0;
+      top: 0;
+    }
+    strong{
+      color: #fe6600;
+    }
+
+  }
+  .dealer-info{
+    padding: 5px 0;
+    dt{
+      font-size: 18px;
+      color: #3c3c3c;
+      line-height: 2.5;
+      a{
+        color: #3c3c3c;
+      }
+      img{
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+    }
+    dd{
+      line-height: 2;
+      span{
+        display: inline-block;
+        margin: 0 5px;
+
+      }
+      a{
+        color: #3a5999;
+      }
+    }
+  }
+  .code{
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px dashed #cccccc;
+    border-bottom: 1px dashed #cccccc;
+    margin: 6px 0;
+    span{
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+  }
+  .chebaba-tags{
+
+    span{
+      margin-top: 5px;
+      border-radius: 5px;
+    }
+  }
+  h3{
+    position: relative;
+    color: #000;
+    font-size: 16px;
+    border-left: 5px solid #c90329;
+    left:-15px;
+    padding-left: 10px;
+    font-weight: normal;
+  }
+  .activty{
+    padding-top: 10px;
+    li{
+      margin-bottom: 20px;
+    }
+  }
+  .list{
+    padding-top: 20px;
+    text-align: center;
+    dd{
+      color: #808080;
+    }
+    dt{
+      font-size: 14px;
+      line-height: 2;
+    }
+  }
+}
+
+.activity-passed-p{
+  text-align: center;
+  margin: 20px 0;
+  color: #ed5c5c;
+  line-height: 31px;
+  font-size: @font16;
+  span{
+    display: inline-block;
+    width:39px;
+    height:31px;
+    margin-right: 10px;
+    vertical-align: middle;
+    background: url(../../images/page/bg-detail.png) -415px -130px no-repeat;
+  }
+}
+.activity-passed-c{
+  dd{
+    float: left;
+    margin: 0 35px;
+    &:hover{
+      img{
+        border-color:@color-bright-red;
+      }
+    }
+    img{
+      border:1px solid @color-gray;
+      width: 225px;
+      height: 150px;
+    }
+    h2{
+      font-size: @font16;
+      text-align: center;
+      margin: 5px 0;
+      color: @color-black;
+    }
+    p{
+      font-size: @font14;
+      margin-bottom: 10px;
+      width: 225px;
+
+    }
+  }
+}
+.activity-more-btn{
+  padding:3px 8px;
+  border:1px solid #ed5c5c;
+  border-radius: 5px;
+  float:right;
+  color:#ed5c5c;
+  margin: 10px;
+}
+
+// dealer service tag 经销商服务认证 类
+.dl-service-col-1{
+  color:#ffa31c;
+  &:hover{
+    background-color:#ffa31c;
+    color:@color-white;
+  }
+}
+.dl-service-col-2{
+  color:#717bd8;
+  &:hover{
+    background-color:#717bd8;
+    color:@color-white;
+  }
+}
+.dl-service-col-3{
+  color:#dcab66;
+  &:hover{
+    background-color:#dcab66;
+    color:@color-white;
+  }
+}
+.dl-service-col-4{
+  color:#636d76;
+  &:hover{
+    background-color:#636d76;
+    color:@color-white;
+  }
+}
+.dl-service-col-5{
+  color:#ce1245;
+  &:hover{
+    background-color:#ce1245;
+    color:@color-white;
+  }
+}
+.dl-service-col-6{
+  color:#839164;
+  &:hover{
+    background-color:#839164;
+    color:@color-white;
+  }
+}
+.dl-service-col-7{
+  color:#73aac4;
+  &:hover{
+    background-color:#73aac4;
+    color:@color-white;
+  }
+}
+.ad-img{
+  margin:15px auto;
+  margin-bottom: 25px;
+}
+
+
+

@@ -1,0 +1,250 @@
+<form id="J-step-rc-3" style="display:none">
+  <div class="tips"></div>
+  <ul>
+      <li class="form-list clearfix">
+          <div class="label">证件类型</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-card" class="form-select" type="text" name="card_name" placeholder="请选择证件类型"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">身份证</a></li>
+                      <li><a href="javascript:;">军官证</a></li>
+                      <li><a href="javascript:;">护照</a></li>
+                      <li><a href="javascript:;">港澳台胞证</a></li>
+                 </ul>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">证件号码</div>
+          <div class="frame J-select-link">
+              <div class="u-input">
+                  <input id="J-rc-card-number" type="text" name="card_number" placeholder="请输入您的证件号码"/>
+              </div>
+              <div id="J-rc-card-number-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">房产状态</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-house" class="form-select" type="text" name="fangchan" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">抵押买房居住</a></li>
+                      <li><a href="javascript:;">寄居</a></li>
+                      <li><a href="javascript:;">借住直系亲属</a></li>
+                      <li><a href="javascript:;">无产权房</a></li>
+                      <li><a href="javascript:;">自有无贷</a></li>
+                      <li><a href="javascript:;">租房</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-house-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">婚姻状态</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-marry" class="form-select" type="text" name="marry" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">已婚</a></li>
+                      <li><a href="javascript:;">已婚没有子女</a></li>
+                      <li><a href="javascript:;">单身</a></li>
+                      <li><a href="javascript:;">离异</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-marry-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">所属行业</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-trade" class="form-select" type="text" name="trade" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">农/林/牧/渔业</a></li>
+                      <li><a href="javascript:;">采矿业/能源业</a></li>
+                      <li><a href="javascript:;">制造业</a></li>
+                      <li><a href="javascript:;">批发/零售/贸易</a></li>
+                      <li><a href="javascript:;">金融业</a></li>
+                      <li><a href="javascript:;">网络/软件/信息技术服务/电子商务</a></li>
+                      <li><a href="javascript:;">酒店/旅游/餐饮</a></li>
+                      <li><a href="javascript:;">水利/环境/公共设施管理业</a></li>
+                      <li><a href="javascript:;">建筑业/房地产业</a></li>
+                      <li><a href="javascript:;">政府机构/科研/培训</a></li>
+                      <li><a href="javascript:;">交通运输/仓储/邮政/物流</a></li>
+                      <li><a href="javascript:;">法律</a></li>
+                      <li><a href="javascript:;">商业咨询/顾问服务</a></li>
+                      <li><a href="javascript:;">卫生/社会保障/福利业</a></li>
+                      <li><a href="javascript:;">文化/体育/娱乐业</a></li>
+                      <li><a href="javascript:;">媒体/公关/出版业</a></li>
+                      <li><a href="javascript:;">租赁/商务服务业</a></li>
+                      <li><a href="javascript:;">居民服务/修理/其他服务业</a></li>
+                      <li><a href="javascript:;">教育</a></li>
+                      <li><a href="javascript:;">其他</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-trade-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">职业</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-occupation" class="form-select" type="text" name="occupation" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">私营业主/合伙人</a></li>
+                      <li><a href="javascript:;">企事业高级管理层/法人/大股东</a></li>
+                      <li><a href="javascript:;">中层管理人员</a></li>
+                      <li><a href="javascript:;">普通员工</a></li>
+                      <li><a href="javascript:;">操作层面蓝领</a></li>
+                      <li><a href="javascript:;">其他人员</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-occupation-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">公司性质</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-company" class="form-select" type="text" name="company" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">国家机关/国有企事业单位</a></li>
+                      <li><a href="javascript:;">股份公司</a></li>
+                      <li><a href="javascript:;">外资本或/合资公司</a></li>
+                      <li><a href="javascript:;">民营企业</a></li>
+                      <li><a href="javascript:;">个体经济</a></li>
+                      <li><a href="javascript:;">自由职业</a></li>
+                      <li><a href="javascript:;">其他性质无法归类的企业</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-company-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">学历情况</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-education" class="form-select" type="text" name="education" placeholder="请选择您的证件号码">
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">研究生及以上</a></li>
+                      <li><a href="javascript:;">本科</a></li>
+                      <li><a href="javascript:;">大专</a></li>
+                      <li><a href="javascript:;">中等技术学校</a></li>
+                      <li><a href="javascript:;">中学</a></li>
+                      <li><a href="javascript:;">小学及以下</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-education-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">工作年限</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-work" class="form-select" type="text" name="working_years" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;" data-id="1">1年</a></li>
+                      <li><a href="javascript:;" data-id="2">2年</a></li>
+                      <li><a href="javascript:;" data-id="3">3年</a></li>
+                      <li><a href="javascript:;" data-id="4">4年</a></li>
+                      <li><a href="javascript:;" data-id="5">5年</a></li>
+                      <li><a href="javascript:;" data-id="6">6年</a></li>
+                      <li><a href="javascript:;" data-id="7">7年</a></li>
+                      <li><a href="javascript:;" data-id="8">8年</a></li>
+                      <li><a href="javascript:;" data-id="9">9年</a></li>
+                      <li><a href="javascript:;" data-id="10">10年</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-work-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">月收入</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-rc-income" class="form-select" type="text" name="income" placeholder="请选择您的证件号码"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li><a href="javascript:;">3000以下</a></li>
+                      <li><a href="javascript:;">3000-5000</a></li>
+                      <li><a href="javascript:;">5000-8000</a></li>
+                      <li><a href="javascript:;">8000-12000</a></li>
+                      <li><a href="javascript:;">12000以上</a></li>
+                 </ul>
+              </div>
+              {# <div id="J-rc-incomes-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div>   #}
+          </div>
+      </li>
+      <li class="form-list btn clearfix ">
+          <div class="label"></div>
+          <div class="frame">
+              <a class="next-btn u-btn-deepred" href="javascript:;">下一步</a>
+              <a class="prex-btn J-prex-btn" href="javascript:;">返回上一步</a>
+          </div>
+      </li>
+  </ul>
+</form>

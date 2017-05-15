@@ -1,0 +1,9 @@
+{% extends 'wap/base/base.html' %}
+{% block seo %}
+  <meta name="description" content="{{catalogs.description}}">
+  <meta name="Keywords" content="{{catalogs.keywords}}">
+{% endblock %}
+{% block title %}{{catalogs.title}}{% endblock %}
+{% block hd_title%}
+		<div class="title">{{catalogs.title}}</div>
+{% endblock%}

@@ -1,0 +1,53 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='惠挑车',
+            tag_id='car',
+            api_list=[
+                {
+                    'api_name': API.CAR_BRAND_BY_ID,
+                    'kwargs': {
+                        'car_brand_id': 1,
+                    }
+                },
+                {
+                    'api_name': API.CAR_BRAND_LIST_BY_ID,
+                    'kwargs': {
+                        'car_brand_id': 1,
+                    }
+                },
+                {
+                    'api_name': API.CAR_OFFICAL_CAR_INFO,
+                    'kwargs': {
+                    }
+                },
+                {
+                    'api_name': API.CAR_CATALOG_DATA,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_type': 0,
+                        'per_page': 2,
+                        'page': 1
+                    }
+                },
+                {
+                    'api_name': API.CAR_CATALOG_BRAND_DATA,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'car_brand_id': 0,
+                        'per_page': 2,
+                        'page': 1
+                    }
+                },
+                {
+                    'api_name': API.CAR_ARTICLE_INFO,
+                    'kwargs': {
+                        'city_id': 20077,
+                        'article_id': 60
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

@@ -1,0 +1,437 @@
+{% extends 'base/base.html' %}
+<!-- 基本数据 -->
+{% set car_type_data=run(API.CAR_TYPE_DATA, city_id=city.city_id, car_type_id=sub_id) %}
+{% block seo %}
+{% set str_product_txt = "" %}
+{% if car_type_data.type.product_spot%}
+{% set str_product_txt = car_type_data.type.product_spot|join(',') %}
+{% endif %}
+<title>【{{city.city_name}}】{{ car_type_data.brand.name }}{{ car_type_data.series.name }}{{ car_type_data.type.name }}报价_参数_油耗_图片_多少钱 - {{platform}}</title>
+<meta name="Keywords" content="{{city.city_name}}{{ car_type_data.series.name }}{{ car_type_data.type.name }},{{ car_type_data.series.name }}{{ car_type_data.type.name }},{{ car_type_data.series.name }}{{ car_type_data.type.name }}多少钱,{{ car_type_data.series.name }}{{ car_type_data.type.name }}怎么样">
+<meta name="description" content="{{ car_type_data.brand.name }}{{ car_type_data.series.name }}{{ car_type_data.type.name }}特色：{{str_product_txt}}, {{ car_type_data.series.name }}{{ car_type_data.type.name }}多少钱,配置怎么样,相关图片、配置、报价、评测等信息请关注{{platform}}！">
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/carModel.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{# 经销商接口 #}
+{% set car_type_dealer=run(API.CAR_TYPE_DEALER, city_id=city.city_id, county_id=0, car_type_id=sub_id, per_page=40, page=1, orderby='price', descending=False) %}
+{# 价格 #}
+{% set sOfferPrice = car_type_data.type.offer_price%}
+{# 热销车型 #}
+{% set hot_car_series=run(API.CAR_SERIES_HOT, city_id=city.city_id, count=4) %}
+{# 产品图片 #}
+{% set product_image=run(API.PRODUCT_IMAGES, series_id=car_type_data.series.id|string,position=2,countofpage=8,pagecount=0) %}
+{% block js %}
+    {{ super() }}
+    <script>
+        //省接口
+        var provinceUrl = '{{rest(API.LIST, model=MODELS.T_BASE_CITY)}}';
+        //市接口
+        var cityUrl = '{{rest(API.CITY_CAR_TYPE_DEALER_COUNT,car_type_id=sub_id)}}';
+
+        //经销商接口
+        var delearOps = {
+          url:'{{rest(API.CAR_TYPE_DEALER)}}',
+          param:{ city_id:{{city.city_id}}, county_id:0, car_type_id:{{sub_id}}, per_page:4, page:1,orderby:'price', descending:'False'}   
+        }
+
+        //热销接口
+        var hotOps = {
+          url:'{{rest(API.CAR_SERIES_HOT)}}',
+          param:{city_id:{{city.city_id}},count:4}
+        }
+
+        //产品图片接口
+        var productOps = {
+          url:'{{rest(API.PRODUCT_IMAGES)}}',
+          // param:{ series_id:'49301',position:2,countofpage:8,pagecount:0}   
+          param:{ series_id:{{car_type_data.series.id}},model_id:{{sub_id}},position:2,countofpage:54,pagecount:0}    
+        }        
+
+        //数据
+        var pythonData = {
+            seriesId:{{catalogs.model_instanceid}},
+            dealerJson:{{ dumps_json(car_type_dealer)|safe }},
+            hotCarJson:{{ dumps_json(hot_car_series)|safe }}
+        }
+    </script>
+    <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/flexslider.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/lib/common.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/page/model.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+{#{{ dumps_json(car_type_data.type.product_spot)|safe }}#}
+    {# 车型总数 #}
+    {% set car_model_count = count_objs(model=MODELS.T_BASE_CAR_TYPE, car_series_id=car_type_data.series.id) %}
+    {# 贷款购车接口 #}
+    {% set loan=run(API.LOWEST_MONTHLY_PAYMENT, city_id=city.city_id, car_series_id=catalogs.model_instanceid) %} 
+    {# 购置税 #} 
+    {% set purchaseTax=run(API.PURCHASETAX,price=sOfferPrice.price,car_type_id=sub_id) %}
+    {# 车船税、交强险、商业险 #}
+    {% set typeTax=run(API.CARTYPE_TAX_INSURANCE,car_type_id=sub_id) %}
+     {# <p>{{ dumps_json(car_type_data, add_pre=True)|safe }}</p> #}
+    <div class="model-wrap mainbody">
+        <!--<div class="m-crumb">
+            <span>当前位置：</span>
+            <a href="/{{city.city_alias}}">首页</a>
+            <span class="separator">></span>
+            <a href="/{{city.city_alias}}/car">惠挑车</a>
+            <span class="separator">></span>
+            <a href="javascript:;">{{car_type_data.series.name}}</a>
+        </div> -->
+        <div class="product g-box">
+            <div class="top clearfix"> 
+                <div class="fl title">
+                    <img class="logo-icon" src="{{car_type_data.brand.img}}"/>
+                    {{ car_type_data.type.name }}
+                </div>
+                <div class="fl m-carmod-num">
+                    在售车型共<code>{{ car_model_count }}</code>款<span class="ico-carser-d"></span>
+                    {% set group_types=run(API.CAR_SERIES_GROUP_CAR_TYPES, car_series_id=car_type_data.series.id, property_key='pailiang') %}
+                    
+                    <div class="carmod-num-list">
+                        {% if group_types %}
+                        {% for voGroupTypes in group_types%}
+                        <dl>
+                            <dt>{{voGroupTypes.value}}</dt>
+                            {% for voTypeList in voGroupTypes.car_type_list%}
+                                <dd><a href="{{voTypeList.url}}">{{voTypeList.name}}</a></dd>
+                            {% endfor%}
+                        </dl>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="fr m-label">
+                    {% if car_type_data.series.car_property%}
+                        {% set carProperty = car_type_data.series.car_property %}
+                        {% for voCarProperty in carProperty%}
+                            <a class="{{ loop.cycle('orange', 'blue','deepred','green','pink','yellow','greyBlue') }}" href="javascript:;">{{voCarProperty}}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="intro clearfix">
+                <div class="preview fl u-scale">
+                    <a class="pic u-translateX" href="javascript:;">
+                        {% if car_type_data.type.imgs%}
+                            <img src="{{car_type_data.type.imgs[0].CDNPATH}}@600h" alt="{{ car_type_data.series.name }}{{ car_type_data.type.name }}" title="{{ car_type_data.series.name }}{{ car_type_data.type.name }}"/>
+                        {% endif %}
+                        {% if car_type_data.series.car_property%}
+                            <div class="halve-icon">{{carProperty[0]}}</div>
+                        {% endif %}
+                    </a>
+                    <div class="feature u-popover bottom">
+                        <ul>
+                            {% if car_type_data.type.product_spot%}
+                            {% set product_spot = car_type_data.type.product_spot%}
+                                {% for voSpot in product_spot%}
+                                {% if voSpot.strip() %}
+                                    <li><i class="cbb cbb-check-circle-o"></i>{{voSpot.strip()}}</li>
+                                {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        <div class="arrow"></div>
+                    </div>
+                </div>
+                <div class="info fl"> 
+                    <div class="price">   
+                        本地优惠价：
+                        <strong>{{ '%.2f'|format(sOfferPrice.price/10000) }}</strong>万元&nbsp;&nbsp;
+                        {% if sOfferPrice.discount > 0 %}
+                            优惠：
+                            {% if sOfferPrice.discount >= 10000%}
+                                <strong>{{'%.2f'|format(sOfferPrice.discount/10000)}}</strong>万元
+                            {% else %}
+                                <strong>{{sOfferPrice.discount}}</strong>元
+                            {% endif %}    
+                        {% endif %}
+
+                        <a class="tips" href="/{{city.city_alias}}/info/apply?series_id={{catalogs.model_instanceid}}&server=7&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-05-0000" target="_blank"><i class="cbb cbb-mobile-phone" ></i>降价提醒</a>
+                    </div>
+                    <div class="guide-price">官方指导价：{{car_type_data.type.guide_price / 10000}}万元</div>
+                    <div class="btn clearfix">
+                        <a class="u-btn-deepred" href="/{{city.city_alias}}/info/apply?series_id={{catalogs.model_instanceid}}&server=7&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-04-0000" target="_blank">获取优惠</a>
+                        <a class="u-btn-lightRed" href="/{{city.city_alias}}/info/apply?series_id={{catalogs.model_instanceid}}&server=2&lead_key=NV-Chebabanew-Pc-V5-Ch-Le-PoC-Msg3-03-0000" target="_blank">预约试驾</a>
+                        {% if car_type_data.brand.id==1 %}
+                        <a class="tips" href="/{{city.city_alias}}/finance/apply?series_id={{catalogs.model_instanceid}}&loan_plan=249&sku=24&percent=50&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-02-0000" target="_blank">
+                            <i></i>
+                            超低月供，购车无压力!
+                        </a>
+                        {% elif car_type_data.brand.id==2 %}
+                        <a class="tips" href="/{{city.city_alias}}/finance/apply?series_id={{catalogs.model_instanceid}}&loan_plan=252&sku=24&percent=50&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-02-0000" target="_blank">
+                            <i></i>
+                            超低月供，购车无压力!
+                        </a>
+                        {% endif %}
+                    </div>
+                    <ul class="data clearfix">
+                        {# 车型属性 #}
+                        {% set prop_keys = ['jibie','fadongjixinghao','biansuxiangxingshi','qudongfangshi','zuoweishu','zhengchezhibao'] %}
+                        {% set car_props = run(API.CAR_TYPE_PROPERTY,car_type_id=sub_id,prop_keys=prop_keys) %}
+                        {# <p>{{ dumps_json(car_props, add_pre=True)|safe }}</p>  #}
+                        {% if car_props%}
+                        {% for voPropKeys in prop_keys %}
+                            <li>
+                                <div class="label">
+                                    {%if voPropKeys != 'zuoweishu'%}
+                                        {{ car_props[voPropKeys].name }}：
+                                    {% else %}
+                                        车身结构:
+                                    {% endif %}
+                                </div>
+                                {{ car_props[voPropKeys].property_value }}
+                            </li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                    <div id="J-slide-x" class="loan cxslide_x">
+                        <div class="box">
+                            <ul class="inside slides">
+                                <li class="list">
+                                    <div class="hd">贷款购车</div>
+                                    <div class="bd">
+                                        <div class="item"><div class="label">首付比例：</div>{{loan.first_pay_percent|default('0')}}%</div>
+                                        <div class="item"><div class="label">首付金额：</div>{{ '%.2f'|format(loan.first_pay_amount|default(0)/10000) }}万元</div>
+                                        <div class="item"><div class="label">贷款金额：</div>{{ '%.2f'|format(loan.loan_amount|default(0)/10000) }}万元</div>
+                                        <div class="item"><div class="label">还款期限：</div>{{loan.sku_item|default(12)}}个月</div>
+                                        <div class="item"><div class="label">总计约：</div><strong>{{ '%.2f'|format(loan.loan_amount|default(0)/10000) }}</strong>万元</div>
+                                    </div>
+                                    <div class="ft">全款购车</div>
+                                </li>
+
+                                <li class="list">
+                                    <div class="hd">全款购车</div>
+                                    <div class="bd">
+                                        <div class="item"><div class="label">裸车价：</div>{{ '%.2f'|format(sOfferPrice.price/10000) }}万</div>
+                                        <div class="item"><div class="label">+购置税：</div>{% if purchaseTax.purchasetax>=10000 %}{{ '%.2f'|format(purchaseTax.purchasetax/10000)}}万{% else %} {{ '%.0f'|format(purchaseTax.purchasetax)}}元{%endif%}</div>
+                                        <div class="item"><div class="label">+交强险：</div>{{typeTax.travel_insurance}}元</div>
+                                        <div class="item"><div class="label">+商业险：</div>{{typeTax.busi_insurance}}元</div>
+                                        {# <div class="item"><div class="label">+车船税：</div>{{typeTax.travel_tax}}元</div> #}
+                                        <div class="item"><div class="label">总计约：</div><strong>{{ '%.2f'|format((sOfferPrice.price+purchaseTax.purchasetax+typeTax.busi_insurance+typeTax.travel_insurance)/10000) }}</strong>万</div>
+                                    </div>
+                                    <div class="ft">贷款购车</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                        <!-- <i class="plus cbb cbb-angle-left"></i>
+                        <i class="minus cbb cbb-angle-right"></i> -->
+                </div>
+            </div>
+        </div>
+        <div class="ad">
+            <script>
+                (function() {
+                    var s = "_" + Math.random().toString(36).slice(2);
+                    document.write('<div id="' + s + '"></div>');
+                    (window.slotbydup=window.slotbydup || []).push({
+                        id: '2430799',
+                        container: s,
+                        size: '990,90',
+                        display: 'inlay-fix'
+                    });
+                })();
+            </script>
+            <script src="http://dup.baidustatic.com/js/os.js"></script>
+
+        </div>
+        <div class="dealer g-box">
+            <div class="m-title top clearfix">
+                <div class="title-l fl">
+                    <i class="title-icon"></i>
+                    本地经销商报价
+                    <div class="J-select-link m-city">
+                        <div id="J-province" class="m-btn-group city">
+                            {% set province = get_object(MODELS.T_BASE_PROVINCE, province_id=city.province_id) %}
+                           <div class="btn btn-default">
+                              <span class="val" data-provinceId="{{ province.province_id }}">{{ province.province_name }}</span>
+                              <span class="cbb cbb-angle-down"></span>
+                           </div>
+                           <ul class="dropdown-ul">
+                                {% set province = list_objs(model=MODELS.T_BASE_PROVINCE, is_enable=1) %}
+
+                                {% for voProvince in province %}
+                                  <li><a href="javascript:;" data-provinceId="{{ voProvince.province_id }}">{{ voProvince.province_name }}</a></li>
+                                {% endfor %}
+                           </ul>
+                        </div>
+                        <div id="J-city" class="m-btn-group city">
+                           <div class="btn btn-default">
+                              <span class="val" data-cityId="{{city.city_id}}">{{city.city_name}}</span>
+                              <span class="cbb cbb-angle-down"></span>
+                           </div>
+                           <ul class="dropdown-ul">
+                                {% set cityList = list_objs(model=MODELS.T_BASE_CITY,  province_id=city.province_id) %}
+
+                                {% for voCity in cityList %}
+                                  <li><a href="javascript:;" data-cityId="{{ voCity.city_id }}">{{ voCity.city_name }}</a></li>
+                                {% endfor %}
+                           </ul>
+                        </div>
+                        <!-- <div id="J-area" class="m-btn-group">
+                           <div class="btn btn-default" data-toggle="dropdown">
+                              <span class="val" data-areaId="">请选择区</span>
+                              <span class="cbb cbb-angle-down"></span>
+                           </div>
+                           <ul class="dropdown-ul" role="menu"></ul>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="m-rank fr">
+                    <span class="fl txt">排序:</span>
+                    <a class="J-rank J-rank-price first" href="javascript:;">价格<i class="cbb cbb-long-arrow-down" data-descend="true" data-orderBy="price"></i></a>
+                    <a class="J-rank J-rank-discount" href="javascript:;">优惠<i class="cbb cbb-long-arrow-down" data-descend="true" data-orderBy="discount"></i></a>
+                </div>
+            </div>
+            <div id="J-area" class="menu clearfix">
+                <a class="active" href="javascript:;" data-areaId="">不限</a>
+                {% set areaList=run(API.CITY_CAR_TYPE_DEALER_COUNT,city_id=city.city_id,car_type_id=sub_id) %}
+
+                {% for voAreaList in areaList %}
+                     <a href="javascript:;" data-areaId="{{voAreaList.county_id}}">{{voAreaList.county_name}}({{voAreaList.dealer_count}})</a>
+                {% endfor %} 
+            </div>
+            <ul id="J-dealer" class="bd" ms-controller="c-dealer">
+                <div class="m-loading" ms-visible="loading"><img src="{{ static('site/images/lib/loding.gif') }}"/></div>
+                <li ms-repeat="array" ms-visible="!loading">
+                    <a class="pic fl" ms-attr-href="[% el.url %]">
+                        <img ms-attr-src="[% el.dlr_image_url %]" ms-attr-alt="[% el.dlr_short_name %]"/>
+                    </a>
+                    <div class="info fl">
+                        <div class="clearfix">
+                            <div class="block-1 m-dealer-data fl">
+                                <div class="title clearfix">
+                                    <div class="compare"> 
+                                        <a class="J-compare-btn" href="javascript:;" ms-attr-data-dealerId="[% el.id %]">
+                                            <i class="cbb cbb-plus"></i>对比
+                                        </a>
+                                        <div class="tips u-popover top">可以选择多个经销商，进行批量询价
+                                            <div class="arrow"></div>
+                                        </div>
+                                    </div>
+                                    <i ms-if="el.is_vip == 1" class="vip"></i>
+                                    <a class="d-name" ms-attr-href="[% el.url %]">[% el.dlr_short_name %]</a>
+                                </div>  
+                                <p ms-if="el.cont_address !=null">地址：[% el.cont_address %]</p>
+                                <p>电话：[% el.sale_tel %]</p>
+                            </div>
+                            <div class="block-2 fl">  
+                                <p>
+                                    报价：<strong>[% el.offer_price.price/10000|number(2) %]</strong>万元
+                                    <span ms-if="el.offer_price.discount>=10000">
+                                    限时优惠：<strong>[% el.offer_price.discount/10000|number(2) %]</strong>万元
+                                    </span>
+                                    <span ms-if="el.offer_price.discount>0 && el.offer_price.discount<10000">
+                                    限时优惠：<strong>[% el.offer_price.discount %]</strong>元
+                                    </span>
+                                </p>
+                                <a class="btn u-btn-lightRed" ms-attr-href="/info/apply?dealer_id=[%el.id%]&series_id={{car_type_data.series.id}}&server=7&lead_key=NV-Chebabanew-Pc-V1-Ch-Le-PoC-Msg1-06-0000" target="_blank">获取更多优惠</a>
+                            </div>
+                        </div>
+                        <dl class="m-promotion">
+                            <dt>促销活动</dt>  
+                            <dd><a ms-attr-href="[% el.dealer_activity_list[0].url%]"><i class="new"></i>[%el.dealer_activity_list!=''?el.dealer_activity_list[0].activity_title:'暂无内容'%]</a></dd>
+                            <dd class="last"><a ms-attr-href="[% el.activity_list[0].url%]"><i class="hot"></i>[%el.activity_list !=''?el.activity_list[0].activity_title:'暂无内容'%]</a></dd>
+                        </dl>   
+                    </div>
+                </li>
+            </ul>
+            <div id="J-compare-result" class="result">
+                你已选择了<strong class="num">1</strong>间靠谱经销商，最多选<strong>3</strong>间。<span>（建议多选几间，以便你找导更低的优惠价）</span>
+                <a class="J-compare-submit btn" href="javascript:;">一键比价</a>
+            </div>
+        </div>
+        <div id="J-property" class="property g-box">
+            <div class="m-title  clearfix">
+                <div class="title-l fl">
+                    <i class="title-icon"></i>
+                    参数配置
+                </div>
+                <a class="more fr" href="/{{city.city_alias}}/config/{{sub_id}}" target="_blank">详细参数></a>
+            </div>
+            <p class="base-hd">基本参数</p>
+            <table>
+                {% set car_type_group_property=run(API.CAR_TYPE_GROUP_PROPERTY, car_type_id=sub_id, group_key='jibencanshu') %}
+                {% if car_type_group_property %}
+                    {% for voGroupProps in car_type_group_property %}
+                        {{ loop.cycle('<tr>', '', '')|safe }} 
+                            <td>{{ voGroupProps.name }}</td>
+                            <td>{{ voGroupProps.property_value }}</td>
+                        {{ loop.cycle('', '', '</tr>')|safe }} 
+                    {% endfor %}
+                    {% if car_type_group_property|length %3 != 0 %}
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            </table>
+        </div>
+        {# {%if product_image%}
+        <div class="m-photo g-box" ms-controller="c-product" >
+            <div class="m-title clearfix">
+                <div class="title-l fl">
+                    <i class="title-icon"></i>
+                    {{car_type_data.brand.name}} {{car_type_data.series.name}}图片
+                </div>
+                <div id="J-photo-type" class="more fr">
+                {% set product_dict=run(API.PRODUCT_IMAGE_TYPE_DICT) %}
+                {% for voPdoructDict in product_dict %}
+                    <a href="javascript:;" data-key="{{voPdoructDict.DICT_KEY}}">{{voPdoructDict.DICT_VALUE}}</a>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="bd clearfix">
+                <div class="big-pic fl">
+                    <img class="J-big-photo" ms-attr-src="[% bigPic %]"/>
+                </div>
+                <div class="small-pic fl">
+                    <!-- <div class="up plus"><i></i></div> -->
+                    <div id="J-photo-y" class="box">
+                        <ul class="slides">
+                            <li ms-repeat="array">
+                                <a ms-repeat-il="array[$index]" class="J-small-photo" href="javascript:;">
+                                    <div ms-click="click(il.CDNPATH)" class="mask"></div>   
+                                    <img ms-attr-src="[% il.CDNPATH %]"/>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="bottom minus"><i></i></div> -->
+                </div>
+            </div>
+        </div>
+        {%endif%} #}
+    
+        {% if hot_car_series %}
+            <div class="m-goods g-box" ms-controller="c-hot">
+                <div class="m-title  clearfix">
+                    <div class="title-l fl">
+                        <i class="title-icon"></i>热销车推荐
+                    </div>
+                    <a class="more fr" href="javascript:;" ms-click="change">换一批车<i class="cbb cbb-refresh"></i></a>
+                </div> 
+                <div class="bd clearfix">
+                    <ul id="J-goods-ul">
+                        <li ms-repeat="array">
+                            <a ms-attr-href="/{{city.city_alias}}[% el.url %]">  
+                                <div class="pic u-translateX">
+                                    <img ms-attr-src="[% el.pc_thumbnail %]@300h" ms-attr-title="[% el.name %]" ms-attr-alt="[% el.name %]"/>
+                                </div> 
+                                <div class="name">[% el.name %]</div>
+                                <div class="price">官方指导价：[% el.start_guideprice/10000|number(2) %]-[% el.end_guideprice/10000|number(2) %]万元</div>
+                            </a>
+                        </li>   
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+

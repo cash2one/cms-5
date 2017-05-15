@@ -1,0 +1,180 @@
+<form id="J-step-1">
+  <div class="tips">
+      <i class="cbb cbb-exclamation-circle"></i>
+      温馨提示：为了确保预审批额度的准确性，请您填写真实资料!
+  </div>
+  <ul>
+      <li class="form-list clearfix">
+          <div class="label">姓名</div>
+          <div class="frame">
+              <div class="u-input">
+                  <input id="J-name" class="fl u-width1" type="text" name="loan_name" placeholder="请输入姓名"/>
+                  <ul class="fl sex" data-toggle="buttons">
+                      <li class="first item">
+                        <label class="btn active">
+                          <span class="cbb-stack cbb-lg">
+                            <i class="cbb cbb-circle cbb-stack-2x"></i>
+                            <i class="cbb cbb-mars cbb-stack-1x"></i>
+                          </span>
+                          {# <i class="cbb cbb-mars"></i> #}先生  
+                          <input class="J-sex" name="loan_gender" type="radio" value="M" checked="true">
+                        </label> 
+                      </li>
+                      <li class="item">
+                        <label class="btn venus">
+                          <span class="cbb-stack cbb-lg">
+                            <i class="cbb cbb-circle cbb-stack-2x"></i>
+                            <i class="cbb cbb-venus cbb-stack-1x"></i>
+                          </span>
+                          女士
+                          <input class="J-sex" name="loan_gender" type="radio" value="F"> 
+                        </label>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">手机号码</div>
+          <div class="frame">
+              <div class="u-input">
+                  <input id="J-phone" type="text" name="loan_phone" placeholder="请输11位手机号"/>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">验证码</div>
+          <div class="frame">
+              <div class="u-input">
+                  <input id="J-verify-code" class="u-width1" type="text" name="verify_code" placeholder="请输验证码"/>
+                  <a id="J-code-btn" class="code-btn fr" href="javascript:;">获取验证码</a>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">意向车系</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-series-id" class="form-select" type="text" name="loan_series" placeholder="请选择车系" data-id=""/> 
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                  {% for car_series in car_series_list %}
+                    {% if car_series.series_list %}
+                      <li class="sub-title">{{ car_series.brand.name}}</li>
+                      <li>
+                        {% for car_series_inside in car_series.series_list %}   
+                        <a class="J-series-list" href="javascript:;" data-id="{{ car_series_inside.id }}" data-brand="{{car_series.brand.id}}">{{ car_series_inside.name }}</a>
+                        {% endfor %} 
+                      </li>  
+                    {% endif %}
+                  {% endfor %}
+                 </ul>
+              </div>
+              <div id="J-series-id-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+              </div>
+          </div>
+          <input id="J-brand" type="hidden" name="load_brand" value=""/>
+      </li>
+      <li id="J-form-type" class="form-list clearfix" ms-controller="c-type" style="display:none">
+          <div class="label">意向车型</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-type-id" class="form-select" type="text" name="product_id" placeholder="请选择车型" data-id=""/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li ms-repeat="array">
+                        <a href="javascript:;" ms-data-id="el.id"> [% el.name %]</a>
+                      </li> 
+                 </ul>
+              </div>
+              <div id="J-type-id-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+              </div>
+          </div>
+      </li>
+      <li id="J-form-city" class="form-list list-city clearfix" style="display:none">
+          <div class="label">所属城市</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group city" data-from-select="true" ms-controller="c-proinceList">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-proince-id" class="form-select" type="text" name="loan_province" placeholder="选择省" ms-data-id="proinceListId" ms-attr-value="proinceListName"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>   
+                 <ul class="dropdown-ul">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.province_id" ms-click="click">[% el.province_name %]</a></li>
+                 </ul>
+              </div>
+              <div class="m-btn-group city" data-from-select="true" ms-controller="c-city">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-city-id" class="form-select" type="text" name="loan_city" placeholder="选择市" ms-data-id="cityId" ms-attr-value="cityName"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul" >
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.  city_id" ms-click="click">[% el.city_name %]</a></li> 
+                 </ul> 
+              </div>
+              <div class="m-btn-group city J-county" ms-controller="c-county">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-county-id" class="form-select" type="text" name="loan_count" placeholder="选择区县" ms-attr-value="countyName" ms-data-id="countyId"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul class="dropdown-ul">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el.county_id" ms-click="click">[% el.county_name %]</a></li> 
+                 </ul>
+              </div>
+              <div id="J-city-id-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+              </div>
+          </div>
+      </li>
+      <li class="form-list dealer clearfix J-dealer-list" ms-controller="c-dealer" style="display:none" ms-visible="loading">
+          <div class="label">经销商</div>
+          <div class="frame" > 
+              <div class="fl"> 
+                可选<span class="num">[%num%]</span>家经销商<a class="change" href="javascript:;" ms-click="change">[更换]</a>
+                <div class="result">
+                  <div class="item"> 
+                    <div class="J-dealer-name name">[%array[0].dlr_short_name%]</div>
+                    <div class="J-dealer-area area">[%array[0].county_name%]</div>
+                  </div>
+                </div>
+              </div>
+              {# <div id="loan_dealer-error" class="error msg">
+                <i class="cbb msg-icon"></i>
+                <span class="txt"></span>
+              </div> #}
+          </div>
+          <input id="J-dealer-id" type="hidden" class="hidden" ms-attr-value="[%array[0].id%]"/>
+          <input id="J-dealer-code" type="hidden" class="hidden" ms-attr-value="[%array[0].dlr_code%]"/>
+          <input id="J-service-tel" type="hidden" ms-attr-value="[%array[0].service_tel%]">
+          <input id="J-dlr-adress" type="hidden" name="loan_address" ms-attr-value="[%array[0].cont_address%]">
+      </li>
+      <li class="form-list agree clearfix">
+          <div class="label"></div>
+          <div class="frame">
+              <label>
+                <i class="u-icon u-icon-xz"></i>
+                <input class="J-checkbox checkbox" type="checkbox" class="checkbox" name="agree">
+              </label>
+              我已阅读并接受车巴巴<strong class="J-agree-dialog">服务条款</strong>
+          </div>
+      </li>
+      <div ms-controller="c-loading" class="m-loading" style="display:none" ms-visible="flag"><img src="/static/site/images/lib/loding.gif"/></div>
+      <li class="form-list btn clearfix ">
+          <div class="label"></div>
+          <div class="frame">
+              <a class="next-btn u-btn-deepred" href="javascript:;">下一步</a>
+          </div>
+      </li>
+  </ul>
+</form>

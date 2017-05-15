@@ -1,0 +1,313 @@
+{% extends 'base/base.html' %}
+{# 基础车系数据 #}
+{% set carSeries=run(API.FINANCE_CAR_SERIES_AND_CAR_TYPE,city_id=city.city_id,car_series_id=series_id) %}
+{% block title %}【{{city.city_name}}分期贷款买车】{{carSeries.series.name}}车贷_{{carSeries.series.name}}零首付_分期贷款 - {{platform}}{% endblock %}
+{% block description %}
+<meta name="Keywords" content="{{carSeries.series.name}}车贷,{{carSeries.series.name}}零首付, {{carSeries.series.name}}分期贷款">
+<meta name="description" content="{{city.city_name}}贷款买车，{{carSeries.series.name}}汽车贷款，{{platform}}为您提供{{carSeries.series.name}}汽车贷款方案, {{carSeries.series.name}}车贷计算, {{carSeries.series.name}}首付比例,贷款期限和年利率查询服务, {{carSeries.series.name}}车贷免费在线申请, {{carSeries.series.name}}车贷问题答疑,查{{carSeries.series.name}}最新车贷方案,就上车巴巴">
+{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="{{ static('site/css/page/finace_list.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{# 第一个车型ID #}
+{% set firstTypeId = model_id if model_id else carSeries.car_type_list[0].id %}
+{# 车系详细数据 #}
+{% set seriesDetail = carSeries.series%}
+{# 获取经销商 #}
+{% set dealer=run(API.FINANCE_CAR_TYPE_DEALER,city_id=city.city_id,car_type_id=firstTypeId,per_page=50) %}
+{# 第一个经销商报价 #}
+{% set firstTypePrice = dealer[0].offer_price.public_offer_price%}
+{# 获取购置税 #} 
+{% set purchaseTax=run(API.PURCHASETAX,price=firstTypePrice,car_type_id=firstTypeId) %}
+{% block js %}
+    {{ super() }}
+      <script>
+        //金融方案接口
+        var financialOps = {
+          url:'{{rest(API.LIST_FINANCIALS)|safe }}', 
+          // param:{price:'',downpay:20,period:12}  
+          param:{first_pay_percent:30,sku_item:36,car_series_id:{{ series_id }},car_type_id:{{firstTypeId}},dealer_id:{{dealer[0].dealer.id}},city_id:{{city.city_id}},order_by:''}
+        } 
+
+        //购置税
+        var purchaseTaxOps = {
+          url:'{{rest(API.PURCHASETAX)|safe }}',
+          param:{price:{{firstTypePrice}},car_type_id:{{firstTypeId}}}  
+        } 
+        //车型接口
+        var typeOps = {
+          url:'{{rest(API.FINANCE_CAR_SERIES_CAR_TYPE) |safe}}',
+          param:{city_id:{{ city.city_id }} , car_series_id:{{ series_id }} }
+        }
+        //经销商接口
+        var dealerOps = {
+          url:'{{rest(API.FINANCE_CAR_TYPE_DEALER) |safe}}',
+          param:{city_id:{{ city.city_id }} , car_type_id:{{firstTypeId}}}
+        }
+        //数据
+        var pythonData = {
+            carSeriesJson:{{ dumps_json(carSeries.car_type_list)|safe }},
+            dealerJson:{{ dumps_json(dealer)|safe }},
+            purchaseTaxJson:{{ dumps_json(purchaseTax)|safe }}
+        }
+        //车型ID
+        var modelID='{{ model_id }}'
+    </script>
+    <script type="text/javascript" src="{{ static('3rd/avalon/avalon.js') }}"></script>
+    <script type="text/javascript" src="{{ static('site/js/page/vclist.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+ {#<p>{{ dumps_json(carSeries, add_pre=True)|safe }}</p>#}
+{# 车型ID #}
+{# {{model_id|default('')}} #}
+  <div class="mainbody">
+    <div class="m-crumb">
+        <span>当前位置：</span>
+        <a href="/{{city.city_alias}}">首页</a>
+        <span class="separator">></span>
+        <a href="/{{city.city_alias}}/finance">任性贷</a>
+        <span class="separator">></span>
+        <a href="javascript:;" ms-controller="c-type">[%typeName%]</a>
+    </div>
+  </div>
+  <div class="mainbody finance-list-wrap"> 
+    <div class="top clearfix">
+      <div class="pic">
+        {% if seriesDetail.imgs %}
+        <a href="/{{city.city_alias}}{{seriesDetail.url}}" target="_blank"><img src="{{seriesDetail.imgs[0].CDNPATH}}@700w" title="{{carSeries.series.brand.name}} {{carSeries.series.name}}" alt="{{carSeries.series.brand.name}} {{carSeries.series.name}}"></a>
+        {% endif %}
+      </div>
+      <div class="info J-select-link">
+
+        <div class="m-btn-group none-border select-type" ms-controller="c-type">
+          <div class="btn">
+            <div class="J-select select fl type-title">[%typeName%]</div>
+            <span class="cbb cbb-angle-down"></span>
+          </div>
+          <ul class="dropdown-ul">
+            <li ms-repeat="arrCars"><span>[% (el.guide_price/10000).toFixed(2) %]万</span><a href="javascript:;" ms-data-id="el.id" ms-data-price="el.guide_price" ms-click="selectType">[% el.name %]</a></li>
+          </ul>
+        </div>
+
+        <div class="m-btn-group none-border select-area" ms-controller="c-dealer">
+          <div class="btn">
+            <div class="J-select select fl dealer-title" ms-data-id="arrSs[0].dealer.id" ms-data-code="arrSs[0].dealer.dlr_code">[%arrSs[0].dealer.dlr_full_name%]</div>
+            <span class="cbb cbb-angle-down"></span>
+          </div>
+          <ul class="dropdown-ul">
+            <li ms-repeat="arrSs"><a href="javascript:;" ms-data-index="$index" ms-data-price="el.offer_price.public_offer_price" ms-data-id="el.dealer.id" ms-data-code="el.dealer.dlr_code" ms-click="selectDealer">[% el.dealer.dlr_full_name %]</a></li>
+          </ul> 
+        </div>
+
+        {# <div class="channel">
+        <a href="/{{city.city_alias}}{{seriesDetail.url}}" class="s-anchor f-ib">车系频道</a>
+        </div> #}
+      </div>
+      <div class="price">
+        <ul>
+          <li class="t">
+            <span class="u-font">官方指导价</span><span>：</span>
+            <span class="u-font" ms-controller="c-type">
+              [% (typePrice/10000).toFixed(2) %]
+            </span>
+            <span class="u-font">万元</span>
+          </li>
+          <li class="c" ms-controller="c-dealer">
+            <span class="u-font">报&nbsp;&nbsp;&nbsp;&nbsp;价</span><span>：</span>
+            <strong>[% (dealerPrice/10000).toFixed(2) %]</strong>
+            <span class="u-font">万元</span>
+          </li>
+          <li class="c2" ms-controller="c-type">
+            <a ms-controller="c-dealer" ms-attr-href="/{{city.city_alias}}/info/apply?series_id={{ series_id }}&model_id=[% typeId %]&dlrCode=[% currenDlCode %]&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg1-04-0000" class="u-btn-deepred" target="_blank">获取优惠</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="fincail-project" ms-controller="c-financial"> 
+      <div class="param">
+        <div class="select fl">
+          <dl class="clearfix">
+            <dt>
+              <i class="u-icon u-icon-sfbl"></i>
+              <span class="title">首付比例:</span>
+            </dt>
+            <dd>
+              <ul class="clearfix">
+                <li ms-click="selectFirstPay" ms-click-1="status">20%</li>
+                <li class="z-active" ms-click="selectFirstPay" ms-click-1="status">30%</li>
+                <li ms-click="selectFirstPay" ms-click-1="status">40%</li>
+                <li ms-click="selectFirstPay" ms-click-1="status">50%</li>
+                <li ms-click="selectFirstPay" ms-click-1="status">60%</li>
+                <li ms-click="selectFirstPay" ms-click-1="status">70%</li>
+                <li ms-click="selectFirstPay" ms-click-1="status">80%</li>
+              </ul>
+            </dd>
+          </dl>
+          <dl class="clearfix sku-item">
+            <dt>
+              <i class="u-icon u-icon-hkqx"></i>
+              <span class="title">还款期限:</span>
+            </dt>
+            <dd>
+              <ul class="clearfix">
+                <li ms-click="selectSkuItem" ms-click-1="status">12期</li>
+                <li ms-click="selectSkuItem" ms-click-1="status">24期</li>
+                <li class="z-active" ms-click="selectSkuItem" ms-click-1="status">36期</li>
+                <li ms-click="selectSkuItem" ms-click-1="status">48期</li>
+                <li ms-click="selectSkuItem" ms-click-1="status">60期</li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+        <div class="info fr" ms-controller="c-purchaseTax">
+          <dl>
+            <dt>首付款</dt> 
+            <dd>   
+              <span class="num">[% (percent*originalPrice)/100|unitConversion(2) %]</span>[% originalPrice>=10000? '万':'元' %]
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <span class="s-sm-b gzs">购置税  
+              <i class="u-icon u-icon-gzs" ms-if="obj.flag == 1"></i>
+              </span>
+            </dt>
+            <dd>
+              <span class="num">[%obj.purchasetax|unitConversion(2)%]</span>[% obj.purchasetax>=10000? '万':'元' %]
+            </dd>
+          </dl>
+          <dl class="last">
+            <dt>
+              <span>购车预计</span>
+            </dt>
+            <dd>
+              <span class="num">[% (percent*originalPrice)/100 + obj.purchasetax|unitConversion(2) %]</span>万
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="menu clearfix">
+        <div class="fl menu-l">
+          已筛选出[%arrList.size()%]款<b>适合您的金融车贷方案</b>(以下费用不包括购车其他费用，具体以各经销商报价为准)
+        </div>
+        <div class="fr menu-r">
+          <a href="javascript:void(0);" class="z-active" data-rank="default" ms-click-1="status">默认</a>
+          <a href="javascript:void(0);" data-rank="price" ms-click="rankPrice" ms-click-1="status">按月供价格
+              <i class="cbb" ms-class="[%priceToggle? 'cbb-long-arrow-down':'cbb-long-arrow-up'%]"></i>
+          </a>
+          <a href="javascript:void(0);" data-rank="hot" ms-click="rankHot" ms-click-1="status">按热门度
+              <i class="cbb" ms-class="[%hotToggle? 'cbb-long-arrow-down':'cbb-long-arrow-up'%]"></i>
+          </a>
+        </div>
+      </div>
+      <div class="m-loading" ms-visible="loading"><img src="{{ static('site/images/lib/loding.gif') }}"/></div>
+      <div class="m-no-data" ms-visible="noData">
+        <i></i> 
+        <div class="tips">
+          <h1>车巴巴金融助手努力寻找中......</h1>
+          <h2>找不到该条件金融产品，试试切换不同首付和比例看看</h2>
+        </div>
+      </div>
+      <ul ms-visible="!loading">
+        <li class="item clearfix" ms-repeat="arrList">
+          <div class="pic fl">
+            <div class="inside">
+              <img ms-attr-src="[% el.corp_logo%]">
+            </div>
+            <span class="u-font s-color-b0">[% el.corp_name %]</span>
+          </div>
+          <div class="features fl">
+            <div class="hd">[% el.financial_product_name %]</div>
+            <ul class="clearfix">
+              <li ms-repeat-item="el.features">
+                <i><img ms-attr-src="[%item.dict_ext_values.attribute2%]" ms-if="item.dict_ext_values.attribute2"/></i>
+                <span class="s-list-info">[%item.dict_value%]</span>
+              </li>
+            </ul>
+          </div>
+          <div class="finances fl"> 
+            <dl>
+              <dt>[% el.repayment_type=="paymentMethod1860" ? '月供（不含利息）':'月供（含利息）' %]
+                <div class="dialog u-popover bottom">
+                  <i class="arrow"></i>
+                  <div class="tips-txt"><p>[% el.repayment_type=="paymentMethod1860" ? '利息费用一次性收取':'月供本金+利息' %]</p></div>
+                </div>
+              </dt>
+              <dd>
+                <span class="u-number">[% el.monthly_pay_amount|unitConversion(2) %]</span>
+                <span class="s-sm-b">[% el.monthly_pay_amount>=10000? '万':'元' %]</span>
+              </dd>  
+            </dl>
+            <dl>
+              <dt>总利息
+                <div class="dialog u-popover bottom">
+                    <i class="arrow"></i>
+                    <div class="tips-txt">
+                      <p>利息：[% el.loan_cost>=10000?(el.loan_cost/10000).toFixed(2):el.loan_cost.toFixed(0) %][% el.loan_cost>=10000? '万':'元' %]</p>
+                      <p>利率：[%el.sku_rate%]%</p>
+                    </div>
+                </div>
+              </dt>
+              <dd>
+                <span class="u-number">[% el.loan_cost|unitConversion(2) %]</span>
+                <span class="s-sm-b">[% el.loan_cost>=10000? '万':'元' %]</span> 
+              </dd>
+            </dl>
+            <dl ms-if="el.is_final_payment == 1">
+              <dt>尾款
+              <div class="dialog u-popover bottom">
+                  <i class="arrow"></i>
+                  <div class="tips-txt"><p>尾款在最后一期还款前支付</p></div>
+                </div>
+              </dt> 
+              <dd>  
+                <span class="u-number">[% el.final_payment_amount|unitConversion(2) %]</span>
+                <span class="s-sm-b">[% el.loan_cost>=10000? '万':'元' %]</span>
+              </dd>
+            </dl>
+            <dl class="last">
+              <dt>申请条件
+              <div class="dialog u-popover bottom">
+                  <i class="arrow"></i>
+                  <div class="tips-txt">  
+                    <p ms-repeat-il="el.conditions">[%il%]</p>
+                  </div>
+              </div>
+              </dt>
+              <dd class="material">所需材料
+                <div class="dialog u-popover bottom">
+                    <i class="arrow"></i>
+                    <div class="tips-txt">   
+                      <p ms-repeat-il="el.materials">[%il%]</p>
+                    </div>
+                </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="apply fr" ms-controller="c-dealer">
+            <a ms-attr-href="/{{city.city_alias}}/finance/apply?dlrCode=[% currenDlCode %]&series_id={{ series_id }}&loan_plan=[% el.product_id %]&sku=[% el.sku_item %]&percent=[% el.first_pay_percent %]&lead_key=NV-Chebabanew-Pc-V3-Ch-Le-PoC-Msg8-05-0000" class="u-btn-lightRed" target="_blank">马上申请</a>
+            <div class="pass-percent clearfix">
+              <div class="bar-outside fl">
+                <div class="bar" ms-css-width="[%el.pass_percent%]%">
+                  <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="txt fl">
+                <span class="s-list-info-s">通过率</span>
+                <span class="s-list-info-s">[% el.pass_percent %]%</span>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

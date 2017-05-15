@@ -1,0 +1,73 @@
+{% import 'test/common.html' as common with context %}
+{% macro test() -%}
+    {{ 
+        common.api_tag(
+            name='车系',
+            tag_id='car_series',
+            api_list=[
+                {
+                    'api_name': API.CAR_SERIES_BY_ID,
+                    'kwargs': {
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_DATA,
+                    'kwargs': {
+                        'city_id': 20267,
+                        'car_series_id': 14660
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_PROPERTY,
+                    'kwargs': {
+                        'car_series_id': 43013,
+                        'prop_keys': ['pailiang', 'zhengchezhibao'],
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_HOT,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'count': 3,
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_ON_SALE_CAR_TYPES,
+                    'kwargs': {
+                        'city_id': 20305,
+                        'car_series_id': 14660,
+                        'per_page': 2,
+                        'page': 1,
+                        'orderby': 'discount',
+                        'descending': False,
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_DEALER,
+                    'kwargs': {
+                        'city_id': 20001,
+                        'county_id': 0,
+                        'car_series_id': 430131,
+                        'per_page': 2,
+                        'page': 1,
+                        'orderby': 'discount',
+                        'descending': False,
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_GROUP_CAR_TYPES,
+                    'kwargs': {
+                        'car_series_id': 14660,
+                        'property_key': 'pailiang'
+                    }
+                },
+                {
+                    'api_name': API.CAR_SERIES_SEARCH,
+                    'kwargs': {
+                    }
+                }
+            ]
+        )
+    }}
+{%- endmacro %}

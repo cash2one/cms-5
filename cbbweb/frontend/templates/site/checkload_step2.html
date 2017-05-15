@@ -1,0 +1,75 @@
+<form id="J-step-2" style="display:none">
+  <div class="tips"></div>
+  <ul>
+      <li class="form-list clearfix">
+          <div class="label">首付比例</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-first-pay" class="form-select" type="text" name="pay_scale" placeholder="请选择首付比例" value="30%" data-id="30"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul id="J-downpay" class="dropdown-ul" ms-controller="c-downpay">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el">[%el%]%</a></li>
+                 </ul>
+              </div>
+          </div>
+      </li>
+      <li class="form-list clearfix">
+          <div class="label">还款期限</div>
+          <div class="frame J-select-link">
+              <div class="m-btn-group form-select">
+                 <div class="btn btn-default btn-form">
+                    <input id="J-sku-item" class="form-select" type="text" name="loan_period" placeholder="请选择首付比例" data-id="12" value="12期"/>
+                    <span class="cbb cbb-angle-down"></span>
+                    <div class="mask"></div>
+                 </div>
+                 <ul id="J-period" class="dropdown-ul" ms-controller="c-period">
+                      <li ms-repeat="array"><a href="javascript:;" ms-data-id="el">[%el%]期</a></li>
+                 </ul>
+              </div>
+          </div>
+      </li>
+      <li class="form-list project clearfix" ms-controller="c-financial">
+          <div class="label">可供选择的金融方案</div>
+          <div class="frame" data-toggle="buttons" >
+              <dl ms-repeat="array"> 
+                <label class="J-product" ms-class="btn [% $first?'active':''%]" ms-data-productid="el.product_id" ms-data-productname="el.financial_product_name" ms-data-rate="el.sku_rate">
+                  <dt><img ms-attr-src="[% el.corp_logo%]"/>[% el.corp_name%]</dt>
+                  <dd>  
+                    <p>首付款</p>
+                    <p>
+                      <strong>[% el.first_pay_amount|unitConversion(2) %]</strong>
+                      [% el.first_pay_amount>=10000? '万':'元' %]
+                    </p>
+                  </dd>
+                  <dd>
+                    <p>月供（含利息）</p>
+                    <p>
+                      <strong>[% el.monthly_pay_amount|unitConversion(2)%]</strong>
+                      [% el.monthly_pay_amount>=10000? '万':'元' %]
+                    </p>
+                  </dd>
+                  <dd>
+                    <p>总成本</p>
+                    <p>
+                      <strong>[% el.loan_cost|unitConversion(2) %]</strong>
+                      [% el.loan_cost>=10000? '万':'元' %]
+                    </p>
+                  </dd>
+                  <input class="J-corp-id" name="corp_id" type="radio" ms-attr-value="[% el.corp_id%]" ms-attr-checked="[%$index ==0?true:false%]">
+                  <i class="icon"></i>
+                </label>
+              </dl>
+          </div>
+      </li>
+      <li class="form-list btn clearfix ">
+          <div class="label"></div>
+          <div class="frame">
+              <a class="next-btn u-btn-deepred" href="javascript:;">下一步</a>
+              <a class="prex-btn J-prex-btn" href="javascript:;">返回上一步</a>
+          </div>
+      </li>
+  </ul>
+</form>

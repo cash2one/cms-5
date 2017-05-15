@@ -1,0 +1,52 @@
+{% extends 'wap/base/base.html' %}
+{% block body %}
+  {% if model_id %}
+    <script>
+      var ops = {url:'{{ rest(API.PRODUCT_IMAGES)|safe }}',param:{series_id:{{series_id}},model_id:{{model_id}},countofpage:10,pagecount:1}}
+    </script>
+  {% else %}  
+    <script>
+      var ops = {url:'{{ rest(API.PRODUCT_IMAGES)|safe }}',param:{series_id:{{series_id}},countofpage:10,pagecount:1}}
+    </script>
+  {% endif %}
+	<div class="g-wrap">
+    <h3 class="u-title-center"></h3>
+    <ul class="m-imgDisplay f-cb">
+      {# <li><img src="{{ static('images/lib/display1.jpg') }}" alt=""/></li> #}
+    </ul>
+  </div>
+  
+{% endblock %}
+{% block js %}
+ <script type="text/javascript" src="{{ static('wap/site/js/lib/tab.js') }}"></script>
+ <script>
+   $(function(){   
+
+      scroll.cntInit(true,0,ops,$('.m-imgDisplay'),'pagecount');
+
+      scroll.loading = function(index){
+        if($('#load').length<=0){
+            $('body').append("<div id='load' style='text-align: center;padding:40px 0 10px 0'><img src='{{ static('images/lib/loading.gif') }}' ></div>")
+        }
+      }
+      scroll.respondData = function(data,index){
+        $('#load').remove();
+        //console.log(data);
+      }
+      
+
+      //设置demo
+      function setDemo(data){
+        if($.isEmptyObject(data)&& data.status == 'success' && $.isEmptyObject(data.result)){
+          $('.u-title-center').text(data.result[0].TITLE);
+          $.each(data.result,function(ind,itm){
+            $('.m-imgDisplay').append('<li><img src="'+itm.CDNPATH+'" alt=""/></li>')
+          });
+        }
+      }
+
+
+  		
+   });
+ </script>
+{% endblock %}
